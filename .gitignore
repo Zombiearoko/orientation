@@ -32,6 +32,5 @@ backend/target/*
 backend/.setting
 backend/.classpath
 backend/.project
-.mvn/*
 mvnw
 mvnw.cmd
