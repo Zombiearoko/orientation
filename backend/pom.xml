@@ -6,11 +6,11 @@
 	<artifactId>backend</artifactId>
 
 	<name>backend</name>
-	<description>Le backend du projet de rencontre</description>
+	<description>Le backend du projet d'orientation</description>
 
 	<parent>
 		<groupId>com.bocobi2</groupId>
-		<artifactId>rencontre</artifactId>
+		<artifactId>orientation</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<dependencies>

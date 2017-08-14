@@ -6,11 +6,11 @@
 	 <artifactId>frontend</artifactId>
 	 
 	<name>frontend</name>
-    <description>Le frontend du projet de rencontre</description>
+    <description>Le frontend du projet d'orientation</description>
 
 	<parent>
 		<groupId>com.bocobi2</groupId>
-		<artifactId>rencontre</artifactId>
+		<artifactId>orientation</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	

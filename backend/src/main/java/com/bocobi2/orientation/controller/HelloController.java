@@ -1,6 +1,8 @@
-package com.bocobi2.rencontre.controller;
+package com.bocobi2.orientation.controller;
 
 import javax.servlet.http.HttpServletRequest;
+
+
 
 
 
@@ -20,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bocobi2.rencontre.model.Customer;
-import com.bocobi2.rencontre.repositories.CustomerRepository;
+import com.bocobi2.orientation.model.Customer;
+import com.bocobi2.orientation.repositories.CustomerRepository;
 
 @RestController
 public class HelloController {

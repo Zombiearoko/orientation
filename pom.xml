@@ -4,13 +4,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.bocobi2</groupId>
-	<artifactId>rencontre</artifactId>
+	<artifactId>orientation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<!-- <packaging>jar</packaging> -->
 	<packaging>pom</packaging>
 
-	<name>rencontre</name>
-	<description>Le projet parent du site de Rencontre</description>
+	<name>orientation</name>
+	<description>Le projet parent du site d'Orientation</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

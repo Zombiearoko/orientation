@@ -1,10 +1,10 @@
-package com.bocobi2.rencontre.repositories;
+package com.bocobi2.orientation.repositories;
 
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.bocobi2.rencontre.model.Customer;
+import com.bocobi2.orientation.model.Customer;
 
 public interface CustomerRepository extends MongoRepository<Customer, String> {
 
