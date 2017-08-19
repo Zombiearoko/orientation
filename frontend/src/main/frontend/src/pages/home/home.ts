@@ -11,12 +11,12 @@ public name:string='rrr';
   constructor(public rest:RestProvider) {
 		this.getName();
   }
-  public getName(){
+  /*public getName(){
     let nom=this.name;
     this.rest.getHello().subscribe((data)=>{
 		console.log(data);
 		alert("name: "+data);
     	nom=data;
 	});
-  }
+  }*/
 }
