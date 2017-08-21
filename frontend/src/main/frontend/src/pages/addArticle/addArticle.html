@@ -10,6 +10,9 @@
                     </div>
                 </div>
             </div>
+            <div *ngFor="let item of collectionJson">
+                <div *ngIf="item.userId == 1">something wrong</div>
+            </div>
             <div class="form-group">
                 <label for="content" class="cols-lg-2 control-label">contenu</label>
                 <div class="cols-lg-5">
@@ -19,14 +22,12 @@
                     </div>
                 </div>
             </div>
+            <div *ngFor="let item of collectionJson">
+                <div *ngIf="item.userId == 1">something wrong</div>
+            </div>
             <div class="form-group ">
                 <input type="submit" class="btn btn-primary  btn-block login-button" value="creer article">
             </div>
         </form>
     </div>
-</div>
-  <div *ngFor="let item of collectionJson">
-    <p> userId : {{ item.userId }}</p>
-    
-    <hr>
 </div>

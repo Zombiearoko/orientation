@@ -44,7 +44,7 @@ public articleForm: FormGroup;
       }
  ngOnInit(): void  {
 // la requette http de recupération des données
-this.http.get('https://jsonplaceholder.typicode.com/posts').subscribe(resp => {
+this.http.get('https://localhost:8092/administrator/createArticle').subscribe(resp => {
   this.results = resp['results'];
   this.collectionJson = resp.json();
   console.log(this.collectionJson);
