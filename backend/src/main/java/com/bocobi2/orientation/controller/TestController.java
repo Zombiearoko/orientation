@@ -2,66 +2,27 @@ package com.bocobi2.orientation.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-
-
-
-
-
-
-
-import org.json.simple.JSONObject;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.bocobi2.orientation.model.Customer;
 import com.bocobi2.orientation.repositories.CustomerRepository;
 
-@CrossOrigin(origins = "*")
 @RestController
-public class HelloController {
+public class TestController {
 	@Autowired
 	private CustomerRepository customerRepository;
 
-	@RequestMapping(value = "/hello", method = RequestMethod.POST, params = { "name","surname" })
-	public JSONObject print(HttpServletRequest request) {
+	@RequestMapping(value = "/hello1", method = RequestMethod.GET, params = { "name" })
+	public String print(HttpServletRequest request) {
 		String name= request.getParameter("name");
-		String surname= request.getParameter("surname");
-		JSONObject param = new JSONObject();
-		param.put("name", name);
-		param.put("surname", surname);
-		param.put("application_type", "Spring");
-
-		System.out.println(param);
-		return param;
-	}
-	
-	@RequestMapping(value = "/hello", method = RequestMethod.GET, params = {  "name","surname"  })
-	public JSONObject print1(HttpServletRequest request) {
-		String name= request.getParameter("name");
-		String surname= request.getParameter("surname");
-		JSONObject param = new JSONObject();
-		param.put("name", name);
-		param.put("surname", surname);
-		param.put("application_type", "Spring");
-
-		System.out.println(param);
-		return param;
+		System.out.println("{name: Hi "+name+ " , your are the Best}");
+		return "{name: Hi "+name+ " , your are the Best}";
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/1", method = RequestMethod.GET)
 	//public ModelAndView helloWorld( ModelMap model ) {
 	public String helloWorld( HttpServletRequest model ) {
 		customerRepository.deleteAll();
