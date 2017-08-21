@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="row ">
+        <form [formGroup]="helloForm" (ngSubmit)="onSubmit();" class="cadre">
+            <div class="form-group">
+                <label for="title" class="cols-lg-2 control-label">titre</label>
+                <div class="cols-lg-5">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Entrez le titre de l'article" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="content" class="cols-lg-2 control-label">contenu</label>
+                <div class="cols-lg-5">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                        <textarea class="form-control" name="articleContent" placeholder="Entrez le contenu"> </textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group ">
+                <input type="submit" class="btn btn-primary  btn-block login-button" value="creer article">
+            </div>
+        </form>
+    </div>
+</div>
+  <div *ngFor="let item of collectionJson">
+    <p> userId : {{ item.userId }}</p>
+    
+    <hr>
+</div>
