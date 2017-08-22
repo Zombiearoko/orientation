@@ -10,24 +10,18 @@ import { Http } from '@angular/http';
   styleUrls: ['./addArticle.css', '../../bootstrap/css/bootstrap.css']
 })
 export class AddArticleComponent implements OnInit {
-  @Input('group')
-public articleForm: FormGroup;
-  public name: string;
-  public surname: string;
-  private title: string;
-   private results: string[];
+  @Input() articleForm: FormGroup;
+ private title: string;
+private content: string;
+   private results: [any];
    private collectionJson: Object;
-  public valrecu = {
-    name: 'test',
-    surname: 'test',
-    application_type: 'test'
-  };
+
   submitted = false;
   constructor( public rest: RestProvider, public formBuilder: FormBuilder, private http: Http) {
-    this.createForm1();
+    this.createFormAddArticle();
      }
 
-     createForm1() {
+     createFormAddArticle() {
      const title = '';
       const content = '';
       this.articleForm = this.formBuilder.group({
@@ -37,11 +31,10 @@ public articleForm: FormGroup;
       }
 
      onSubmit() {
-       this.rest.getHello(this.articleForm.value.title, this.articleForm.value.content).subscribe((data) => {
-        this.valrecu = data;
-        this.submitted = true;
-       });
-      }
+      const object = {title: this.title, content: this.content};
+    this.results.push(object);
+    console.log(this.results);
+       }
  ngOnInit(): void  {
 // la requette http de recupération des données
 this.http.get('https://localhost:8092/administrator/createArticle').subscribe(resp => {
