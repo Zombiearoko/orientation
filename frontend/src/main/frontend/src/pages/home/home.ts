@@ -1,22 +1,24 @@
 import { Component } from '@angular/core';
 
-//import { RegisterPage } from '../register/register';
+// import { RegisterPage } from '../register/register';
 import { RestProvider } from '../../providers/rest/rest';
 @Component({
-  selector: 'page-home',
+  selector: 'app-page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
-public name:string='rrr';
-  constructor(public rest:RestProvider) {
-	//	this.getName();
+
+export class HomePageComponent {
+public name: string;
+  constructor(public rest: RestProvider) {
+this.getName();
   }
-  /*public getName(){
-    let nom=this.name;
-    this.rest.getHello().subscribe((data)=>{
-		console.log(data);
-		alert("name: "+data);
-    	nom=data;
-	});
-  }*/
+  public getName() {
+    const nom = 'kakeu';
+    const prenom = 'linda';
+    this.rest.getHello(nom, prenom).subscribe((data) => {
+console.log(data);
+alert('name: ' + data);
+ // nom = data;
+});
+  }
 }

@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
-  styleUrls: ['./app.component.css']
+  styleUrls:  ['./app.component.css', '../bootstrap/css/bootstrap.css']
 })
 export class AppComponent {
-	title = 'Orientation';
+title = 'Orientation';
 }
 
