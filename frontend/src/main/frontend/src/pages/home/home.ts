@@ -9,7 +9,7 @@ import { RestProvider } from '../../providers/rest/rest';
 export class HomePage {
 public name:string='rrr';
   constructor(public rest:RestProvider) {
-		this.getName();
+	//	this.getName();
   }
   /*public getName(){
     let nom=this.name;
