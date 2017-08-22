@@ -18,12 +18,14 @@ public class AdministratorController {
 	@Autowired
 	ArticleRepository articleRepository;
 	
+	@Autowired
 	AdminRepository adminRepository;
 	
 	
 	//methode pour la gestion de la connexion de l'administrateur
 	
-	@RequestMapping(value="/authentication",method={RequestMethod.GET,RequestMethod.POST}, params={"title","articleContent"})
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/authentication",method={RequestMethod.GET,RequestMethod.POST}, params={"login","password"})
 	public JSONObject authentication(HttpServletRequest request){
 		
 		HttpSession session;
@@ -37,7 +39,7 @@ public class AdministratorController {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		
-		Admin admin = null;
+		Admin admin = admin = new Admin();;
 		
 		try{
 			validateLogin(login);
@@ -51,12 +53,15 @@ public class AdministratorController {
 			errors.put("passwordErrorMessage", e.getMessage());
 		}
 		try{
-			admin = new Admin()
+			System.out.println("recherche de l'administrateur dans la base de donnees");
 			admin = adminRepository.findByLogin(login);
+			System.out.println("recherche reussie: administrateur trouvé");
 		}catch(Exception e){
-			errors.put("notFoundError", "l'administrateur de login " +login+" n'existe pas!");
+			errors.put("notFoundError", "l'administrateur de login " +login+" n'existe pas!"+e.getMessage());
+			System.out.print(e.getMessage());
 		}
 		if(errors.isEmpty()){
+			
 			if(admin.getLogin().equals(login) && admin.getPassword().equals(password)){
 				session = request.getSession();
 				welcomeMessage = "session ouverte avec succes, bienvenu Mr l'administrateur";
@@ -75,6 +80,7 @@ public class AdministratorController {
 	
 	//methode pour la creation d'un nouvel article
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/createArticle",method={RequestMethod.GET, RequestMethod.POST}, params={"title","articleContent"})
 	public JSONObject createArticle(HttpServletRequest request){
 		
@@ -101,7 +107,7 @@ public class AdministratorController {
 			try{
 				article = new Article(title,articleContent);
 				articleRepository.save(article);
-				success.put("rapport", "enregistrement reussi avec succes");
+				success.put("rapport", "article enregistré avec succes");
 			}catch(Exception e){
 				e.printStackTrace();
 				errors.put("insertionError", "echec de l'insertion dans la base de donnée!"+e.getMessage());
@@ -137,7 +143,7 @@ public class AdministratorController {
 		throw new Exception( "Merci de saisir votre mot de passe." );
 		} 	
 	}
-	private void validateLogin(String login) {
+	private void validateLogin(String login) throws Exception {
 		// TODO Auto-generated method stub
 		if ( login != null ) {
 			if ( login.length() < 8 ) {
