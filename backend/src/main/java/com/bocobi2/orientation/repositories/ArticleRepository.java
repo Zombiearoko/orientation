@@ -8,7 +8,7 @@ import com.bocobi2.orientation.model.Article;
 
 public interface ArticleRepository extends MongoRepository<Article, String>{
 	
-	 public Article findBytitle(String title);
-	 public List<Article> findByarticleContent(String articleContent);
+	 public Article findByTitle(String title);
+	 public List<Article> findByArticleContent(String articleContent);
 	
 }

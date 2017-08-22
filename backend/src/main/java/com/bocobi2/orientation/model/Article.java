@@ -9,8 +9,25 @@ public class Article {
 	@Id
     public String articleId;
 
-    public String title;
-    public String articleContent;
+    private String title;
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getArticleContent() {
+		return articleContent;
+	}
+
+	public void setArticleContent(String articleContent) {
+		this.articleContent = articleContent;
+	}
+
+
+	private String articleContent;
     
     
     public Article() {}
