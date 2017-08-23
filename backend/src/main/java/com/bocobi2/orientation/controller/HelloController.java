@@ -74,7 +74,7 @@ public class HelloController {
 		System.out.println("Customers found with findAll():");
 		System.out.println("-------------------------------");
 		for (Customer customer : customerRepository.findAll()) {
-			System.out.println(customer);
+			System.out.println(customer.toString());
 		}
 		System.out.println();
 
