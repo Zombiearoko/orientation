@@ -223,11 +223,11 @@ public class AdministratorController {
 		
 		
 		
-		//methode pour l'ajout d'un livre 
+		//methode pour l'ajout d'un livre en get
 		
 		@SuppressWarnings("unchecked")
-		@RequestMapping(value="/addBook",method={RequestMethod.GET, RequestMethod.POST})
-		public JSONObject addBook(HttpServletRequest request){
+		@RequestMapping(value="/addBook",method=RequestMethod.GET)
+		public JSONObject addBookGet(HttpServletRequest request){
 			
 			//creation des objects JSON à renvoyer à la vue
 			
@@ -282,7 +282,67 @@ public class AdministratorController {
 			return result;
 			
 		}
+	//methode pour l'ajout d'un livre en post
 	
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/addBook",method=RequestMethod.POST)
+			public JSONObject addBookPost(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+				
+				//recuperation des parametres de la requete
+				
+				String bookName = request.getParameter("bookName");
+				String bookAuthor = request.getParameter("bookAuthor");
+				String bookEdition = request.getParameter("bookEdition");
+				Part bookFile = request.getPart("bookFile");
+				
+				//definition du nom que aura le fichier recuperé dans mon repertoire de livre
+				
+				String fileName = bookName+".pdf";
+				
+				// definition logique du repertoire d'enregistrement des livres
+				
+				File booksRepository = new File(booksFolder);
+				if(!booksRepository.exists()){
+					booksRepository.mkdir();
+				}
+
+				String nameOnTheDisk = booksFolder+File.separator+fileName;
+				
+				try{
+					bookFile.write(nameOnTheDisk);
+				}catch(Exception e){
+					errors.put("noMoreSpaceError", "le fichier n'a pas pu etre sauvegadé sur le disque");
+				}
+				//creation du livre
+				
+				Book book = new Book(bookName,bookAuthor,bookEdition,nameOnTheDisk);
+				
+				//insertion du livre dans la base de données
+					if(errors.isEmpty()){
+					try{
+						bookRepository.save(book);
+						success.put("rapport", "livre enregistré avec succès");
+						
+					}catch(Exception e){
+						errors.put("notSaveError", "le livre a été enregistré sur le disque mais son nom n'a pas"
+								+ "été enregistré dans la base de données");
+					}
+					}
+				
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}
+		
+
 	//methodes de controle des formulaires
 	
 	
