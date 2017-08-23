@@ -11,15 +11,21 @@ public class Book {
 	private String bookName;
 	private String bookAuthor;
 	private String bookEdition;
+	private String bookFile;
 	
 	public Book (){}
 	
-	public Book(String bookName, String bookAuthor, String bookEdition) {
+	
+
+	public Book(String bookName, String bookAuthor, String bookEdition, String bookFile) {
 		super();
 		this.bookName = bookName;
 		this.bookAuthor = bookAuthor;
 		this.bookEdition = bookEdition;
+		this.bookFile = bookFile;
 	}
+
+
 
 	public String getBookName() {
 		return bookName;
@@ -44,9 +50,23 @@ public class Book {
 	public void setBookEdition(String bookEdition) {
 		this.bookEdition = bookEdition;
 	}
+
+	public String getBookFile() {
+		return bookFile;
+	}
+
+	public void setBookFile(String bookFile) {
+		this.bookFile = bookFile;
+	}
 	
-	
-	
+	   @Override
+	    public String toString() {
+	        return String.format(
+	                "{\"bookId\":%s, \"bookName\":'%s', \"bookAuthor\":'%s',\"bookEdition\":'%s',\"bookEdition\":'%s',"
+	                + "\"bookFile\":'%s'}",
+	                BookId, bookName, bookAuthor,bookEdition,bookFile);
+	    }
+
 	
 	
 	
