@@ -4,12 +4,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Administrator")
-public class Administratoristrator {
+public class Administrator {
 
     @Id
     public String AdministratorId;
-
     private String login;
+    private String password;
+    
+    
     public String getLogin() {
 		return login;
 	}
@@ -26,11 +28,11 @@ public class Administratoristrator {
 		this.password = password;
 	}
 
-	private String password;
+	
 
-    public Administratoristrator() {}
+    public Administrator() {}
 
-    public Administratoristrator(String login, String password) {
+    public Administrator(String login, String password) {
         this.login = login;
         this.password = password;
     }
@@ -38,8 +40,9 @@ public class Administratoristrator {
     @Override
     public String toString() {
         return String.format(
-                "Administratoristrator[id=%s, password='%s', password='%s']",
+                "{\"AdministratoristratorId\":%s, \"login\":'%s', \"password\":'%s'}",
                 AdministratorId, login, password);
     }
+
 
 }

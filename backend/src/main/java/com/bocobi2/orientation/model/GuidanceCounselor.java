@@ -39,6 +39,13 @@ public class GuidanceCounselor {
 		this.password = password;
 	}
 	
+	   @Override
+	    public String toString() {
+	        return String.format(
+	                "{\"guidanceCounselorId\":%s, \"login\":'%s', \"password\":'%s'}",
+	                guidanceCounselorId, login, password);
+	    }
+
 	
 	
 	
