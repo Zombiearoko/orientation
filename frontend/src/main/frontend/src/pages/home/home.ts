@@ -6,6 +6,7 @@ import { RestProvider } from '../../providers/rest/rest';
   selector: 'app-page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePageComponent {
 public name: string;
   constructor(public rest: RestProvider) {
