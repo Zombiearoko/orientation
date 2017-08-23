@@ -9,6 +9,10 @@ import com.bocobi2.orientation.model.CounselingCenter;
 public interface CounselingCenterRepository extends MongoRepository<CounselingCenter, String> {
 
     public CounselingCenter findBycounselingSector(String counselingSector);
+<<<<<<< HEAD
     public List<CounselingCenter> findBycounselingCenterName(String counselingCenterName);
+=======
+    public List<CounselingCenter> findBycounselingName(String counselingName);
+>>>>>>> 1305f807e59d31c3eb7107fcee1b2e8a68e0f2d0
 
 }

@@ -8,16 +8,24 @@ public class TrainingCourse {
 	
 	@Id
 	private String trainingCourseId;
+<<<<<<< HEAD
 	private String trainingCourseName;
 	private String trainingCourseBeginningDate;
 	private String trainingCourseEndingDate;
 	private String trainingCourseWebLink;
+=======
+	private String trainigCourseName;
+	private String trainigCourseBeginningDate;
+	private String trainigCourseEndingDate;
+	private String trainigCourseWebLink;
+>>>>>>> 1305f807e59d31c3eb7107fcee1b2e8a68e0f2d0
 	
 	public TrainingCourse(){}
 
 	public TrainingCourse(String trainigCourseName, String trainigCourseBeginningDate, String trainigCourseEndingDate,
 			String trainigCourseWebLink) {
 		super();
+<<<<<<< HEAD
 		this.trainingCourseName = trainigCourseName;
 		this.trainingCourseBeginningDate = trainigCourseBeginningDate;
 		this.trainingCourseEndingDate = trainigCourseEndingDate;
@@ -54,6 +62,44 @@ public class TrainingCourse {
 
 	public void setTrainigCourseWebLink(String trainigCourseWebLink) {
 		this.trainingCourseWebLink = trainigCourseWebLink;
+=======
+		this.trainigCourseName = trainigCourseName;
+		this.trainigCourseBeginningDate = trainigCourseBeginningDate;
+		this.trainigCourseEndingDate = trainigCourseEndingDate;
+		this.trainigCourseWebLink = trainigCourseWebLink;
+	}
+
+	public String getTrainigCourseName() {
+		return trainigCourseName;
+	}
+
+	public void setTrainigCourseName(String trainigCourseName) {
+		this.trainigCourseName = trainigCourseName;
+	}
+
+	public String getTrainigCourseBeginningDate() {
+		return trainigCourseBeginningDate;
+	}
+
+	public void setTrainigCourseBeginningDate(String trainigCourseBeginningDate) {
+		this.trainigCourseBeginningDate = trainigCourseBeginningDate;
+	}
+
+	public String getTrainigCourseEndingDate() {
+		return trainigCourseEndingDate;
+	}
+
+	public void setTrainigCourseEndingDate(String trainigCourseEndingDate) {
+		this.trainigCourseEndingDate = trainigCourseEndingDate;
+	}
+
+	public String getTrainigCourseWebLink() {
+		return trainigCourseWebLink;
+	}
+
+	public void setTrainigCourseWebLink(String trainigCourseWebLink) {
+		this.trainigCourseWebLink = trainigCourseWebLink;
+>>>>>>> 1305f807e59d31c3eb7107fcee1b2e8a68e0f2d0
 	}
 	
 	
@@ -62,7 +108,11 @@ public class TrainingCourse {
 	        return String.format(
 	                "{\"trainingCouseId\":%s, \"trainingCourseName\":'%s', \"traininCourseBeginnigDate\":'%s',"
 	                + "\"trainingCourseEndingDate\":'%s'}",
+<<<<<<< HEAD
 	                trainingCourseId, trainingCourseName, trainingCourseEndingDate,trainingCourseEndingDate);
+=======
+	                trainingCourseId, trainigCourseName, trainigCourseEndingDate,trainigCourseEndingDate);
+>>>>>>> 1305f807e59d31c3eb7107fcee1b2e8a68e0f2d0
 	    }
 
 }

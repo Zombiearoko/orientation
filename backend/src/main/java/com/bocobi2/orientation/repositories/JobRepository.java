@@ -9,6 +9,10 @@ import com.bocobi2.orientation.model.Job;
 public interface JobRepository extends MongoRepository<Job, String> {
 
     public Job findByjobName(String jobName);
+<<<<<<< HEAD
     public List<Job> findByjobSector(String jobSector);
+=======
+    public List<Job> findByjobsector(String jobsector);
+>>>>>>> 1305f807e59d31c3eb7107fcee1b2e8a68e0f2d0
 
 }

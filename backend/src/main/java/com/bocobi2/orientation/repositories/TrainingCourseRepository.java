@@ -8,7 +8,12 @@ import com.bocobi2.orientation.model.TrainingCourse;
 
 public interface TrainingCourseRepository extends MongoRepository<TrainingCourse, String> {
 
+<<<<<<< HEAD
     public TrainingCourse findBytrainingCourseName(String trainingCourseName);
     public List<TrainingCourse> findBytrainingCourseId(String trainingCourseId);
+=======
+    public TrainingCourse findBytrainigCourseName(String trainigCourseName);
+    public List<TrainingCourse> findBytrainigCourseId(String trainigCourseId);
+>>>>>>> 1305f807e59d31c3eb7107fcee1b2e8a68e0f2d0
 
 }
