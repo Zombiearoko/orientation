@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bocobi2.orientation.model.*;
 import com.bocobi2.orientation.repositories.*;
 
+
 @RestController
 @RequestMapping("/administrator")
 public class AdministratorController {
@@ -109,8 +110,7 @@ public class AdministratorController {
 				articleRepository.save(article);
 				success.put("rapport", "article enregistré avec succes");
 			}catch(Exception e){
-				e.printStackTrace();
-				errors.put("insertionError", "echec de l'insertion dans la base de donnée!"+e.getMessage());
+				errors.put("insertionError", "echec de l'insertion dans la base de donnée!");
 			}
 		}
 		
