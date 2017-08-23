@@ -11,6 +11,7 @@ public class Book {
 	private String bookName;
 	private String bookAuthor;
 	private String bookEdition;
+	private String bookFile;
 	
 	public Book (){}
 	
@@ -19,6 +20,15 @@ public class Book {
 		this.bookName = bookName;
 		this.bookAuthor = bookAuthor;
 		this.bookEdition = bookEdition;
+	}
+
+
+	public Book(String bookName, String bookAuthor, String bookEdition, String bookFile) {
+		super();
+		this.bookName = bookName;
+		this.bookAuthor = bookAuthor;
+		this.bookEdition = bookEdition;
+		this.bookFile = bookFile;
 	}
 
 	public String getBookName() {
@@ -43,6 +53,14 @@ public class Book {
 
 	public void setBookEdition(String bookEdition) {
 		this.bookEdition = bookEdition;
+	}
+
+	public String getBookFile() {
+		return bookFile;
+	}
+
+	public void setBookFile(String bookFile) {
+		this.bookFile = bookFile;
 	}
 	
 	

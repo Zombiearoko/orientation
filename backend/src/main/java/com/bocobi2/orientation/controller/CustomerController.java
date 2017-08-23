@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bocobi2.orientation.model.Client;
 import com.bocobi2.orientation.repositories.*;
 
-import ch.qos.logback.core.net.server.Client;
 
 @RequestMapping("/customer")
 @RestController
@@ -29,7 +29,7 @@ public class CustomerController {
 	// methode d'ajout d'un nouveau client dans la base de donnees requete en
 	// get
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET, params = { "firstNameCustomer",
-			"lastNameCustomer", "phoneNumber", "emailAdress", "password" })
+			"lastNameCustomer", "phoneNumber", "emailAddress", "password" })
 	public JSONObject addClientGet(HttpServletRequest request) {
 
 		JSONObject result, success, errors;
@@ -42,7 +42,7 @@ public class CustomerController {
 		String firstNameCustomer = (String) request.getParameter("firstNameCustomer");
 		String lastNameCustomer = (String) request.getParameter("lastNameCustomer");
 		String phoneNumber = (String) request.getParameter("phoneNumber");
-		String emailAdress = (String) request.getParameter("emailAdress");
+		String emailAddress = (String) request.getParameter("emailAddress");
 		String password = (String) request.getParameter("password");
 
 		// instanciation du client à ajouter
@@ -51,17 +51,17 @@ public class CustomerController {
 
 		// action a menner apres reception des informations
 
-		client.setfirstNameCustomer(firstNameCustomer);
-		client.setlastNameCustomer(lastNameCustomer);
+		client.setFirstNameCustomer(firstNameCustomer);
+		client.setLastNameCustomer(lastNameCustomer);
 		client.setPhoneNumber(phoneNumber);
-		client.setpassword(password);
-		client.setEmailAdress(emailAdress);
+		client.setPassword(password);
+		client.setEmailAddress(emailAddress);
 
 		try {
 			clientRepository.save(client);
-			success.put("succes message", "Client" + Client.toString() + " was saved succesfully");
+			success.put("succes message", "Client" + client.toString() + " was saved succesfully");
 		} catch (Exception e) {
-			errors.put("failedToSaveMessage", "Client" + Client.toString() + "non enregistré");
+			errors.put("failedToSaveMessage", "Client" + client.toString() + "non enregistré");
 		}
 
 		// construction du message à renvoyer à la vue
@@ -96,17 +96,17 @@ public class CustomerController {
 
 		// action a menner apres reception des informations
 
-		client.setfirstNameCustomer(firstNameCustomer);
-		client.setlastNameCustomer(lastNameCustomer);
+		client.setFirstNameCustomer(firstNameCustomer);
+		client.setLastNameCustomer(lastNameCustomer);
 		client.setPhoneNumber(phoneNumber);
-		client.setpassword(password);
-		client.setEmailAdress(emailAdress);
+		client.setPassword(password);
+		client.setEmailAddress(emailAdress);
 
 		try {
 			clientRepository.save(client);
-			success.put("succes message", "Client" + Client.toString() + " was saved succesfully");
+			success.put("succes message", "Client" + client.toString() + " was saved succesfully");
 		} catch (Exception e) {
-			errors.put("failedToSaveMessage", "Client" + Client.toString() + "non enregistré");
+			errors.put("failedToSaveMessage", "Client" + client.toString() + "non enregistré");
 		}
 
 		// construction du message à renvoyer à la vue
