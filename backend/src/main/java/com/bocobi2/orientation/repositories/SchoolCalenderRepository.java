@@ -8,7 +8,5 @@ import com.bocobi2.orientation.model.SchoolCalender;
 
 public interface SchoolCalenderRepository extends MongoRepository<SchoolCalender, String> {
 
-    public SchoolCalender findByFirstName(String firstName);
-    public List<SchoolCalender> findByLastName(String lastName);
 
 }

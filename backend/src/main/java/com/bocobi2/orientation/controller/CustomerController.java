@@ -17,7 +17,7 @@ import com.bocobi2.orientation.repositories.*;
 @RestController
 public class CustomerController {
 	@Autowired
-	private ClientRepository ClientRepository;
+	private ClientRepository clientRepository;
 
 	private String errorMessage = "";
 	private long phone = 0;
@@ -59,9 +59,10 @@ public class CustomerController {
 
 		try {
 			clientRepository.save(client);
-			success.put("succes message", "Client" + client.toString() + " was saved succesfully");
+			System.out.println(client);
+			success.put("succes message", "Client" + client + " was saved succesfully");
 		} catch (Exception e) {
-			errors.put("failedToSaveMessage", "Client" + client.toString() + "non enregistré");
+			errors.put("failedToSaveMessage", "Client" + client + "non enregistré");
 		}
 
 		// construction du message à renvoyer à la vue
@@ -130,7 +131,7 @@ public class CustomerController {
 		Client client = new Client();
 
 		try {
-			client = clientRepository.findByEmailAdress(login);
+			client = clientRepository.findByEmailAddress(login);
 		} catch (Exception e) {
 			errors.put("notFoundError", "l'utilisateur d'adresse email " + login + "est introuvable");
 		}
@@ -165,7 +166,7 @@ public class CustomerController {
 		Client client = new Client();
 
 		try {
-			client = clientRepository.findByEmailAdress(login);
+			client = clientRepository.findByEmailAddress(login);
 		} catch (Exception e) {
 			errors.put("notFoundError", "l'utilisateur d'adresse email " + login + "est introuvable");
 		}
@@ -212,9 +213,9 @@ public class CustomerController {
 
 	}
 
-	private void validatePasswordAndLogin(String password, String login) {
+	private void validatePasswordAndLogin(String password, String login) throws Exception {
 		// TODO Auto-generated method stub
-		Client client = clientRepository.findByLogin(login);
+		Client client = clientRepository.findByEmailAddress(login);
 		if (!client.getPassword().equals(password)) {
 			throw new Exception("le mot de passe entré ne corespond pas au login");
 		}

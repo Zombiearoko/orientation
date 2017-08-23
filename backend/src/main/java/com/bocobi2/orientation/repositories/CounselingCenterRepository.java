@@ -8,7 +8,5 @@ import com.bocobi2.orientation.model.CounselingCenter;
 
 public interface CounselingCenterRepository extends MongoRepository<CounselingCenter, String> {
 
-    public CounselingCenter findBycounselingSector(String counselingSector);
-    public List<CounselingCenter> findBycounselingName(String counselingName);
 
 }

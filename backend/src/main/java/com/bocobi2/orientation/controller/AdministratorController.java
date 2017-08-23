@@ -1,7 +1,9 @@
 package com.bocobi2.orientation.controller;
 
 import java.io.File;
+import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
@@ -241,7 +243,16 @@ public class AdministratorController {
 			String bookName = request.getParameter("bookName");
 			String bookAuthor = request.getParameter("bookAuthor");
 			String bookEdition = request.getParameter("bookEdition");
-			Part bookFile = request.getPart("bookFile");
+			Part bookFile=null;
+			try {
+				bookFile = request.getPart("bookFile");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ServletException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			//definition du nom que aura le fichier recuperé dans mon repertoire de livre
 			
@@ -300,7 +311,16 @@ public class AdministratorController {
 				String bookName = request.getParameter("bookName");
 				String bookAuthor = request.getParameter("bookAuthor");
 				String bookEdition = request.getParameter("bookEdition");
-				Part bookFile = request.getPart("bookFile");
+				Part bookFile=null;
+				try {
+					bookFile = request.getPart("bookFile");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ServletException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				//definition du nom que aura le fichier recuperé dans mon repertoire de livre
 				

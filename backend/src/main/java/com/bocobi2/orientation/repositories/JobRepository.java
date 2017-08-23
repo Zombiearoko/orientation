@@ -8,7 +8,4 @@ import com.bocobi2.orientation.model.Job;
 
 public interface JobRepository extends MongoRepository<Job, String> {
 
-    public Job findByjobName(String jobName);
-    public List<Job> findByjobsector(String jobsector);
-
 }
