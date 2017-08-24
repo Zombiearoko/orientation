@@ -1,4 +1,4 @@
-import { AddArticleComponent } from './../pages/addArticle/addArticle';
+import { routes } from './app.rooter';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
@@ -7,19 +7,31 @@ import { AppComponent } from './app.component';
 import { RestProvider } from '../providers/rest/rest';
 import { HomePageComponent } from '../pages/home/home';
 import { HelloComponent } from './hello/hello.component';
+import { CreateArticleComponent } from './create-article/create-article.component';
+import { AdministratorLoginComponent } from './administrator-login/administrator-login.component';
+import { HomeComponent } from './home/home.component';
+import { ServiceComponent } from './service/service.component';
+import { ContactsComponent } from './contacts/contacts.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
      HomePageComponent,
      HelloComponent,
-     AddArticleComponent
+     CreateArticleComponent,
+     AdministratorLoginComponent,
+     HomeComponent,
+     ServiceComponent,
+     ContactsComponent,
+     AboutComponent
   ],
   imports: [
    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    routes,
   ],
   providers: [
   RestProvider
