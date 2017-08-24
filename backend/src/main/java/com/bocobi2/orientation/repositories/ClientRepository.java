@@ -10,5 +10,6 @@ public interface ClientRepository extends MongoRepository<Client, String> {
 
     public Client findByfirstNameCustomer(String firstNameCustomer);
     public List<Client> findBylastNameCustomer(String lastNameCustomer);
+    public Client findByEmailAddress(String emailAddress);
 
 }

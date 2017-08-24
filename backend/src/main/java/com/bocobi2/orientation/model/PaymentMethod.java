@@ -10,9 +10,11 @@ public class PaymentMethod {
 	String paymentMethodId;
 	String paymentMethodName;
 
+
 	public PaymentMethod(){}
 	
 	
+
 
 
 
@@ -48,10 +50,10 @@ public class PaymentMethod {
         return String.format( 
                 "{\"paymentMetodId\":%s, \"paymentMetodName\":'%s'}",
                 paymentMethodId, paymentMethodName);
-
     }
 
 	
 	
 	
 }
+

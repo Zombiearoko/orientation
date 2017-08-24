@@ -12,3 +12,4 @@ public interface ArticleRepository extends MongoRepository<Article, String>{
 	 public List<Article> findByArticleId(String articleId);
 	
 }
+

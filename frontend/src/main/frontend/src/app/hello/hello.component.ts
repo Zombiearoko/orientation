@@ -7,8 +7,7 @@ import { RestProvider } from '../../providers/rest/rest';
   styleUrls: ['./hello.component.css']
 })
 export class HelloComponent implements OnInit {
-  @Input('group')
-public helloForm: FormGroup;
+  @Input() helloForm: FormGroup;
   public name: string;
   public surname: string;
   public valrecu = {

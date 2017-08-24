@@ -11,4 +11,5 @@ public interface SchoolRepository extends MongoRepository<School, String> {
     public School findByschoolName(String schoolName);
     public List<School> findByschoolType(String schoolType);
 
+
 }

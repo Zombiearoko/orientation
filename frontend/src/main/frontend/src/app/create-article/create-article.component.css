@@ -20,3 +20,11 @@
             color: black;
             border-radius: 5px;
         }
+        
+        .ng-valid {
+            border-color: green;
+        }
+        
+        .ng-invalid {
+            border-color: red;
+        }
