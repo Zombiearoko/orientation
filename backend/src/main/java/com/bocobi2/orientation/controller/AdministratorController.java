@@ -117,14 +117,14 @@ public class AdministratorController {
 			
 			//recheche dans la base de données de l'administrateur ayant les informations fournies
 			
-			try{
+			
 				System.out.println("recherche de l'administrateur dans la base de donnees");
 				admin = administratorRepository.findByLogin(login);
-				System.out.println("recherche reussie: administrateur trouvé");
-			}catch(Exception e){
-				errors.put("notFoundError", "l'administrateur de login " +login+" n'existe pas!"+e.getMessage());
-				System.out.print(e.getMessage());
-			}
+				System.out.println("recherche reussie: administrateur trouvé le voici d'ailleur"+admin);
+				if(admin==null){
+				errors.put("notFoundError", "l'administrateur de login " +login+" n'existe pas!");
+				}
+				
 			if(errors.isEmpty()){
 				
 				if(admin.getLogin().equals(login) && admin.getPassword().equals(password)){
@@ -305,7 +305,7 @@ public class AdministratorController {
 				result = new JSONObject();
 				success = new JSONObject();
 				errors = new JSONObject();
-				
+	
 				//recuperation des parametres de la requete
 				
 				String bookName = request.getParameter("bookName");
