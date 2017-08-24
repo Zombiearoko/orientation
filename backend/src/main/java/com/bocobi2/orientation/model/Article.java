@@ -8,8 +8,8 @@ public class Article {
 	
 	@Id
     public String articleId;
-
     private String title;
+    
     public String getTitle() {
 		return title;
 	}
@@ -38,12 +38,12 @@ public class Article {
     }
     
     
+    @Override
     public String toString() {
         return String.format(
-                "Article[articleId=%s, title='%s', articleContent='%s']",
-                articleId, title, articleContent);
+                "{\"articleId\":%s, \"title\":'%s'}",
+                articleId, title);
     }
-
 
 
 }

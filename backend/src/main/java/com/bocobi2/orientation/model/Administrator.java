@@ -3,13 +3,15 @@ package com.bocobi2.orientation.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Admin")
-public class Admin {
+@Document(collection = "Administrator")
+public class Administrator {
 
     @Id
-    public String id;
-
+    public String AdministratorId;
     private String login;
+    private String password;
+    
+    
     public String getLogin() {
 		return login;
 	}
@@ -26,11 +28,11 @@ public class Admin {
 		this.password = password;
 	}
 
-	private String password;
+	
 
-    public Admin() {}
+    public Administrator() {}
 
-    public Admin(String login, String password) {
+    public Administrator(String login, String password) {
         this.login = login;
         this.password = password;
     }
@@ -38,8 +40,7 @@ public class Admin {
     @Override
     public String toString() {
         return String.format(
-                "Admin[id=%s, password='%s', password='%s']",
-                id, login, password);
+                "{\"AdministratoristratorId\":%s, \"login\":'%s', \"password\":'%s'}",
+                AdministratorId, login, password);
     }
-
-}
+    }
