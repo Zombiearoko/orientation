@@ -1,14 +1,15 @@
 <div class="container">
     <div class="row cadre ">
-        <form [formGroup]="helloForm" (ngSubmit)="onSubmit();">
+        <form [formGroup]="helloForm" #f="ngForm" (ngSubmit)="onSubmit(f.value);">
             <div class="form-group">
                 <label for="title" class="cols-lg-2 control-label">titre</label>
                 <div class="cols-lg-8">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="title" id="title" placeholder="Entrez le titre " />
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Entrez le titre " ngControl="name" />
                     </div>
                 </div>
             </div>
+            <span [hidden]="name.valid" class="text-danger"></span>
             <span *ngFor="let item of collectionJson">
                 <span *ngIf="item.userId == 1">something wrong</span>
             </span>

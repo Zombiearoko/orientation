@@ -130,11 +130,11 @@ public class CustomerController {
 		String password = request.getParameter("password");
 		Client client = new Client();
 
-		try {
+		
 			client = clientRepository.findByEmailAddress(login);
-		} catch (Exception e) {
+		if(client==null)
 			errors.put("notFoundError", "l'utilisateur d'adresse email " + login + "est introuvable");
-		}
+		
 
 		if (errors.isEmpty()) {
 			try {
@@ -171,7 +171,7 @@ public class CustomerController {
 			errors.put("notFoundError", "l'utilisateur d'adresse email " + login + "est introuvable");
 		}
 
-		if (errors.isEmpty()) {
+		if (errors.isEmpty()) { 
 			try {
 				validatePasswordAndLogin(password, login);
 				session = request.getSession();
