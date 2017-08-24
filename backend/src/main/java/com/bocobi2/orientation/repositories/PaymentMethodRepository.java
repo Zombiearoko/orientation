@@ -11,4 +11,5 @@ public interface PaymentMethodRepository extends MongoRepository<PaymentMethod, 
     public PaymentMethod findBypaymentMethodId(String paymentMethodId);
     public List<PaymentMethod> findBypaymentMethodName(String paymentMethodName);
 
+
 }

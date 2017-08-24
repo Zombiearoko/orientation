@@ -117,4 +117,6 @@ public class Client {
 	                + "\"emailAddress\":'%s',\"password\":'%s',\"phoneNumber\":'%s'}",
 	                ClientId, firstNameCustomer, lastNameCustomer,emailAddress,password,phoneNumber);
 	    }
+
+
 }

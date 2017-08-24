@@ -11,5 +11,4 @@ public interface CounselingCenterRepository extends MongoRepository<CounselingCe
     public CounselingCenter findBycounselingSector(String counselingSector);
     public List<CounselingCenter> findBycounselingCenterName(String counselingCenterName);
 
-
 }
