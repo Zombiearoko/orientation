@@ -18,7 +18,10 @@ private content: string;
 private newArticle: Article;
    private results: [any];
    private collectionJson: Object;
-
+   public valrecu = {
+    title: '',
+    titleContent: '',
+  };
   submitted = false;
   constructor( public rest: RestProvider, public formBuilder: FormBuilder, private http: Http) {
     this.createFormAddArticle();
@@ -37,14 +40,22 @@ private newArticle: Article;
     }
 
      onSubmit(value) {
-      const article = new Article(value.title, value.articleContent);
+     /* const article = new Article(value.title, value.articleContent);
     console.log(article);
-     this.resetForm();
+     this.resetForm();*/
+      this.rest.postArticle(this.articleForm.value.title, this.articleForm.value.articleContent).subscribe((data) => {
+        this.valrecu = data;
+        console.log(this.articleForm.value.title);
+        this.submitted = true;
+       });
        }
  ngOnInit(): void  {
 // la requette http de recupération des données
-this.http.get('https://localhost:8092/administrator/createArticle').subscribe(resp => {
-  this.results = resp['results'];
+const title = '';
+const articleContent = '';
+ const url = 'http://192.168.8.110:8092/administrator/createArticle' + '?title=' + title + '&articleContent=' + articleContent;
+this.http.get('https://jsonplaceholder.typicode.com/posts').subscribe(resp => {
+ this.results = resp['results'];
   this.collectionJson = resp.json();
   console.log(this.collectionJson);
 });

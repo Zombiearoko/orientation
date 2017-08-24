@@ -6,78 +6,116 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<<<<<<< HEAD <title>Orientation</title>
+<title>Orientation</title>
 
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
 
 
-    <body>
+<body>
 
-        <!-- Navigation -->
-        <div class="nav">
-            <div class="navbar navbar-default navbar-fixed-top  navbar-inverse">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+    <!-- Navigation -->
+    <div class="nav">
+        <div class="navbar navbar-defaultt navbar-fixed-top  navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-                    </div>
-                    <div class="navbar-collapse collapse" id="navbar-main">
-                        <ul class="nav navbar-nav">
-                            <li>
-                                <a routerLink="home">Accueil</a>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" routerLink="services" id="themes">services <span class="caret"></span></a>
-                                <ul class="dropdown-menu" aria-labelledby="themes">
-                                    <li><a href="../default/">conseiller d'orientation</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="../cerulean/">offres de bourses</a></li>
-                                    <li><a href="../yeti/">offres d'emplois</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a routerLink="contacts">Contacts</a>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" routerLink="about" id="download">A propos <span class="caret"></span></a>
-                                <ul class="dropdown-menu" aria-labelledby="download">
-                                    <li><a href="">navigation</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="">presentation</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                </div>
+                <div class="navbar-collapse collapse" id="navbar-main">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a [routerLink]="['home']"> Accueil</a>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['services']" id="themes">services <span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="themes">
+                                <li><a href="../default/">conseiller d'orientation</a></li>
+                                <li class="divider"></li>
+                                <li><a href="../cerulean/">offres de bourses</a></li>
+                                <li><a href="../yeti/">offres d'emplois</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a [routerLink]="['contacts']">Contacts</a>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['about']" id="download">A propos <span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="download">
+                                <li><a href="">navigation</a></li>
+                                <li class="divider"></li>
+                                <li><a href="">presentation</a></li>
+                            </ul>
+                        </li>
+                    </ul>
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="">s'abonner</a></li>
-                            <li><a href="">Librairie</a></li>
-                        </ul>
-
-                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a [routerLink]="['subscribe']">s'abonner</a></li>
+                        <li><a [routerLink]="['bookshoop']">Librairie</a></li>
+                    </ul>
+                    <form class="navbar-form pull-right">
+                        <input type="search" name="" class="input-small form-control" placeholder="Recherche">
+                        <button class="btn btn-primary "><span class="glyphicon glyphicon-search"></span>Rechercher</button>
+                    </form>
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <div class="separator"></div>
 
 
-
-        <!-- Header -->
-        <header class="intro-header">
-            <div class="container">
-                <div class="intro-message">
-                    <h1>Orientation academique et professionnelle </h1>
-                    <hr class="intro-divider">
-                </div>
+    <!-- Header -->
+    <header class="intro-header">
+        <div class="container">
+            <div class="intro-message">
+                <h1>Orientation academique et professionnelle </h1>
+                <hr class="intro-divider">
             </div>
-        </header>
+        </div>
+    </header>
+    <div class="separators"></div>
+    <!--navigaton side-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-        <!-- Page Content -->
-        <section class="content-section-a">
+    <div class="nav-side-menu">
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+        <div class="menu-list">
+
+            <ul id="menu-content" class="menu-content collapse out">
+
+
+                <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                    <a href="#"><i class="fa fa-gift fa-lg"></i>s'abonner <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products">
+                    <li><a href="#">offre d'emploi</a></li>
+                    <li><a href="#">offre de stage</a></li>
+                    <li><a href="#">offre de bourse</a></li>
+                    <li><a href="#">conseiller d'orientation</a></li>
+                </ul>
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a href=""><i class="fa fa-user fa-lg"></i>creer un compte client <span class="arrow"></span></a>
+                </li>
+
+
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a href=""><i class="fa fa-globe fa-lg"></i> Librairie <span class="arrow"></span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="article clear-left">
+        <section class="content-section-a ">
 
             <div class="container">
                 <router-outlet></router-outlet>
@@ -142,64 +180,70 @@
             <!-- /.container -->
 
         </section>
-        <!-- /.content-section-a -->
+    </div>
+    <div class="content-aside clear-left">
 
-        <aside class="banner">
+        <h3>publicité </h3>
 
-            <div class="container">
+    </div>
 
-                <div class="row">
-                    <div class="col-lg-6 my-auto">
-                        <h2>suivre des sites profesionnelles</h2>
-                    </div>
-                    <div class="col-lg-6 my-auto">
-                        <ul class="list-inline banner-social-buttons">
-                            <li class="list-inline-item">
-                                <a href="#" class="btn btn-secondary btn-lg">
-                                    <i class="fa fa-github fa-fw"></i>
-                                    <span class="network-name">Github</span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" class="btn btn-secondary btn-lg">
-                                    <i class="fa fa-linkedin fa-fw"></i>
-                                    <span class="network-name">Linkedin</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+    <aside class="banner">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6 my-auto">
+                    <h2>suivre des sites profesionnelles</h2>
                 </div>
-
+                <div class="col-lg-6 my-auto">
+                    <ul class="list-inline banner-social-buttons">
+                        <li class="list-inline-item">
+                            <a href="#" class="btn btn-secondary btn-lg">
+                                <i class="fa fa-github fa-fw"></i>
+                                <span class="network-name">Github</span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="#" class="btn btn-secondary btn-lg">
+                                <i class="fa fa-linkedin fa-fw"></i>
+                                <span class="network-name">Linkedin</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <!-- /.container -->
 
-        </aside>
-        <!-- /.banner -->
+        </div>
+        <!-- /.container -->
 
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <ul class="list-inline">
-                    <li class="list-inline-item">
-                        <a href="#">Home</a>
-                    </li>
-                    <li class="footer-menu-divider list-inline-item">&sdot;</li>
-                    <li class="list-inline-item">
-                        <a href="#about">About</a>
-                    </li>
-                    <li class="footer-menu-divider list-inline-item">&sdot;</li>
-                    <li class="list-inline-item">
-                        <a href="#services">Services</a>
-                    </li>
-                    <li class="footer-menu-divider list-inline-item">&sdot;</li>
-                    <li class="list-inline-item">
-                        <a href="#contact">Contact</a>
-                    </li>
-                </ul>
-                <p class="copyright text-muted small">Copyright &copy; bocobi2 2017. All Rights Reserved</p>
-            </div>
-        </footer>
+    </aside>
 
-    </body>
+    <!-- /.banner -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="footer-menu-divider list-inline-item">&sdot;</li>
+                <li class="list-inline-item">
+                    <a href="#about">About</a>
+                </li>
+                <li class="footer-menu-divider list-inline-item">&sdot;</li>
+                <li class="list-inline-item">
+                    <a href="#services">Services</a>
+                </li>
+                <li class="footer-menu-divider list-inline-item">&sdot;</li>
+                <li class="list-inline-item">
+                    <a href="#contact">Contact</a>
+                </li>
+            </ul>
+            <p class="copyright text-muted small">Copyright &copy; bocobi2 2017. All Rights Reserved</p>
+        </div>
+    </footer>
+    <app-create-article [articleForm]="articleForm"> </app-create-article>
+</body>
 
 </html>
