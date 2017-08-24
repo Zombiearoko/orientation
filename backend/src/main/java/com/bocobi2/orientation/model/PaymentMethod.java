@@ -8,32 +8,37 @@ public class PaymentMethod {
 	
 	@Id
 	String paymentMethodId;
-	String paymentMetodName;
-	
+	String paymentMethodName;
+
+
 	public PaymentMethod(){}
 	
 	
 
 
 
-	public PaymentMethod(String paymentMetodName) {
+
+
+	public PaymentMethod(String paymentMethodName) {
 		super();
-		this.paymentMetodName = paymentMetodName;
-	}
+		this.paymentMethodName = paymentMethodName;
 
-
-	/**
-	 * @return the paymentMetodName
-	 */
-	public String getPaymentMetodName() {
-		return paymentMetodName;
 	}
 
 	/**
-	 * @param paymentMetodName the paymentMetodName to set
+
+	 * @return the paymentMethodName
 	 */
-	public void setPaymentMetodName(String paymentMetodName) {
-		this.paymentMetodName = paymentMetodName;
+	public String getpaymentMethodName() {
+		return paymentMethodName;
+	}
+
+	/**
+	 * @param paymentMethodName the paymentMethodName to set
+	 */
+	public void setpaymentMethodName(String paymentMethodName) {
+		this.paymentMethodName = paymentMethodName;
+
 	}
 
 
@@ -42,15 +47,13 @@ public class PaymentMethod {
 
     @Override
     public String toString() {
-        return String.format(
+        return String.format( 
                 "{\"paymentMetodId\":%s, \"paymentMetodName\":'%s'}",
-                paymentMethodId, paymentMetodName);
+                paymentMethodId, paymentMethodName);
     }
 
 	
 	
 	
 }
-	
-
 

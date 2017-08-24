@@ -1,3 +1,4 @@
+
 package com.bocobi2.orientation.model;
 
 import org.springframework.data.annotation.Id;
@@ -44,3 +45,4 @@ public class Administrator {
                 AdministratorId, login, password);
     }
     }
+
