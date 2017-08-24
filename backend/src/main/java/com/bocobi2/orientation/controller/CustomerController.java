@@ -201,6 +201,10 @@ public class CustomerController {
 		session = request.getSession();
 		Client client = (Client) session.getAttribute("customerInSession");
 		
+		//recupertion du temoignage
+		
+		String testimonyContent = request.getParameter("testimonyContent");
+		String author = client.getFirstNameCustomer()+" "+client.getLastNameCustomer();
 
 		result.put("success", success);
 		result.put("errors", errors);
