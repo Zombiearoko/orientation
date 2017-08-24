@@ -12,4 +12,6 @@ public interface AdministratorRepository extends MongoRepository<Administrator, 
     public Administrator findByLogin(String login);
     public List<Administrator> findByPassword(String password);
     
+
+
 }
