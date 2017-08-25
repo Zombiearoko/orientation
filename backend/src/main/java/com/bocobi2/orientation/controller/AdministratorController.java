@@ -2,6 +2,8 @@ package com.bocobi2.orientation.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -361,8 +363,338 @@ public class AdministratorController {
 				return result;
 				
 			}
+			
+			//methode pour la recherche des livre en get
+			
+
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/researchBookByName",method=RequestMethod.GET)
+			public JSONObject researchBookByNameGet(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+	
+				//recuperation des parametres de la requete
+				
+				String bookName =request.getParameter("bookName");
+				//creation du livre
+				
+				Book book = new Book();
+				
+				//insertion du livre dans la base de données
+					
+						book = bookRepository.findByBookName(bookName);
+						
+						
+					if(book==null){
+						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
+					}else{
+						success.put("rapport", book);
+					}
+				
+				
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}
+			//methode pour la recherche des livre en post
 		
 
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/researchBookByName",method=RequestMethod.POST)
+			public JSONObject researchBookByNamePost(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+	
+				//recuperation des parametres de la requete
+				
+				String bookName =request.getParameter("bookName");
+				//creation du livre
+				
+				Book book = new Book();
+				
+				//recherche du livre dans la base de données
+					
+						book = bookRepository.findByBookName(bookName);
+						
+						
+					if(book==null){
+						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
+					}else{
+						success.put("rapport", book);
+					}
+				
+				
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}
+			
+			//methode pour la recherche de tous les livres en get
+			
+
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/researchAllBook",method=RequestMethod.GET)
+			public JSONObject researchAllBookGet(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+	
+				//creation de laliste des livres
+				
+				List<Book> listOfBook = new ArrayList<Book>();
+				
+				//recuperation des livres dans la base de données
+					
+						listOfBook = bookRepository.findAll();
+						
+						
+					if(listOfBook.isEmpty()){
+						errors.put("notFoundError", "aucun livre n'est enregistré dans la base de données");
+					}else{
+						int i=1;
+						for(Book bookFind:listOfBook){
+						success.put("book"+i, bookFind);
+						i++;
+						}
+					}
+				
+				
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}
+			
+			//methode pour la recherche de tous les livres en post
+			
+
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/researchAllBook",method=RequestMethod.POST)
+			public JSONObject researchAllBookPost(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+	
+				//creation de la liste des livres
+				List<Book> listOfBook = new ArrayList<Book>();
+				
+				//insertion du livre dans la base de données
+					
+						listOfBook = bookRepository.findAll();
+						
+						
+					if(listOfBook.isEmpty()){
+						errors.put("notFoundError", "aucun livre n'est enregistré dans la base de données");
+					}else{
+						int i=1;
+						for(Book bookFind:listOfBook){
+						success.put("book"+i, bookFind);
+						i++;
+						}
+					}
+				
+				
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}
+			
+			
+			//methode pour la recherche des livre par auteur en post
+			
+
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/researchBookByAuthor",method=RequestMethod.GET)
+			public JSONObject researchBookByAuthorGet(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+	
+				//recuperation des parametres de la requete
+				
+				String bookAuthor =request.getParameter("bookAuthor");
+				//creation de la liste des livres
+				
+				List<Book> listOfBook = new ArrayList<Book>();
+				
+				//recuperation des livres dans la base de données
+					
+						listOfBook = bookRepository.findByBookAuthor(bookAuthor);
+						
+						
+					if(listOfBook.isEmpty()){
+						errors.put("notFoundError", "aucun livre d'auteur "+bookAuthor+" n'est enrégisté!");
+					}else{
+						int i=1;
+						for(Book bookFind:listOfBook){
+						success.put("book"+i, bookFind);
+						i++;
+						}
+					}
+				
+				
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}
+			
+			
+			//methode pour la recherche des livre par auteur en post
+			
+
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/researchBookByAuthor",method=RequestMethod.POST)
+			public JSONObject researchBookByAuthorPost(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+	
+				//recuperation des parametres de la requete
+				
+				String bookAuthor =request.getParameter("bookAuthor");
+				//creation de la liste des livres
+				
+				List<Book> listOfBook = new ArrayList<Book>();
+				
+				//recuperation des livres dans la base de données
+					
+						listOfBook = bookRepository.findByBookAuthor(bookAuthor);
+						
+						
+					if(listOfBook.isEmpty()){
+						errors.put("notFoundError", "aucun livre d'auteur "+bookAuthor+" n'est enrégisté!");
+					}else{
+						int i=1;
+						for(Book bookFind:listOfBook){
+						success.put("book"+i, bookFind);
+						i++;
+						}
+					}
+				
+				
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}
+			
+			
+			//methode pour la suppression des livre par auteur en get
+			
+
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/deleteBook",method=RequestMethod.GET)
+			public JSONObject deleteBookGet(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+	
+				//recuperation des parametres de la requete
+				
+				String bookName =request.getParameter("bookName");
+				//creation de la liste des livres
+				
+				Book book = new Book();
+				
+				//recuperation du livre dans la base de données
+					
+						book = bookRepository.findByBookName(bookName);
+						
+						
+					if(book==null){
+						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
+					}else{
+						bookRepository.delete(book);
+					}
+					book = bookRepository.findByBookName(bookName);
+					if(book==null){
+						success.put("rapport", "suppression effectuée avec succes");
+					}else{
+
+						errors.put("cantDeleteError", "le livre de nom "+bookName+" n'a pa pu etre supprimé!");
+					}
+				
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}
+			
+			
+			
+			//methode pour la suppression des livre par auteur en post
+			
+
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/deleteBook",method=RequestMethod.POST)
+			public JSONObject deleteBookPost(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+	
+				//recuperation des parametres de la requete
+				
+				String bookName =request.getParameter("bookName");
+				//creation de la liste des livres
+				
+				Book book = new Book();
+				
+				//recuperation du livre dans la base de données
+					
+						book = bookRepository.findByBookName(bookName);
+						
+						
+					if(book==null){
+						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
+					}else{
+						bookRepository.delete(book);
+						success.put("rapport","livre supprimé avec succes");
+					}
+				
+				
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}
 	//methodes de controle des formulaires
 	
 	

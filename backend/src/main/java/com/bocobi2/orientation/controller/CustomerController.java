@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bocobi2.orientation.model.Client;
+import com.bocobi2.orientation.model.Testimony;
 import com.bocobi2.orientation.repositories.*;
 
 
@@ -18,7 +19,11 @@ import com.bocobi2.orientation.repositories.*;
 public class CustomerController {
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private TestimonyRepository testimonyRepository;
 
+	
 	private String errorMessage = "";
 	private long phone = 0;
 
@@ -117,6 +122,8 @@ public class CustomerController {
 		return result;
 	}
 
+	//methode d'authentification en get
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/authentication", method = RequestMethod.GET, params = { "login", "password" })
 	private JSONObject authenticationGet(HttpServletRequest request) {
@@ -152,6 +159,7 @@ public class CustomerController {
 		return result;
 	}
 
+	//methode d'authentification en post
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/authentication", method = RequestMethod.POST, params = { "login", "password" })
 	private JSONObject authenticationPost(HttpServletRequest request) {
@@ -189,9 +197,11 @@ public class CustomerController {
 	
 	
 	
+	//methode d'ajout d'un temoignage en get
+	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/postTestimony", method = RequestMethod.GET, params = { "testimonyContent" })
-	private JSONObject postTestimony(HttpServletRequest request) {
+	private JSONObject postTestimonyGet(HttpServletRequest request) {
 		JSONObject result, success, errors;
 		result = new JSONObject();
 		success = new JSONObject();
@@ -204,12 +214,62 @@ public class CustomerController {
 		//recupertion du temoignage
 		
 		String testimonyContent = request.getParameter("testimonyContent");
-		String author = client.getFirstNameCustomer()+" "+client.getLastNameCustomer();
+		String testimonyAuthor = client.getFirstNameCustomer()+" "+client.getLastNameCustomer();
+		
+		//cretion du temoignage
+		
+		Testimony testimony = new Testimony();
+		testimony.setTestimonyAuthor(testimonyAuthor);
+		testimony.setTestimonyContent(testimonyContent);
+		
+		try{
+			testimonyRepository.save(testimony);
+			success.put("rapport", "temoignage enregistré avec succes");
+		}catch(Exception e){
+			errors.put("notSaveError", "le temoignage n'a pas été enregistré");
+		}
 
 		result.put("success", success);
 		result.put("errors", errors);
 		return result;
 	}
+	
+	//methode d'ajout d'un temoignage en post
+	
+		@SuppressWarnings("unchecked")
+		@RequestMapping(value = "/postTestimony", method = RequestMethod.POST, params = { "testimonyContent" })
+		private JSONObject postTestimonyPost(HttpServletRequest request) {
+			JSONObject result, success, errors;
+			result = new JSONObject();
+			success = new JSONObject();
+			errors = new JSONObject();
+			HttpSession session;
+			
+			session = request.getSession();
+			Client client = (Client) session.getAttribute("customerInSession");
+			
+			//recupertion du temoignage
+			
+			String testimonyContent = request.getParameter("testimonyContent");
+			String testimonyAuthor = client.getFirstNameCustomer()+" "+client.getLastNameCustomer();
+			
+			//cretion du temoignage
+			
+			Testimony testimony = new Testimony();
+			testimony.setTestimonyAuthor(testimonyAuthor);
+			testimony.setTestimonyContent(testimonyContent);
+			
+			try{
+				testimonyRepository.save(testimony);
+				success.put("rapport", "temoignage enregistré avec succes");
+			}catch(Exception e){
+				errors.put("notSaveError", "le temoignage n'a pas été enregistré");
+			}
+
+			result.put("success", success);
+			result.put("errors", errors);
+			return result;
+		}
 	
 	// definition des methodes de controle des donnees recues de la vue
 	private void validationpassword(String password) throws Exception {
