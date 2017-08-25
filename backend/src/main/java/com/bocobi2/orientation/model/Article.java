@@ -7,8 +7,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Article {
 	
 	@Id
-    public String articleId;
-    private String title;
+    private String articleId;
+    public String getArticleId() {
+		return articleId;
+	}
+
+	public void setArticleId(String articleId) {
+		this.articleId = articleId;
+	}
+
+
+	private String title;
     
     public String getTitle() {
 		return title;

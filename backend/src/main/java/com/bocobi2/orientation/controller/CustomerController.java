@@ -23,16 +23,17 @@ public class CustomerController {
 	@Autowired
 	private TestimonyRepository testimonyRepository;
 
-	
-	private String errorMessage = "";
-	private long phone = 0;
 
 	public CustomerController() {
 		// TODO Auto-generated constructor stub
 	}
-
-	// methode d'ajout d'un nouveau client dans la base de donnees requete en
-	// get
+//***************************************************************************************************************	
+			//******************************************************************************//
+			//***********************methode d'ajout d'un nouveau client******************************//
+			//******************************************************************************//
+		
+	// methode d'ajout d'un nouveau client en get
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET, params = { "firstNameCustomer",
 			"lastNameCustomer", "phoneNumber", "emailAddress", "password" })
 	public JSONObject addClientGet(HttpServletRequest request) {
@@ -77,8 +78,8 @@ public class CustomerController {
 		return result;
 	}
 
-	// methode d'ajout d'un nouveau client dans la base de donnees requete en
-	// get
+	// methode d'ajout d'un nouveau client en post
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST, params = { "firstNameCustomer",
 			"lastNameCustomer", "phoneNumber", "emailAdress", "password" })
 	public JSONObject addClientPost(HttpServletRequest request) {
@@ -121,7 +122,11 @@ public class CustomerController {
 		result.put("errors", errors);
 		return result;
 	}
-
+	//***************************************************************************************************************	
+			//******************************************************************************//
+			//***********************methode de connexion******************************//
+			//******************************************************************************//
+		
 	//methode d'authentification en get
 	
 	@SuppressWarnings("unchecked")
@@ -148,7 +153,7 @@ public class CustomerController {
 				validatePasswordAndLogin(password, login);
 				session = request.getSession();
 				session.setAttribute("customerInSession", client);
-				success.put("customerInSession", client.toString());
+				success.put("customerInSession", client);
 				success.put("rapport", "session ouverte avec succes");
 			} catch (Exception e) {
 				errors.put("errorMessage", e.getMessage());
@@ -270,12 +275,107 @@ public class CustomerController {
 			result.put("errors", errors);
 			return result;
 		}
+		
+//***************************************************************************************************************	
+		//******************************************************************************//
+		//***********************methode de deconnexion******************************//
+		//******************************************************************************//
+		
+		//methode pour la gestion de la deconnexion du client en get
+		
+		@SuppressWarnings("unchecked")
+		@RequestMapping(value="/deconnection", method=RequestMethod.GET)
+		public JSONObject deconnectionGet(HttpServletRequest request){
+			
+			//creation des objects JSON à renvoyer à la vue
+			
+			JSONObject result,success,errors; 
+			result = new JSONObject();
+			success = new JSONObject();
+			errors = new JSONObject();
+			
+			//recuperation des parametres de la requete
+			
+			
+			//objets utils
+			
+			HttpSession session;
+			
+			//creation d'un objet clientistrateur
+			
+			Client client = new Client();
+			
+			//recheche dans la base de données de l'clientistrateur ayant les informations fournies
+
+					session = request.getSession();
+					client = (Client) session.getAttribute("customerInSession");
+					
+					if(client!=null){
+					try{
+						session.invalidate();
+						success.put("rapport", "deconnexion reussie");
+					}catch(Exception e){
+						errors.put("errorMessage", "la session n'a pas pu etre fermé");
+					}
+					}else{
+						errors.put("errorMessage", "aucune session n'est ouverte");
+					}
+			result.put("success", success);
+			result.put("errors", errors);
+			return result;
+			
+		}
+		
+		
+		
+		//methode pour la gestion de la connexion de l'clientistrateur en post
+		
+			@SuppressWarnings("unchecked")
+			@RequestMapping(value="/deconnection", method=RequestMethod.POST)
+			public JSONObject deconnectionPost(HttpServletRequest request){
+				
+				//creation des objects JSON à renvoyer à la vue
+				
+				JSONObject result,success,errors; 
+				result = new JSONObject();
+				success = new JSONObject();
+				errors = new JSONObject();
+				
+				//recuperation des parametres de la requete
+				
+				
+				//objets utils
+				
+				HttpSession session;
+				
+				//creation d'un objet clientistrateur
+				
+				Client client = new Client();;
+				
+				//recheche dans la base de données de l'clientistrateur ayant les informations fournies
+
+						session = request.getSession();
+						client = (Client) session.getAttribute("customerInSession");
+						
+						if(client!=null){
+						try{
+							session.invalidate();
+							success.put("rapport", "deconnexion reussie");
+						}catch(Exception e){
+							errors.put("errorMessage", "la session n'a pas pu etre fermé");
+						}
+						}else{
+							errors.put("errorMessage", "aucune session n'est ouverte");
+						}
+				result.put("success", success);
+				result.put("errors", errors);
+				return result;
+				
+			}			
+//***************************************************************************************************************	
+
 	
 	// definition des methodes de controle des donnees recues de la vue
-	private void validationpassword(String password) throws Exception {
-		// TODO Auto-generated method stub
-
-	}
 
 	private void validatePasswordAndLogin(String password, String login) throws Exception {
 		// TODO Auto-generated method stub

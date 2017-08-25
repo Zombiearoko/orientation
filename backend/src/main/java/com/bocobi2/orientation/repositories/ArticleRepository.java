@@ -10,6 +10,7 @@ public interface ArticleRepository extends MongoRepository<Article, String>{
 	
 	 public Article findByTitle(String title);
 	 public List<Article> findByArticleId(String articleId);
+	public void deleteByArticleId(String articleId);
 	
 }
 
