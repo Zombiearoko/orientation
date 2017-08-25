@@ -24,6 +24,7 @@ import com.bocobi2.orientation.repositories.*;
 public class AdministratorController {
 	
 	String booksFolder ="D:/workspacegithub/orientation/backend/src/main/resources/booksFolder";
+	String schoolCalenderFolder = "D:/workspacegithub/orientation/backend/src/main/resources/schoolCalenderFolder";
 	
 	@Autowired
 	ArticleRepository articleRepository;
@@ -274,7 +275,7 @@ public class AdministratorController {
 			
 		}
 		
-		//methode pour la mise a jour des livres en post
+		//methode pour la mise a jour des articles en post
 		
 
 		@SuppressWarnings("unchecked")
@@ -981,6 +982,7 @@ public class AdministratorController {
 				return result;
 				
 			}
+
 //***************************************************************************************************************
 			//******************************************************************************//
 			//***********************methode pour la mise a jour des livres**********//
@@ -1177,8 +1179,6 @@ public class AdministratorController {
 				}			
 //***************************************************************************************************************	
 
-	//methodes de controle des formulaires
-	
-	
-	
+				
+
 }

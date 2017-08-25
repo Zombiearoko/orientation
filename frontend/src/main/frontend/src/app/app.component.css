@@ -336,16 +336,16 @@ body {
 }
 
 .content-aside {
-    width: 40%;
+    width: 30%;
     border-width: 1px;
     border-style: inset;
     border-color: black;
-    margin: 10, 10, 10, 10;
 }
 
 .article {
     width: 60%;
-    margin: 10, 10, 10, 10;
+    margin-left: 20px;
+    margin-top: 20px;
     border-width: 1px;
     border-style: dotted;
     border-color: blue;
