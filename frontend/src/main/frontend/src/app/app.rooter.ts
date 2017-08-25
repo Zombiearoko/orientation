@@ -12,7 +12,9 @@ export const router: Routes = [
   {path: 'home', component: HomeComponent },
   {path: 'services', component: ServiceComponent},
   {path: 'contacts', component: ContactsComponent},
-  {path: 'about', component: AboutComponent}
+  {path: 'about', component: AboutComponent},
+  {path: 'subcribe', component: AboutComponent},
+  {path: 'bookshoop', component: AboutComponent}
 
 ];
 
