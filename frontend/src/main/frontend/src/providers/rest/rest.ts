@@ -45,5 +45,20 @@ const options = new RequestOptions({  headers: headers1 });
           public   getArticle() {
 
     }
+          public postAccount(firstNameCustomer, lastNameCustomer, emailAddress, password, phoneNumber) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = [
+      {  }
+    ];
+    const url = 'http://192.168.8.110:8092/customer/createAccountClient';
+      const url2 = 'https://jsonplaceholder.typicode.com/posts';
+    return  this.http.post(url2, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}
+          public   getAccount() {
+
+    }
 
 }
