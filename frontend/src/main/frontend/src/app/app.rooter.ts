@@ -10,7 +10,7 @@ import { Routes, RouterModule} from '@angular/router';
 
 
 export const router: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: '', redirectTo: 'about', pathMatch: 'prefix'},
   {path: 'home', component: HomeComponent },
   {path: 'services', component: ServiceComponent},
   {path: 'contacts', component: ContactsComponent},

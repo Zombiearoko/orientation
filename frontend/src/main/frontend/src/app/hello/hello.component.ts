@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestProvider } from '../../providers/rest/rest';
 @Component({
-  selector: 'app-hello',
   templateUrl: './hello.component.html',
   styleUrls: ['./hello.component.css']
 })

@@ -7,7 +7,6 @@ import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
 
 @Component({
-  selector: 'app-create-article',
   templateUrl: './create-article.component.html',
   styleUrls: ['./create-article.component.css', '../../bootstrap/css/bootstrap.css']
 })
