@@ -15,8 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.bocobi2.orientation.model.*;
-import com.bocobi2.orientation.repositories.*;
+
+import com.bocobi2.orientation.model.Administrator;
+import com.bocobi2.orientation.model.Article;
+import com.bocobi2.orientation.model.Book;
+import com.bocobi2.orientation.model.SchoolCalender;
+import com.bocobi2.orientation.repositories.AdministratorRepository;
+import com.bocobi2.orientation.repositories.ArticleRepository;
+import com.bocobi2.orientation.repositories.BookRepository;
+import com.bocobi2.orientation.repositories.SchoolCalenderRepository;
 
 
 @RestController
@@ -34,6 +41,9 @@ public class AdministratorController {
 	
 	@Autowired
 	BookRepository bookRepository;
+	
+	@Autowired
+	SchoolCalenderRepository schoolCalenderRepository;
 	
 	
 //***************************************************************************************************************	
@@ -982,7 +992,6 @@ public class AdministratorController {
 				return result;
 				
 			}
-
 //***************************************************************************************************************
 			//******************************************************************************//
 			//***********************methode pour la mise a jour des livres**********//
@@ -1180,5 +1189,344 @@ public class AdministratorController {
 //***************************************************************************************************************	
 
 				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+//***************************************************************************************************************	
+				//******************************************************************************//
+				//***********************methode creation d'un nouveau programme*******************//
+//******************************************************************************//
 
+
+		//methode pour la creation d'un nouvel article en get
+		
+		@SuppressWarnings("unchecked")
+		@RequestMapping(value="/addSchoolCalender", method=RequestMethod.GET)
+		public JSONObject createSchoolCalenderGet(HttpServletRequest request){
+			
+			//creation des objects JSON à renvoyer à la vue
+			
+			JSONObject result,success,errors; 
+			result = new JSONObject();
+			success = new JSONObject();
+			errors = new JSONObject();
+			
+			//recuperation des parametres de la requete
+			
+			String schoolCalenderName = request.getParameter("schoolCalenderName");
+			String schoolCalenderType = request.getParameter("schoolCalenderType");
+			String schoolCalenderYear = request.getParameter("schoolCalenderYear");
+			Part schoolCalenderFile = null;
+			try{
+			schoolCalenderFile = request.getPart("schoolCalenderFile");
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			String schoolCalenderFileName = schoolCalenderName+".pdf";
+			
+			//definition logique du repertoire d'enregistrement
+			
+			File fileRepository = new File(schoolCalenderFolder);
+			if(!fileRepository.exists()){
+				fileRepository.mkdir();
+			}
+			
+			String nameOnTheDisk = schoolCalenderFolder+File.separator+schoolCalenderFileName;
+			
+			try{
+				schoolCalenderFile.write(nameOnTheDisk);
+				
+			}catch(Exception e){
+				errors.put("noMoreSpaceError", "le fichier n'a pas pu etre sauvegadé sur le disque");
+			}
+			//creation du programme
+			
+			SchoolCalender schoolCalender = new SchoolCalender(schoolCalenderName,
+																schoolCalenderType,
+																schoolCalenderYear,
+																nameOnTheDisk);
+			
+			//insertion du livre dans la base de données
+				if(errors.isEmpty()){
+				try{
+					 schoolCalenderRepository.save(schoolCalender);
+					success.put("rapport", "programme enregistré avec succès");
+					
+				}catch(Exception e){
+					errors.put("notSaveError", "le programme a été enregistré sur le disque mais son nom n'a pas"
+							+ "été enregistré dans la base de données");
+				}
+				}
+			
+			result.put("success", success);
+			result.put("errors", errors);
+			return result;
+			
+		}
+
+
+
+
+		//methode pour la creation d'un nouvel article en post
+		
+				@SuppressWarnings("unchecked")
+				@RequestMapping(value="/addSchoolCalender", method=RequestMethod.POST)
+				public JSONObject createSchoolCalenderPost(HttpServletRequest request){
+					
+					//creation des objects JSON à renvoyer à la vue
+					
+					JSONObject result,success,errors; 
+					result = new JSONObject();
+					success = new JSONObject();
+					errors = new JSONObject();
+					
+					//recuperation des parametres de la requete
+					
+					String schoolCalenderName = request.getParameter("schoolCalenderName");
+					String schoolCalenderType = request.getParameter("schoolCalenderType");
+					String schoolCalenderYear = request.getParameter("schoolCalenderYear");
+					Part schoolCalenderFile = null;
+					try{
+					schoolCalenderFile = request.getPart("schoolCalenderFile");
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					
+					String schoolCalenderFileName = schoolCalenderName+".pdf";
+					
+					//definition logique du repertoire d'enregistrement
+					
+					File fileRepository = new File(schoolCalenderFolder);
+					if(!fileRepository.exists()){
+						fileRepository.mkdir();
+					}
+					
+					String nameOnTheDisk = schoolCalenderFolder+File.separator+schoolCalenderFileName;
+					
+					try{
+						schoolCalenderFile.write(nameOnTheDisk);
+						
+					}catch(Exception e){
+						errors.put("noMoreSpaceError", "le fichier n'a pas pu etre sauvegadé sur le disque");
+					}
+					//creation du programme
+					
+					SchoolCalender schoolCalender = new SchoolCalender(schoolCalenderName,
+																		schoolCalenderType,
+																		schoolCalenderYear,
+																		nameOnTheDisk);
+					
+					//insertion du livre dans la base de données
+						if(errors.isEmpty()){
+						try{
+							 schoolCalenderRepository.save(schoolCalender);
+							success.put("rapport", "programme enregistré avec succès");
+							
+						}catch(Exception e){
+							errors.put("notSaveError", "le programme a été enregistré sur le disque mais son nom n'a pas"
+									+ "été enregistré dans la base de données");
+						}
+						}
+					
+					result.put("success", success);
+					result.put("errors", errors);
+					return result;
+					
+				}
+	
+//***************************************************************************************************************
+	//******************************************************************************//
+	//***********************methode pour la suppression d'un programme**********//
+	//******************************************************************************//		
+
+	
+	//methode pour la suppression d'un programme en get
+	
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/deleteSchoolCalender",method=RequestMethod.GET)
+	public JSONObject deleteSchoolCalenderGet(HttpServletRequest request){
+		
+		//creation des objects JSON à renvoyer à la vue
+		
+		JSONObject result,success,errors; 
+		result = new JSONObject();
+		success = new JSONObject();
+		errors = new JSONObject();
+
+		//recuperation des parametres de la requete
+		
+		String schoolCalenderName =request.getParameter("schoolCalenderName");
+		//creation du programme à supprimer
+		
+		SchoolCalender schoolCalender = new SchoolCalender();
+		
+		//recuperation de l'article dans la base de données
+			
+				schoolCalender = schoolCalenderRepository.findBySchoolCalenderName(schoolCalenderName);
+				
+				
+			if(schoolCalender==null){
+				errors.put("notFoundError", "le programme de nom "+schoolCalenderName+" n'existe pas!");
+			}else{
+				schoolCalenderRepository.deleteByschoolCalenderId(schoolCalender.getSchoolCalenderId());
+				success.put("rapport", "suppression effectuée avec succes");
+			}
+			
+		result.put("success", success);
+		result.put("errors", errors);
+		return result;
+		
+	}
+	
+	//methode pour la suppression d'un programme en post
+	
+
+		@SuppressWarnings("unchecked")
+		@RequestMapping(value="/deleteSchoolCalender",method=RequestMethod.POST)
+		public JSONObject deleteSchoolCalenderPost(HttpServletRequest request){
+			
+			//creation des objects JSON à renvoyer à la vue
+			
+			JSONObject result,success,errors; 
+			result = new JSONObject();
+			success = new JSONObject();
+			errors = new JSONObject();
+
+			//recuperation des parametres de la requete
+			
+			String schoolCalenderName =request.getParameter("schoolCalenderName");
+			//creation du programme à supprimer
+			
+			SchoolCalender schoolCalender = new SchoolCalender();
+			
+			//recuperation de l'article dans la base de données
+				
+					schoolCalender = schoolCalenderRepository.findBySchoolCalenderName(schoolCalenderName);
+					
+					
+				if(schoolCalender==null){
+					errors.put("notFoundError", "le programme de nom "+schoolCalenderName+" n'existe pas!");
+				}else{
+					schoolCalenderRepository.deleteByschoolCalenderId(schoolCalender.getSchoolCalenderId());
+					success.put("rapport", "suppression effectuée avec succes");
+				}
+				
+			result.put("success", success);
+			result.put("errors", errors);
+			return result;
+			
+		}
+		
+//***************************************************************************************************************
+	
+	//******************************************************************************//
+	//*************methode pour la recherche des programmes suivant l'année**********//
+	//******************************************************************************//		
+	
+	//methode pour la recherche d'un programme en get
+	
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/researchSchoolCalenderByYear",method=RequestMethod.GET)
+	public JSONObject researchSchoolCalenderByYearGet(HttpServletRequest request){
+		
+		//creation des objects JSON à renvoyer à la vue
+		
+		JSONObject result,success,errors; 
+		result = new JSONObject();
+		success = new JSONObject();
+		errors = new JSONObject();
+
+		//recuperation des parametres de la requete
+		
+		String schoolCalenderYear =request.getParameter("schoolCalenderyear");
+		//creation de l'article à renvoyer
+		
+		List<SchoolCalender> listOfSchoolCalender = new ArrayList<SchoolCalender>();
+		
+		//recuperation de l'article dans la base de données
+			
+		listOfSchoolCalender = schoolCalenderRepository.findBySchoolCalenderYear(schoolCalenderYear);
+				
+			int i=1;	
+			if(listOfSchoolCalender.isEmpty()){
+				errors.put("notFoundError", "aucun programme pour le compte de l'année "+schoolCalenderYear+" n'est enrégisté!");
+			}else{
+				for(SchoolCalender sc:listOfSchoolCalender){
+				success.put("programme"+i, sc);
+				i++;
+				}
+			}
+		
+		
+		result.put("success", success);
+		result.put("errors", errors);
+		return result;
+		
+	}
+	
+
+	//methode pour la recherche d'un programme en get
+	
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/researchSchoolCalenderByYear",method=RequestMethod.POST)
+	public JSONObject researchSchoolCalenderByYearPost(HttpServletRequest request){
+		
+		//creation des objects JSON à renvoyer à la vue
+		
+		JSONObject result,success,errors; 
+		result = new JSONObject();
+		success = new JSONObject();
+		errors = new JSONObject();
+
+		//recuperation des parametres de la requete
+		
+		String schoolCalenderYear =request.getParameter("schoolCalenderyear");
+		//creation de l'article à renvoyer
+		
+		List<SchoolCalender> listOfSchoolCalender = new ArrayList<SchoolCalender>();
+		
+		//recuperation de l'article dans la base de données
+			
+		listOfSchoolCalender = schoolCalenderRepository.findBySchoolCalenderYear(schoolCalenderYear);
+				
+			int i=1;	
+			if(listOfSchoolCalender.isEmpty()){
+				errors.put("notFoundError", "aucun programme pour le compte de l'année "+schoolCalenderYear+" n'est enrégisté!");
+			}else{
+				for(SchoolCalender sc:listOfSchoolCalender){
+				success.put("programme"+i, sc);
+				i++;
+				}
+			}
+		
+		
+		result.put("success", success);
+		result.put("errors", errors);
+		return result;
+		
+	}
+
+
+//***************************************************************************************************************
+
+	//methodes de controle des formulaires
+	
+	
 }
