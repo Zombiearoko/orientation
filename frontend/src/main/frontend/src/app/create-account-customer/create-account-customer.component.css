@@ -117,10 +117,13 @@ body {
     border-radius: 5px;
 }
 
-.ng-valid {
-    border-color: green;
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42A948;
+    /* green */
 }
 
-.ng-invalid {
-    border-color: red;
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442;
+    /* red */
 }

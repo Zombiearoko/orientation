@@ -6,34 +6,58 @@ import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
 
 @Component({
-  selector: 'app-create-account-customer',
   templateUrl: './create-account-customer.component.html',
   styleUrls: ['./create-account-customer.component.css']
 })
 export class CreateAccountCustomerComponent implements OnInit {
   clientForm: FormGroup;
+  post: any;
+  firstNameCustomer: string;
+  lastNameCustomer: string;
+  emailAdress: string;
+    password: string;
+    phoneNumber: string;
   private results: [any];
    private collectionJson: Object;
+   submitted = false;
 
-  constructor(public fb: FormBuilder, private http: Http) { }
+  constructor(public rest: RestProvider, public fb: FormBuilder, private http: Http) {
 
-  onSubmit() {
- console.log(this.clientForm);
+      this.clientForm = this.fb.group({
+        'firstNameCustomer': [null, Validators.compose([Validators.required, Validators.maxLength(45), Validators.minLength(3)])],
+       'lastNameCustomer': [null, Validators.compose([Validators.required, Validators.maxLength(45), Validators.minLength(3)])],
+      'emailAddress': [null, Validators.compose([Validators.required])],
+      'password': [null, Validators.compose([Validators.required])],
+      'phoneNumber': [null, Validators.compose([Validators.required])]
+      });
   }
 
-  ngOnInit() {
-   const firstNameCustomer = '';
-      const lastNameCustomer = '';
-      this.clientForm = this.fb.group({
-        nom: [firstNameCustomer, Validators.compose([Validators.required])],
-       prenom: [lastNameCustomer, Validators.compose([Validators.required, Validators.maxLength(45), Validators.minLength(3)])]
-      });
-      const url = 'http://192.168.8.110:8092/administrator/createArticle';
-this.http.get('https://jsonplaceholder.typicode.com/posts').subscribe(resp => {
+  onSubmit(post) {
+      this.firstNameCustomer = post.firstNameCustomer;
+      this.lastNameCustomer = post.lastNameCustomer;
+      this.emailAdress = post.emailAdress;
+      this.password = post.password;
+      this.phoneNumber = post.phoneNumber;
+      const url = 'http://192.168.9.101:8092/customer/addCustomer' + '?firstNameCustomer='
+    + post.firstNameCustomer + '&lastNameCustomer='
+     + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
+    + '&password =' + post.password;
+ console.log(this.firstNameCustomer);
+this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emailAdress, this.password, this.phoneNumber  )
+.subscribe((data) => {
+
+        console.log(this.firstNameCustomer);
+        this.submitted = true;
+       });
+      this.http.get('https://jsonplaceholder.typicode.com/posts').subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
   console.log(this.collectionJson);
 });
+  }
+
+  ngOnInit() {
+
   }
 
 }

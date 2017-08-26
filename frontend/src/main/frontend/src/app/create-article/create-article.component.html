@@ -26,6 +26,10 @@
             <div class="form-group ">
                 <button class="btn btn-primary " (click)="onSubmit()">creer article</button>
             </div>
+            <div *ngFor="let item of collectionJson">
+                <p> hello {{ item.nom}}, vous avez créez votre compte avec success
+                </p>
+            </div>
         </form>
     </div>
 </div>
