@@ -1,3 +1,5 @@
+import { NavigationComponent } from './../navigation/navigation.component';
+import { FooterComponent } from './../footer/footer.component';
 import { HttpModule } from '@angular/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -7,7 +9,8 @@ import { Http } from '@angular/http';
 
 @Component({
   templateUrl: './create-account-customer.component.html',
-  styleUrls: ['./create-account-customer.component.css']
+  styleUrls: ['./create-account-customer.component.css', '../../bootstrap/css/bootstrap.css'],
+   entryComponents: [FooterComponent, NavigationComponent]
 })
 export class CreateAccountCustomerComponent implements OnInit {
   clientForm: FormGroup;
@@ -49,7 +52,7 @@ this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emai
         console.log(this.firstNameCustomer);
         this.submitted = true;
        });
-      this.http.get('https://jsonplaceholder.typicode.com/posts').subscribe(resp => {
+      this.http.get(url).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
   console.log(this.collectionJson);

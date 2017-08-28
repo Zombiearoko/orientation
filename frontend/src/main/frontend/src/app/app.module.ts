@@ -14,6 +14,8 @@ import { ServiceComponent } from './service/service.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AboutComponent } from './about/about.component';
 import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CreateAccountCustomerComponent } from './create-account-customer/create
      ServiceComponent,
      ContactsComponent,
      AboutComponent,
-     CreateAccountCustomerComponent
+     CreateAccountCustomerComponent,
+     NavigationComponent,
+     FooterComponent
   ],
   imports: [
    BrowserModule,
