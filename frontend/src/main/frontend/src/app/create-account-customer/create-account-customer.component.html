@@ -1,3 +1,49 @@
+<app-navigation></app-navigation>
+<div class="separator">
+
+</div>
+
+
+<!-- Header -->
+<header>
+    <h1></h1>
+</header>
+<div class="separators"></div>
+<!--navigaton side-->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="nav-side-menu">
+    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+    <div class="menu-list">
+
+        <ul id="menu-content" class="menu-content collapse out">
+
+            <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                <a> <i class="glyphicon glyphicon-off"></i>se connecter <span class="arrow"></span></a>
+            </li>
+            <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                <a href="#"><i class="fa fa-gift fa-lg"></i>s'abonner <span class="arrow"></span></a>
+            </li>
+            <ul class="sub-menu collapse" id="products">
+                <li><a href="#">offre d'emploi</a></li>
+                <li><a href="#">offre de stage</a></li>
+                <li><a href="#">offre de bourse</a></li>
+                <li><a href="#">conseiller d'orientation</a></li>
+            </ul>
+            <li data-toggle="collapse" data-target="#service" class="collapsed">
+                <a [routerLink]="['account']"><i class="fa fa-user fa-lg"></i>creer un compte client <span class="arrow"></span></a>
+            </li>
+
+
+            <li data-toggle="collapse" data-target="#service" class="collapsed">
+                <a href=""><i class="fa fa-globe fa-lg"></i> Librairie <span class="arrow"></span></a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
 <div class="modal-dialog">
     <div class="loginmodal-container">
         <div class="container">
@@ -61,3 +107,4 @@
     <p> {{ item.userId }}, votre compte a ete crée avec succes</p>
 
 </div>
+<app-footer></app-footer>
