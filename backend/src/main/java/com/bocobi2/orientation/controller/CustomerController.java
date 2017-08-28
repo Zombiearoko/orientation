@@ -66,7 +66,7 @@ public class CustomerController {
 		client.setPassword(password);
 		client.setEmailAddress(emailAddress);
 		
-		logger.info("enregistrement du client {}",client);;
+		logger.info("enregistrement du client {}",client);
 
 			clientRepository.save(client);
 		
@@ -105,12 +105,9 @@ public class CustomerController {
 
 			clientRepository.save(client);
 		
-		
-
-		
 		return new ResponseEntity<Client>(client,HttpStatus.CREATED);
 	}
-	//***************************************************************************************************************	
+//***************************************************************************************************************	
 			//******************************************************************************//
 			//***********************methode de connexion******************************//
 			//******************************************************************************//
