@@ -13,6 +13,9 @@ import { HomeComponent } from './home/home.component';
 import { ServiceComponent } from './service/service.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AboutComponent } from './about/about.component';
+import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
+import { NavigationComponent } from './navigation/navigation.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { AboutComponent } from './about/about.component';
      HomeComponent,
      ServiceComponent,
      ContactsComponent,
-     AboutComponent
+     AboutComponent,
+     CreateAccountCustomerComponent,
+     NavigationComponent,
+     FooterComponent
   ],
   imports: [
    BrowserModule,

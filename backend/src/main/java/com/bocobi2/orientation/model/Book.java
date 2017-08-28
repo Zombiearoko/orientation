@@ -7,23 +7,27 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Book {
 	
 	@Id
-	private String BookId;
+	private String bookId;
 	private String bookName;
 	private String bookAuthor;
 	private String bookEdition;
+	private double bookPrice;
 	private String bookFile;
 	
 	public Book (){}
 	
-	
 
-	public Book(String bookName, String bookAuthor, String bookEdition, String bookFile) {
+	public Book(String bookName, String bookAuthor, String bookEdition, double bookPrice, String bookFile) {
 		super();
 		this.bookName = bookName;
 		this.bookAuthor = bookAuthor;
 		this.bookEdition = bookEdition;
+		this.bookPrice = bookPrice;
 		this.bookFile = bookFile;
 	}
+
+
+
 
 
 
@@ -64,8 +68,32 @@ public class Book {
 	        return String.format(
 	                "{\"bookId\":%s, \"bookName\":'%s', \"bookAuthor\":'%s',\"bookEdition\":'%s',\"bookEdition\":'%s',"
 	                + "\"bookFile\":'%s'}",
-	                BookId, bookName, bookAuthor,bookEdition,bookFile);
+	                bookId, bookName, bookAuthor,bookEdition,bookFile);
 	    }
+
+
+
+	public String getBookId() {
+		return bookId;
+	}
+
+
+
+	public void setBookId(String bookId) {
+		bookId = bookId;
+	}
+
+
+
+	public double getBookPrice() {
+		return bookPrice;
+	}
+
+
+
+	public void setBookPrice(double bookPrice) {
+		this.bookPrice = bookPrice;
+	}
 
 	
 	

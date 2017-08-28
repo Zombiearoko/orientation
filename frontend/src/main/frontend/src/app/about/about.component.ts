@@ -1,9 +1,11 @@
+import { NavigationComponent } from './../navigation/navigation.component';
+import { FooterComponent } from '../footer/footer.component';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.css']
+  styleUrls: ['./about.component.css', '../../bootstrap/css/bootstrap.css'],
+  entryComponents: [FooterComponent, NavigationComponent]
 })
 export class AboutComponent implements OnInit {
 

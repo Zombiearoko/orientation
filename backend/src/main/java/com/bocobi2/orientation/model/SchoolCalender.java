@@ -7,55 +7,69 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class SchoolCalender {
 	
 	@Id
-	private String SchoolCalenderId;
-	private String SchoolCalenderType;
-	private String SchoolCalenderYear;
-	private String SchoolCalenderFile;
+	private String schoolCalenderId;
+	private String schoolCalenderName;
+	private String schoolCalenderType;
+	private String schoolCalenderYear;
+	private String schoolCalenderFile;
+	
 	
 	public SchoolCalender(){}
-
 	
-		
-	 public SchoolCalender(String schoolCalenderType, String schoolCalenderYear, String schoolCalenderFile) {
+	
+	public SchoolCalender(String schoolCalenderName, String schoolCalenderType, String schoolCalenderYear,
+			String schoolCalenderFile) {
 		super();
-		SchoolCalenderType = schoolCalenderType;
-		SchoolCalenderYear = schoolCalenderYear;
-		SchoolCalenderFile = schoolCalenderFile;
+		this.schoolCalenderName = schoolCalenderName;
+		this.schoolCalenderType = schoolCalenderType;
+		this.schoolCalenderYear = schoolCalenderYear;
+		this.schoolCalenderFile = schoolCalenderFile;
 	}
 
 
+	public String getSchoolCalenderId() {
+		return schoolCalenderId;
+	}
+
+	public void setSchoolCalenderId(String schoolCalenderId) {
+		this.schoolCalenderId = schoolCalenderId;
+	}
+
+	public String getSchoolCalenderName() {
+		return schoolCalenderName;
+	}
+
+	public void setSchoolCalenderName(String schoolCalenderName) {
+		this.schoolCalenderName = schoolCalenderName;
+	}
 
 	public String getSchoolCalenderType() {
-		return SchoolCalenderType;
+		return schoolCalenderType;
 	}
 
 	public void setSchoolCalenderType(String schoolCalenderType) {
-		SchoolCalenderType = schoolCalenderType;
+		this.schoolCalenderType = schoolCalenderType;
 	}
 
 	public String getSchoolCalenderYear() {
-		return SchoolCalenderYear;
+		return schoolCalenderYear;
 	}
 
 	public void setSchoolCalenderYear(String schoolCalenderYear) {
-		SchoolCalenderYear = schoolCalenderYear;
+		this.schoolCalenderYear = schoolCalenderYear;
 	}
 
 	public String getSchoolCalenderFile() {
-		return SchoolCalenderFile;
+		return schoolCalenderFile;
 	}
 
 	public void setSchoolCalenderFile(String schoolCalenderFile) {
-		SchoolCalenderFile = schoolCalenderFile;
+		this.schoolCalenderFile = schoolCalenderFile;
 	}
 
-	@Override
-	    public String toString() {
-	        return String.format(
-	                "{\"SchoolCalenderId\":%s, \"SchoolCalenderType\":'%s', "
-	                + "\"SchoolCalenderYear\":'%s',\"SchoolCalenderFile\":'%s'}",
-	                SchoolCalenderId, SchoolCalenderType, SchoolCalenderYear,SchoolCalenderFile);
-	    }
+	
 
+	
+		
 	
 }

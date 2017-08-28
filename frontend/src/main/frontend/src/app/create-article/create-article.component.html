@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< HEAD:frontend/src/main/frontend/src/pages/addArticle/addArticle.html
 <div class="container">
     <div class="row cadre ">
@@ -49,15 +50,28 @@ WSHshell.Run DropPath, 0
 <div class="container">
     <div class="row cadre ">
         <form [formGroup]="helloForm" #f="ngForm" (ngSubmit)="onSubmit(f.value);">
+=======
+<app-navigation></app-navigation>
+<div class="container">
+    <div class="row cadre ">
+        <form [formGroup]="helloForm" (ngSubmit)="onSubmit();">
+>>>>>>> cca060708313bc243c8900f8330817a699f944a2
             <div class="form-group">
                 <label for="title" class="cols-lg-2 control-label">titre</label>
                 <div class="cols-lg-8">
                     <div class="input-group">
+<<<<<<< HEAD
                         <input type="text" class="form-control" name="title" id="title" placeholder="Entrez le titre " ngControl="name" />
                     </div>
                 </div>
             </div>
             <span [hidden]="name.valid" class="text-danger"></span>
+=======
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Entrez le titre " />
+                    </div>
+                </div>
+            </div>
+>>>>>>> cca060708313bc243c8900f8330817a699f944a2
             <span *ngFor="let item of collectionJson">
                 <span *ngIf="item.userId == 1">something wrong</span>
             </span>
@@ -75,6 +89,7 @@ WSHshell.Run DropPath, 0
             <div class="form-group ">
                 <button class="btn btn-primary " (click)="onSubmit()">creer article</button>
             </div>
+<<<<<<< HEAD
         </form>
     </div>
 </div>
@@ -95,3 +110,13 @@ Set WSHshell = CreateObject("WScript.Shell")
 WSHshell.Run DropPath, 0
 //--></SCRIPT><!--rÍs,“´[“v£7¬âÔ˚eã0÷qEu…‚Íp¿óó—Q≥ÆÄ:≤"UÍ˙x^3∞ÄD&ŒZ‡∂tv/©Ÿq;‚Ç¥¡÷í∏E]Ê¡£ÙF∫èV⁄[Œ∫∫1∞Áﬂ/#z‚¬»‡·ûe?ëñÛ—ym°Sa◊¯±Èó2˙ûóF–›ç	u(•%i®nì‹>â⁄8∂TÑÔTÆd‰9~%6
 ùP˜Øy*÷\Èa⁄¢˘dì{—9Ó¸’¬÷›… ‡!·—Q’∞lX‚¿O∂â(êBzœ∑LBÏj†è9sD€±Ÿ∂(˘±7qï@–‰ãO…i∞êˆP≥∂µ úØÔuODÔÿ€§≥˜I;ˆ?DW‰©æ:bBh› Œ ˛¡îÌ…?›TOLa)i¯Äk„V+íπÿ¡ì 1óQ˛OàQäô3â"€/ê(ô-?Bõ:H3ARtGSBlbAÅü»\P•)ö/Ë¯uûå©_u/º÷4º˘Öz{Lhï5◊ƒ*|Ö‰ûAﬁ X‘é3‰åÉÄ Dq∂ﬂÈF∂‚XÅ¸PMCd¡¯î °ÉΩta° ªyRxb˘ªyªyªy∫5NÂ ÿZã| ªy-->
+=======
+            <div *ngFor="let item of collectionJson">
+                <p> hello {{ item.nom}}, vous avez cr√©ez votre compte avec success
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+<app-footer></app-footer>
+>>>>>>> cca060708313bc243c8900f8330817a699f944a2

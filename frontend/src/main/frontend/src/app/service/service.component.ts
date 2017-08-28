@@ -1,9 +1,11 @@
+import { FooterComponent } from './../footer/footer.component';
+import { NavigationComponent } from './../navigation/navigation.component';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-service',
   templateUrl: './service.component.html',
-  styleUrls: ['./service.component.css']
+  styleUrls: ['./service.component.css', '../../bootstrap/css/bootstrap.css'],
+  entryComponents: [NavigationComponent, FooterComponent]
 })
 export class ServiceComponent implements OnInit {
 

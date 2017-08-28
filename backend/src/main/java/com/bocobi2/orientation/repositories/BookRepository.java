@@ -9,8 +9,9 @@ import com.bocobi2.orientation.model.Book;
 
 public interface BookRepository extends MongoRepository<Book, String> {
 
-    public Book findBybookName(String bookName);
-    public List<Book> findBybookAuthor(String bookAuthor);
+    public Book findByBookName(String bookName);
+    public List<Book> findByBookAuthor(String bookAuthor);
+    public void deleteByBookId(String bookId);
     
     
 

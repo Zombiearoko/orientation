@@ -1,3 +1,4 @@
+import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
 import { AboutComponent } from './about/about.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { ServiceComponent } from './service/service.component';
@@ -7,12 +8,16 @@ import { Routes, RouterModule} from '@angular/router';
 
 
 
+
 export const router: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  {path: '', redirectTo: 'about', pathMatch: 'prefix'},
   {path: 'home', component: HomeComponent },
   {path: 'services', component: ServiceComponent},
   {path: 'contacts', component: ContactsComponent},
-  {path: 'about', component: AboutComponent}
+  {path: 'about', component: AboutComponent},
+  {path: 'subcribe', component: AboutComponent},
+  {path: 'bookshoop', component: AboutComponent},
+   {path: 'account', component: CreateAccountCustomerComponent},
 
 ];
 
