@@ -8,7 +8,8 @@ import com.bocobi2.orientation.model.Scholarship;
 
 public interface ScholarshipRepository extends MongoRepository<Scholarship, String> {
 
-    public Scholarship findByscholarshipType(String scholarshipType);
+    public List<Scholarship> findByScholarshipType(String scholarshipType);
+    public Scholarship findByScholarshipName(String ScholarshipName);
     public List<Scholarship> findByscholarshipPublishingDate(String scholarshipPublishingDate);
 
 }

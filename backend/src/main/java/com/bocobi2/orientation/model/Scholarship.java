@@ -14,6 +14,14 @@ public class Scholarship {
 	private String scholarshipExpirationDate;
 	private String scholarshipWebLink;
 	
+	public String getScholarshipId() {
+		return scholarshipId;
+	}
+
+	public void setScholarshipId(String scholarshipId) {
+		this.scholarshipId = scholarshipId;
+	}
+
 	public Scholarship(){}
 
 	public Scholarship(String scholarshipName, String scholarshipType, String scholarshipPublishingDate,
