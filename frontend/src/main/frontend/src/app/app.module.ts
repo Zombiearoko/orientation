@@ -14,6 +14,7 @@ import { ServiceComponent } from './service/service.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AboutComponent } from './about/about.component';
 import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
+import { SessionClientComponent } from './session-client/session-client.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CreateAccountCustomerComponent } from './create-account-customer/create
      ServiceComponent,
      ContactsComponent,
      AboutComponent,
-     CreateAccountCustomerComponent
+     CreateAccountCustomerComponent,
+     SessionClientComponent
   ],
   imports: [
    BrowserModule,
