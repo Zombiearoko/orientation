@@ -14,10 +14,6 @@ import { ServiceComponent } from './service/service.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AboutComponent } from './about/about.component';
 import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
-
-import { NavigationComponent } from './navigation/navigation.component';
-import { FooterComponent } from './footer/footer.component';
-
 import { SessionClientComponent } from './session-client/session-client.component';
 
 @NgModule({
@@ -32,9 +28,11 @@ import { SessionClientComponent } from './session-client/session-client.componen
      ContactsComponent,
      AboutComponent,
      CreateAccountCustomerComponent,
-     FooterComponent
+     SessionClientComponent
   ],
-    imports: [
+  imports: [
+   BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpModule,
     routes,
