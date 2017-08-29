@@ -11,7 +11,12 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,19 +24,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bocobi2.orientation.model.Administrator;
 import com.bocobi2.orientation.model.Article;
 import com.bocobi2.orientation.model.Book;
+import com.bocobi2.orientation.model.ErrorClass;
+import com.bocobi2.orientation.model.Scholarship;
 import com.bocobi2.orientation.model.SchoolCalender;
 import com.bocobi2.orientation.repositories.AdministratorRepository;
 import com.bocobi2.orientation.repositories.ArticleRepository;
 import com.bocobi2.orientation.repositories.BookRepository;
+import com.bocobi2.orientation.repositories.ScholarshipRepository;
 import com.bocobi2.orientation.repositories.SchoolCalenderRepository;
 
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/administrator")
 public class AdministratorController {
 	
-	String booksFolder ="D:/workspacegithub/orientation/backend/src/main/resources/booksFolder";
-	String schoolCalenderFolder = "D:/workspacegithub/orientation/backend/src/main/resources/schoolCalenderFolder";
+	public static final Logger logger = LoggerFactory.getLogger(AdministratorController.class);
 	
 	@Autowired
 	ArticleRepository articleRepository;
@@ -45,6 +53,13 @@ public class AdministratorController {
 	@Autowired
 	SchoolCalenderRepository schoolCalenderRepository;
 	
+	@Autowired
+	ScholarshipRepository scholarshipRepository;
+	
+	
+	String booksFolder ="D:/workspacegithub/orientation/backend/src/main/resources/booksFolder";
+	String schoolCalenderFolder = "D:/workspacegithub/orientation/backend/src/main/resources/schoolCalenderFolder";
+
 	
 //***************************************************************************************************************	
 	//******************************************************************************//
@@ -52,17 +67,10 @@ public class AdministratorController {
 	//******************************************************************************//
 	
 	//methode pour la gestion de la connexion de l'administrateur en get
-	
-	@SuppressWarnings("unchecked")
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/authentication", method=RequestMethod.GET, params={"login","password"})
-	public JSONObject authenticationGet(HttpServletRequest request){
-		
-		//creation des objects JSON à renvoyer à la vue
-		
-		JSONObject result,success,errors; 
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
+	public ResponseEntity<?> authenticationGet(HttpServletRequest request){
 		
 		//recuperation des parametres de la requete
 		
@@ -75,27 +83,26 @@ public class AdministratorController {
 		
 		//creation d'un objet administrateur
 		
-		Administrator admin = new Administrator();;
+		Administrator admin = new Administrator();
 		
 		//recheche dans la base de données de l'administrateur ayant les informations fournies
-
+		logger.info("recherche de l'administrateur"+admin);
 			admin = administratorRepository.findByLogin(login);
-		if(admin==null)
-			errors.put("notFoundError", "l'administrateur de login " +login+" n'existe pas!");
-		
-		if(errors.isEmpty()){
-			
+		if(admin==null){
+			logger.error("l'administrateur de login {} n'existe pas!",login);
+			return new ResponseEntity(new ErrorClass("l'administrateur de login "
+					+ login +" n'existe pas!"),HttpStatus.NOT_FOUND);
+		}
 			if(admin.getLogin().equals(login) && admin.getPassword().equals(password)){
 				session = request.getSession();
 				session.setAttribute("administratorInSession", admin);
-				success.put("rapport", "connexion reussie");
 			}else{
-				errors.put("errorMessage", "le mot de passe saisi ne corespond pas au login saisi");
+				logger.error("errorMessage", "le mot de passe saisi ne corespond pas au login saisi");
+				return new ResponseEntity(new ErrorClass("le mot de passe saisi ne corespond pas au login saisi"),HttpStatus.NOT_ACCEPTABLE);
 			}
-		}
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
+
+		
+		return new ResponseEntity<Administrator>(admin,HttpStatus.OK);
 		
 	}
 	
@@ -105,14 +112,7 @@ public class AdministratorController {
 	
 		@SuppressWarnings("unchecked")
 		@RequestMapping(value="/authentication", method=RequestMethod.POST, params={"login","password"})
-		public JSONObject authenticationPost(HttpServletRequest request){
-			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
+		public ResponseEntity<?> authenticationPost(HttpServletRequest request){
 			
 			//recuperation des parametres de la requete
 			
@@ -125,30 +125,28 @@ public class AdministratorController {
 			
 			//creation d'un objet administrateur
 			
-			Administrator admin = new Administrator();;
+			Administrator admin = new Administrator();
 			
 			//recheche dans la base de données de l'administrateur ayant les informations fournies
-
+			logger.info("recherche de l'administrateur"+admin);
 				admin = administratorRepository.findByLogin(login);
-			if(admin==null)
-				errors.put("notFoundError", "l'administrateur de login " +login+" n'existe pas!");
-			
-			if(errors.isEmpty()){
-				
+			if(admin==null){
+				logger.error("l'administrateur de login {} n'existe pas!",login);
+				return new ResponseEntity(new ErrorClass("l'administrateur de login "
+						+ login +" n'existe pas!"),HttpStatus.NOT_FOUND);
+			}
 				if(admin.getLogin().equals(login) && admin.getPassword().equals(password)){
 					session = request.getSession();
 					session.setAttribute("administratorInSession", admin);
-					success.put("rapport", "connexion reussie");
 				}else{
-					errors.put("errorMessage", "le mot de passe saisi ne corespond pas au login saisi");
+					logger.error("errorMessage", "le mot de passe saisi ne corespond pas au login saisi");
+					return new ResponseEntity(new ErrorClass("le mot de passe saisi ne corespond pas au login saisi"),HttpStatus.NOT_ACCEPTABLE);
 				}
-			}
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
+
 			
-		}
-	
+			return new ResponseEntity<Administrator>(admin,HttpStatus.OK);
+			
+		}	
 //***************************************************************************************************************	
 	//******************************************************************************//
 	//***********************methode creation d'un nouvel article*******************//
@@ -1191,6 +1189,8 @@ public class AdministratorController {
 				
 				
 				
+
+				
 				
 				
 				
@@ -1215,7 +1215,7 @@ public class AdministratorController {
 		
 		@SuppressWarnings("unchecked")
 		@RequestMapping(value="/addSchoolCalender", method=RequestMethod.GET)
-		public JSONObject createSchoolCalenderGet(HttpServletRequest request){
+		public JSONObject addSchoolCalenderGet(HttpServletRequest request){
 			
 			//creation des objects JSON à renvoyer à la vue
 			
@@ -1525,6 +1525,301 @@ public class AdministratorController {
 
 
 //***************************************************************************************************************
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//***************************************************************************************************************	
+	//******************************************************************************//
+	//***********************methode creation d'une nouvelle bourse*******************//
+//******************************************************************************//
+
+
+//methode pour la creation d'un nouvel article en get
+
+@SuppressWarnings("unchecked")
+@RequestMapping(value="/addScolarship", method=RequestMethod.GET)
+public JSONObject addScolarshipGet(HttpServletRequest request){
+
+//creation des objects JSON à renvoyer à la vue
+
+JSONObject result,success,errors; 
+result = new JSONObject();
+success = new JSONObject();
+errors = new JSONObject();
+
+//recuperation des parametres de la requete
+
+String scholarshipName = request.getParameter("scholarshipName");
+String scholarshipType = request.getParameter("scholarshipType");
+String scholarshipPublishingDate = request.getParameter("scholarshipPublishingDate");
+String scholarshipExpirationDate = request.getParameter("scholarshipExpirationDate");
+String scholarshipWebLink = request.getParameter("scholarshipWebLink");
+
+//creation du programme
+
+Scholarship scholarship = new Scholarship(scholarshipName,
+											scholarshipType,
+											scholarshipPublishingDate,
+											scholarshipExpirationDate,
+											scholarshipWebLink);
+
+//insertion de la bourse dans la base de données
+	try{
+		 scholarshipRepository.save(scholarship);
+		success.put("rapport", "bourse enregistrée avec succès");
+		
+	}catch(Exception e){
+		errors.put("notSaveError", "echec de l'enregistrement de la bourse");
+	}
+	
+
+result.put("success", success);
+result.put("errors", errors);
+return result;
+
+}
+
+
+
+
+//methode pour la creation d'une nouvelle bourse en post
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/addScolarship", method=RequestMethod.POST)
+	public JSONObject addScolarshipPost(HttpServletRequest request){
+		
+
+		//creation des objects JSON à renvoyer à la vue
+
+		JSONObject result,success,errors; 
+		result = new JSONObject();
+		success = new JSONObject();
+		errors = new JSONObject();
+
+		//recuperation des parametres de la requete
+
+		String scholarshipName = request.getParameter("scholarshipName");
+		String scholarshipType = request.getParameter("scholarshipType");
+		String scholarshipPublishingDate = request.getParameter("scholarshipPublishingDate");
+		String scholarshipExpirationDate = request.getParameter("scholarshipExpirationDate");
+		String scholarshipWebLink = request.getParameter("scholarshipWebLink");
+
+		//creation du programme
+
+		Scholarship scholarship = new Scholarship(scholarshipName,
+													scholarshipType,
+													scholarshipPublishingDate,
+													scholarshipExpirationDate,
+													scholarshipWebLink);
+
+		//insertion de la bourse dans la base de données
+			try{
+				 scholarshipRepository.save(scholarship);
+				success.put("rapport", "bourse enregistrée avec succès");
+				
+			}catch(Exception e){
+				errors.put("notSaveError", "echec de l'enregistrement de la bourse");
+			}
+			
+
+		result.put("success", success);
+		result.put("errors", errors);
+		return result;
+
+		}
+//***************************************************************************************************************
+//******************************************************************************//
+//***********************methode pour la suppression d'une bourse**********//
+//******************************************************************************//		
+
+
+//methode pour la suppression d'une bourse en get
+
+
+@SuppressWarnings("unchecked")
+@RequestMapping(value="/deleteScholarship",method=RequestMethod.GET)
+public JSONObject deleteScholarshipGet(HttpServletRequest request){
+
+//creation des objects JSON à renvoyer à la vue
+
+JSONObject result,success,errors; 
+result = new JSONObject();
+success = new JSONObject();
+errors = new JSONObject();
+
+//recuperation des parametres de la requete
+
+String scholarshipName =request.getParameter("scholarshipName");
+//creation du programme à supprimer
+
+Scholarship scholarship = new Scholarship();
+
+//recuperation de la bourse dans la base de données
+
+scholarship = scholarshipRepository.findByScholarshipName(scholarshipName);
+	
+	
+if(scholarship==null){
+	errors.put("notFoundError", "la bourse de nom "+scholarshipName+" n'existe pas!");
+}else{
+	schoolCalenderRepository.deleteByschoolCalenderId(scholarship.getScholarshipId());
+	success.put("rapport", "suppression effectuée avec succes");
+}
+
+result.put("success", success);
+result.put("errors", errors);
+return result;
+
+}
+
+//methode pour la suppression d'une bourse en post
+
+
+@SuppressWarnings("unchecked")
+@RequestMapping(value="/deleteScholarship",method=RequestMethod.POST)
+public JSONObject deleteScholarshipPost(HttpServletRequest request){
+
+	//creation des objects JSON à renvoyer à la vue
+
+	JSONObject result,success,errors; 
+	result = new JSONObject();
+	success = new JSONObject();
+	errors = new JSONObject();
+
+	//recuperation des parametres de la requete
+
+	String scholarshipName =request.getParameter("scholarshipName");
+	//creation du programme à supprimer
+
+	Scholarship scholarship = new Scholarship();
+
+	//recuperation de la bourse dans la base de données
+
+	scholarship = scholarshipRepository.findByScholarshipName(scholarshipName);
+		
+		
+	if(scholarship==null){
+		errors.put("notFoundError", "la bourse de nom "+scholarshipName+" n'existe pas!");
+	}else{
+		schoolCalenderRepository.deleteByschoolCalenderId(scholarship.getScholarshipId());
+		success.put("rapport", "suppression effectuée avec succes");
+	}
+
+	result.put("success", success);
+	result.put("errors", errors);
+	return result;
+
+	}
+
+//***************************************************************************************************************
+
+//******************************************************************************//
+//*************methode pour la recherche des bourses suivant le type**********//
+//******************************************************************************//		
+
+//methode pour la recherche des bourses en get
+
+
+@SuppressWarnings("unchecked")
+@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.GET)
+public JSONObject researchScholarshipByTypeGet(HttpServletRequest request){
+
+//creation des objects JSON à renvoyer à la vue
+
+JSONObject result,success,errors; 
+result = new JSONObject();
+success = new JSONObject();
+errors = new JSONObject();
+
+//recuperation des parametres de la requete
+
+String scholarshipType =request.getParameter("scholarshipType");
+//creation de la liste des bourses trouvées
+
+List<Scholarship> listOfScholarship = new ArrayList<Scholarship>();
+
+//recuperation de l'article dans la base de données
+
+listOfScholarship = scholarshipRepository.findByScholarshipType(scholarshipType);
+	
+int i=1;	
+if(listOfScholarship.isEmpty()){
+	errors.put("notFoundError", "aucune bourse "+scholarshipType+" n'est enrégisté!");
+}else{
+	for(Scholarship sc:listOfScholarship){
+	success.put("bourse"+i, sc);
+	i++;
+	}
+}
+
+
+result.put("success", success);
+result.put("errors", errors);
+return result;
+
+}
+
+
+//methode pour la recherche des bourses en get
+
+
+@SuppressWarnings("unchecked")
+@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.POST)
+public JSONObject researchScholarshipByTypePost(HttpServletRequest request){
+
+	//creation des objects JSON à renvoyer à la vue
+
+	JSONObject result,success,errors; 
+	result = new JSONObject();
+	success = new JSONObject();
+	errors = new JSONObject();
+
+	//recuperation des parametres de la requete
+
+	String scholarshipType =request.getParameter("scholarshipType");
+	//creation de la liste des bourses trouvées
+
+	List<Scholarship> listOfScholarship = new ArrayList<Scholarship>();
+
+	//recuperation de l'article dans la base de données
+
+	listOfScholarship = scholarshipRepository.findByScholarshipType(scholarshipType);
+		
+	int i=1;	
+	if(listOfScholarship.isEmpty()){
+		errors.put("notFoundError", "aucune bourse "+scholarshipType+" n'est enrégisté!");
+	}else{
+		for(Scholarship sc:listOfScholarship){
+		success.put("bourse"+i, sc);
+		i++;
+		}
+	}
+
+
+	result.put("success", success);
+	result.put("errors", errors);
+	return result;
+
+	}
+
+//***************************************************************************************************************
+
 
 	//methodes de controle des formulaires
 	
