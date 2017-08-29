@@ -7,7 +7,7 @@ import { Http } from '@angular/http';
 
 @Component({
   templateUrl: './create-account-customer.component.html',
-  styleUrls: ['./create-account-customer.component.css']
+  styleUrls: ['./create-account-customer.component.css', '../../bootstrap/css/bootstrap.css']
 })
 export class CreateAccountCustomerComponent implements OnInit {
   clientForm: FormGroup;
