@@ -1,3 +1,4 @@
+import { SessionClientComponent } from './session-client/session-client.component';
 import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
 import { AboutComponent } from './about/about.component';
 import { ContactsComponent } from './contacts/contacts.component';
@@ -18,6 +19,7 @@ export const router: Routes = [
   {path: 'subcribe', component: AboutComponent},
   {path: 'bookshoop', component: AboutComponent},
    {path: 'account', component: CreateAccountCustomerComponent},
+    {path: 'sessionCostumer', component: SessionClientComponent}
 
 ];
 
