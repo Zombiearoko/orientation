@@ -3,7 +3,6 @@ package com.bocobi2.orientation.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bocobi2.orientation.model.Client;
+import com.bocobi2.orientation.model.ErrorClass;
+import com.bocobi2.orientation.model.SuccessClass;
 import com.bocobi2.orientation.model.Testimony;
-import com.bocobi2.orientation.repositories.*;
+import com.bocobi2.orientation.repositories.ClientRepository;
+import com.bocobi2.orientation.repositories.TestimonyRepository;
 
 @CrossOrigin(origins = "*")
 @RequestMapping("/customer")
@@ -41,9 +43,8 @@ public class CustomerController {
 			//******************************************************************************//
 		
 	// methode d'ajout d'un nouveau client en get
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET, params = { "firstNameCustomer",
-			"lastNameCustomer", "phoneNumber", "emailAddress", "password" })
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
 	public ResponseEntity<?> addClientGet(HttpServletRequest request) {
 
 		// recuperation des informations du client
@@ -67,17 +68,17 @@ public class CustomerController {
 		client.setEmailAddress(emailAddress);
 		
 		logger.info("enregistrement du client {}",client);
-
-			clientRepository.save(client);
-		
-		
-
-		
+		if(clientRepository.findByEmailAddress(emailAddress)!=null){
+			logger.error("le client {} est deja enregistré dans la base de donnees",client);
+			return new ResponseEntity(new ErrorClass("le client est deja"
+					+ " enregistré dans la base de donnees"),HttpStatus.CONFLICT);
+		}
+		clientRepository.save(client);
 		return new ResponseEntity<Client>(client,HttpStatus.CREATED);
 	}
 
 	// methode d'ajout d'un nouveau client en post
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
 	public ResponseEntity<?> addClientPost(HttpServletRequest request) {
 
@@ -101,10 +102,13 @@ public class CustomerController {
 		client.setPassword(password);
 		client.setEmailAddress(emailAddress);
 		
-		logger.info("enregistrement du client {}",client);;
-
-			clientRepository.save(client);
-		
+		logger.info("enregistrement du client {}",client);
+		if(clientRepository.findByEmailAddress(emailAddress)!=null){
+			logger.error("le client {} est deja enregistré dans la base de donnees",client);
+			return new ResponseEntity(new ErrorClass("le client est deja"
+					+ " enregistré dans la base de donnees"),HttpStatus.CONFLICT);
+		}
+		clientRepository.save(client);
 		return new ResponseEntity<Client>(client,HttpStatus.CREATED);
 	}
 //***************************************************************************************************************	
@@ -114,88 +118,73 @@ public class CustomerController {
 		
 	//methode d'authentification en get
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/authentication", method = RequestMethod.GET, params = { "login", "password" })
-	private JSONObject authenticationGet(HttpServletRequest request) {
-		JSONObject result, success, errors;
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
+	private ResponseEntity<?> authenticationGet(HttpServletRequest request) {
 
 		HttpSession session;
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		Client client = new Client();
 
-		
 			client = clientRepository.findByEmailAddress(login);
-		if(client==null)
-			errors.put("notFoundError", "l'utilisateur d'adresse email " + login + "est introuvable");
-		
-
-		if (errors.isEmpty()) {
-			try {
-				validatePasswordAndLogin(password, login);
-				session = request.getSession();
-				session.setAttribute("customerInSession", client);
-				success.put("customerInSession", client);
-				success.put("rapport", "session ouverte avec succes");
-			} catch (Exception e) {
-				errors.put("errorMessage", e.getMessage());
+		if(client==null){
+			logger.error("l'utilisateur d'adresse email " + login + " est introuvable");
+			return new ResponseEntity(new ErrorClass("l'utilisateur d'adresse email " + login + ""
+					+ " est introuvable"),HttpStatus.NOT_FOUND);
 			}
+		
+		try {
+			validatePasswordAndLogin(password, login);
+			session = request.getSession();
+			session.setAttribute("customerInSession", client);
+			logger.info("le client {} est actuelement en session", client);
+			return new ResponseEntity(new SuccessClass(client),HttpStatus.OK );
+		} catch (Exception e) {
+			logger.error( e.getMessage());
+			return new ResponseEntity(new SuccessClass(e.getMessage()),HttpStatus.NOT_ACCEPTABLE);
 		}
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
+
 	}
 
 	//methode d'authentification en post
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/authentication", method = RequestMethod.POST, params = { "login", "password" })
-	private JSONObject authenticationPost(HttpServletRequest request) {
-		JSONObject result, success, errors;
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
+	private ResponseEntity<?> authenticationPost(HttpServletRequest request) {
 
 		HttpSession session;
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		Client client = new Client();
 
-		try {
+		
 			client = clientRepository.findByEmailAddress(login);
+		if(client==null){
+			logger.error("l'utilisateur d'adresse email " + login + " est introuvable");
+			return new ResponseEntity(new ErrorClass("l'utilisateur d'adresse email " + login + ""
+					+ " est introuvable"),HttpStatus.NOT_FOUND);
+			}
+		
+		try {
+			validatePasswordAndLogin(password, login);
+			session = request.getSession();
+			session.setAttribute("customerInSession", client);
+			logger.info("le client {} est actuelement en session", client);
+			return new ResponseEntity(new SuccessClass(client),HttpStatus.OK );
 		} catch (Exception e) {
-			errors.put("notFoundError", "l'utilisateur d'adresse email " + login + "est introuvable");
+			logger.error( e.getMessage());
+			return new ResponseEntity(new SuccessClass(e.getMessage()),HttpStatus.NOT_ACCEPTABLE);
 		}
 
-		if (errors.isEmpty()) { 
-			try {
-				validatePasswordAndLogin(password, login);
-				session = request.getSession();
-				session.setAttribute("customerInSession", client);
-				success.put("customerInSession", client.toString());
-				success.put("rapport", "session ouverte avec succes");
-			} catch (Exception e) {
-				errors.put("errorMessage", e.getMessage());
-			}
-		}
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
 	}
-	
 	
 	
 	//methode d'ajout d'un temoignage en get
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/postTestimony", method = RequestMethod.GET, params = { "testimonyContent" })
-	private JSONObject postTestimonyGet(HttpServletRequest request) {
-		JSONObject result, success, errors;
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
+	private ResponseEntity postTestimonyGet(HttpServletRequest request) {
+		
 		HttpSession session;
 		
 		session = request.getSession();
@@ -213,26 +202,23 @@ public class CustomerController {
 		testimony.setTestimonyContent(testimonyContent);
 		
 		try{
+			logger.info("enregistrement du post");
 			testimonyRepository.save(testimony);
-			success.put("rapport", "temoignage enregistré avec succes");
+			client.postTestimony(testimony);
+			clientRepository.save(client);
+			return new ResponseEntity(new SuccessClass("temoignage enregistré avec succes"),HttpStatus.OK);
 		}catch(Exception e){
-			errors.put("notSaveError", "le temoignage n'a pas été enregistré");
+			logger.error("le temoignage n'a pas été enregistré");
+			return new ResponseEntity(new ErrorClass("le temoignage n'a pas été enregistré"),HttpStatus.NOT_ACCEPTABLE);
 		}
-
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
 	}
 	
 	//methode d'ajout d'un temoignage en post
 	
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value = "/postTestimony", method = RequestMethod.POST, params = { "testimonyContent" })
-		private JSONObject postTestimonyPost(HttpServletRequest request) {
-			JSONObject result, success, errors;
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
+		private ResponseEntity postTestimonyPost(HttpServletRequest request) {
+			
 			HttpSession session;
 			
 			session = request.getSession();
@@ -250,16 +236,17 @@ public class CustomerController {
 			testimony.setTestimonyContent(testimonyContent);
 			
 			try{
+				logger.info("enregistrement du post");
 				testimonyRepository.save(testimony);
-				success.put("rapport", "temoignage enregistré avec succes");
+				client.postTestimony(testimony);
+				clientRepository.save(client);
+				return new ResponseEntity(new SuccessClass("temoignage enregistré avec succes"),HttpStatus.OK);
 			}catch(Exception e){
-				errors.put("notSaveError", "le temoignage n'a pas été enregistré");
+				logger.error("le temoignage n'a pas été enregistré");
+				return new ResponseEntity(new ErrorClass("le temoignage n'a pas été enregistré"),HttpStatus.NOT_ACCEPTABLE);
 			}
-
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
 		}
+		
 		
 //***************************************************************************************************************	
 		//******************************************************************************//
@@ -268,20 +255,10 @@ public class CustomerController {
 		
 		//methode pour la gestion de la deconnexion du client en get
 		
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/deconnection", method=RequestMethod.GET)
-		public JSONObject deconnectionGet(HttpServletRequest request){
-			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
-			
-			//recuperation des parametres de la requete
-			
-			
+		public ResponseEntity<?> deconnectionGet(HttpServletRequest request){
+
 			//objets utils
 			
 			HttpSession session;
@@ -297,17 +274,19 @@ public class CustomerController {
 					
 					if(client!=null){
 					try{
+						session.removeAttribute("customerInSession");
 						session.invalidate();
-						success.put("rapport", "deconnexion reussie");
+						return new ResponseEntity(new SuccessClass("deconnexion reussie"),HttpStatus.OK);
 					}catch(Exception e){
-						errors.put("errorMessage", "la session n'a pas pu etre fermé");
+						logger.error("la session n'a pas pu etre fermé");
+						return new ResponseEntity(new ErrorClass("la session"
+								+ " n'a pas pu etre fermé"),HttpStatus.NOT_FOUND);
 					}
 					}else{
-						errors.put("errorMessage", "aucune session n'est ouverte");
+						logger.error("aucune session n'est ouverte");
+						return new ResponseEntity(new ErrorClass("aucune "
+								+ "session n'est ouverte"),HttpStatus.NOT_FOUND);
 					}
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
 			
 		}
 		
@@ -315,27 +294,17 @@ public class CustomerController {
 		
 		//methode pour la gestion de la connexion de l'clientistrateur en post
 		
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/deconnection", method=RequestMethod.POST)
-			public JSONObject deconnectionPost(HttpServletRequest request){
-				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-				
-				//recuperation des parametres de la requete
-				
-				
+			public ResponseEntity<?> deconnectionPost(HttpServletRequest request){
+
 				//objets utils
 				
 				HttpSession session;
 				
 				//creation d'un objet clientistrateur
 				
-				Client client = new Client();;
+				Client client = new Client();
 				
 				//recheche dans la base de données de l'clientistrateur ayant les informations fournies
 
@@ -344,19 +313,22 @@ public class CustomerController {
 						
 						if(client!=null){
 						try{
+							session.removeAttribute("customerInSession");
 							session.invalidate();
-							success.put("rapport", "deconnexion reussie");
+							return new ResponseEntity(new SuccessClass("deconnexion reussie"),HttpStatus.OK);
 						}catch(Exception e){
-							errors.put("errorMessage", "la session n'a pas pu etre fermé");
+							logger.error("la session n'a pas pu etre fermé");
+							return new ResponseEntity(new ErrorClass("la session"
+									+ " n'a pas pu etre fermé"),HttpStatus.NOT_FOUND);
 						}
 						}else{
-							errors.put("errorMessage", "aucune session n'est ouverte");
+							logger.error("aucune session n'est ouverte");
+							return new ResponseEntity(new ErrorClass("aucune "
+									+ "session n'est ouverte"),HttpStatus.NOT_FOUND);
 						}
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
 				
-			}			
+			}
+
 //***************************************************************************************************************	
 
 	

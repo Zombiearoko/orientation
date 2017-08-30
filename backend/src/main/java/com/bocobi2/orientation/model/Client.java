@@ -1,5 +1,7 @@
 package com.bocobi2.orientation.model;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,23 +9,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Client {
 
     @Id
-    private String ClientId;
+    private String emailAddress;
 
     private String firstNameCustomer;
     private String lastNameCustomer;
-    private String emailAddress;
 	private String password;
 	private String phoneNumber;
+	private List<Testimony> customerListOfTestimonies;
 	
 	
 	public Client(){}
 	
 
-    public Client(String firstNameCustomer, String lastNameCustomer, String emailAddress, String password, String phoneNumber) {
+    public Client(String emailAddress, String firstNameCustomer, String lastNameCustomer, String password, String phoneNumber) {
 		super();
+		this.emailAddress = emailAddress;
 		this.firstNameCustomer = firstNameCustomer;
 		this.lastNameCustomer = lastNameCustomer;
-		this.emailAddress = emailAddress;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
 	}
@@ -113,10 +115,24 @@ public class Client {
 	   @Override
 	    public String toString() {
 	        return String.format(
-	                "{\"clientId\":%s, \"firstNameCustomer\":'%s', \"lastNameCustomer\":'%s',"
+	                "{\"firstNameCustomer\":'%s', \"lastNameCustomer\":'%s',"
 	                + "\"emailAddress\":'%s',\"password\":'%s',\"phoneNumber\":'%s'}",
-	                ClientId, firstNameCustomer, lastNameCustomer,emailAddress,password,phoneNumber);
+	                firstNameCustomer, lastNameCustomer,emailAddress,password,phoneNumber);
 	    }
+
+
+	public List<Testimony> getCustomerListOfTestimonies() {
+		return customerListOfTestimonies;
+	}
+
+
+	public void setCustomerListOfTestimonies(List<Testimony> customerListOfTestimonies) {
+		this.customerListOfTestimonies = customerListOfTestimonies;
+	}
+	
+	public void postTestimony(Testimony testimony){
+		this.customerListOfTestimonies.add(testimony);
+	}
 
 
 }
