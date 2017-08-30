@@ -1,5 +1,3 @@
-import { NavigationComponent } from './../navigation/navigation.component';
-import { FooterComponent } from '../footer/footer.component';
 import { Article } from './article';
 import { HttpModule } from '@angular/http';
 import { Component, OnInit, Input } from '@angular/core';
@@ -10,8 +8,7 @@ import { Http } from '@angular/http';
 
 @Component({
   templateUrl: './create-article.component.html',
-  styleUrls: ['./create-article.component.css', '../../bootstrap/css/bootstrap.css'],
-   entryComponents: [FooterComponent, NavigationComponent]
+  styleUrls: ['./create-article.component.css', '../../bootstrap/css/bootstrap.css']
 })
 export class CreateArticleComponent implements OnInit {
 @Input() articleForm: FormGroup;

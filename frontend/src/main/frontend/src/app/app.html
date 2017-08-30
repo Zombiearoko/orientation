@@ -15,7 +15,7 @@
                         <a [routerLink]="['home']"> Accueil</a>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['services']" id="themes">services <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['./services']" id="themes">services <span class="caret"></span></a>
                         <ul class="dropdown-menu" aria-labelledby="themes">
                             <li><a href="../default/">conseiller d'orientation</a></li>
                             <li class="divider"></li>
@@ -49,57 +49,34 @@
     </div>
 
 </div>
-
-<div class="separator"></div>
-
-
-<!-- Header -->
-<header class="intro-header">
-    <div class="container">
-        <div class="intro-message">
-            <h1>Orientation academique et professionnelle </h1>
-            <hr class="intro-divider">
-        </div>
-    </div>
-</header>
-<div class="separators"></div>
-<!--navigaton side-->
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-<div class="nav-side-menu">
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
-
-    <div class="menu-list">
-
-        <ul id="menu-content" class="menu-content collapse out">
-
-            <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                <a> <i class="glyphicon glyphicon-off"></i>se connecter <span class="arrow"></span></a>
-            </li>
-            <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                <a href="#"><i class="fa fa-gift fa-lg"></i>s'abonner <span class="arrow"></span></a>
-            </li>
-            <ul class="sub-menu collapse" id="products">
-                <li><a href="#">offre d'emploi</a></li>
-                <li><a href="#">offre de stage</a></li>
-                <li><a href="#">offre de bourse</a></li>
-                <li><a href="#">conseiller d'orientation</a></li>
-            </ul>
-            <li data-toggle="collapse" data-target="#service" class="collapsed">
-                <a [routerLink]="['account']"><i class="fa fa-user fa-lg"></i>creer un compte client <span class="arrow"></span></a>
-            </li>
-
-
-            <li data-toggle="collapse" data-target="#service" class="collapsed">
-                <a href=""><i class="fa fa-globe fa-lg"></i> Librairie <span class="arrow"></span></a>
-            </li>
-
-        </ul>
-    </div>
-</div>
-
-
-<div class="">
+<div class="container">
     <router-outlet></router-outlet>
 </div>
-<app-footer></app-footer>
+
+
+
+
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <ul class="list-inline">
+            <li class="list-inline-item">
+                <a href="#">Home</a>
+            </li>
+            <li class="footer-menu-divider list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+                <a href="#about">About</a>
+            </li>
+            <li class="footer-menu-divider list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+                <a href="#services">Services</a>
+            </li>
+            <li class="footer-menu-divider list-inline-item">&sdot;</li>
+            <li class="list-inline-item">
+                <a href="#contact">Contact</a>
+            </li>
+        </ul>
+        <p class="copyright text-muted small">Copyright &copy; bocobi2 2017. All Rights Reserved</p>
+    </div>
+</footer>

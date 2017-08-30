@@ -1,11 +1,8 @@
 <div class="separator"></div>
 <!-- Header -->
-<header class="intro-header">
-    <div class="container">
-        <div class="intro-message">
-            <h1>Orientation academique et professionnelle </h1>
-            <hr class="intro-divider">
-        </div>
+<header class="pull-right">
+    <div *ngFor="let item of collectionJson">
+        <h1 *ngIf="item.id == 1"> {{ item.id }},bienvenu</h1>
     </div>
 </header>
 <div class="separators"></div>
@@ -20,10 +17,10 @@
         <ul id="menu-content" class="menu-content collapse out">
 
             <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                <a> <i class="glyphicon glyphicon-off"></i>se connecter <span class="arrow"></span></a>
+                <a> <i class="glyphicon glyphicon-off"></i>se deconnecter <span class="arrow"></span></a>
             </li>
             <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                <a href="#"><i class="fa fa-gift fa-lg"></i>s'abonner <span class="arrow"></span></a>
+                <a href="#"><i class="fa fa-gift fa-lg"></i>consulter les offres <span class="arrow"></span></a>
             </li>
             <ul class="sub-menu collapse" id="products">
                 <li><a href="#">offre d'emploi</a></li>
@@ -32,7 +29,7 @@
                 <li><a href="#">conseiller d'orientation</a></li>
             </ul>
             <li data-toggle="collapse" data-target="#service" class="collapsed">
-                <a [routerLink]="['../account']"><i class="fa fa-user fa-lg"></i>creer un compte client <span class="arrow"></span></a>
+                <a [routerLink]="['../account']"><i class="fa fa-user fa-lg"></i>gerer son panier<span class="arrow"></span></a>
             </li>
 
 
@@ -119,35 +116,3 @@
     </div>
 </div>
 <div class="clear-both"></div>
-<aside class="banner">
-
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-6 my-auto">
-                <h2>suivre des sites profesionnelles</h2>
-            </div>
-            <div class="col-lg-6 my-auto">
-                <ul class="list-inline banner-social-buttons">
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-secondary btn-lg">
-                            <i class="fa fa-github fa-fw"></i>
-                            <span class="network-name">Github</span>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-secondary btn-lg">
-                            <i class="fa fa-linkedin fa-fw"></i>
-                            <span class="network-name">Linkedin</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-    <!-- /.container -->
-
-</aside>
-
-<!-- /.banner -->
