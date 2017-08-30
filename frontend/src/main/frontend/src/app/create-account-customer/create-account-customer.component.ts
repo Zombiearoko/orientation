@@ -44,6 +44,7 @@ export class CreateAccountCustomerComponent implements OnInit {
     + '&password =' + post.password;
     const urlSaph = 'http://192.168.8.105:8091/rencontre/Member/registration';
      const urlInno = 'http://localhost:8092/customer/addCustomer';
+      const url2 = 'https://jsonplaceholder.typicode.com/post';
  console.log(this.firstNameCustomer);
 this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emailAdress, this.password, this.phoneNumber  )
 .subscribe((data) => {
@@ -51,7 +52,7 @@ this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emai
         console.log(this.firstNameCustomer);
         this.submitted = true;
        });
-      this.http.get(urlInno).subscribe(resp => {
+      this.http.get(url).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
   console.log(this.collectionJson);
@@ -59,7 +60,6 @@ this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emai
   }
 
   ngOnInit() {
-
   }
 
 }

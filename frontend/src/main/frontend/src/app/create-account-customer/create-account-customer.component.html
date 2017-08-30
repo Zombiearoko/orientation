@@ -1,57 +1,107 @@
-<div class="container">
-    <div class="row cadre ">
-        <form (ngSubmit)="onSubmit(clientForm.value);" [formGroup]="clientForm">
-            <div class="form-group">
-                <label for="name" class="cols-lg-2 control-label">nom</label>
-                <div class="cols-lg-8">
-                    <div class="input-group">
-                        <input type="text" class="form-control" formControlName="firstNameCustomer" name="firstNameCustomer" id="name" placeholder=" " />
-                    </div>
-                </div>
-            </div>
-            <span class="text-danger" [hidden]="!clientForm.controls.firstNameCustomer.valid && (clientForm.controls.firstNameCustomer.dirty || clientForm.controls.firstNameCustomer.touched)">*</span>
-            <div class="form-group">
-                <label for="pname" class="cols-lg-2 control-label">prenom</label>
-                <div class="cols-lg-8">
-                    <div class="input-group">
-                        <input type="text" class="form-control" formControlName="lastNameCustomer" name="lastNameCustomer" id="pname" placeholder=" " />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="email" class="cols-lg-2 control-label">email</label>
-                <div class="cols-lg-8">
-                    <div class="input-group">
-                        <input type="email" class="form-control" formControlName="emailAddress" name="emailAddress" id="title" placeholder=" " />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="name" class="cols-lg-2 control-label">mot de passe</label>
-                <div class="cols-lg-8">
-                    <div class="input-group">
-                        <input type="text" class="form-control" formControlName="password" name="password" id="title" placeholder=" " />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="tel" class="cols-lg-2 control-label">telephone</label>
-                <div class="cols-lg-8">
-                    <div class="input-group">
-                        <input type="text" class="form-control" formControlName="phoneNumber" name="phoneNumber" id="title" placeholder=" " />
-                    </div>
-                </div>
-            </div>
-            <div class="form-group ">
-                <button class="btn btn-success " type="submit">creer compte</button>
-                <button class="btn btn-danger ">annuler</button>
-            </div>
-        </form>
+<div class="separator"></div>
+<!-- Header -->
+<header class="intro-header">
+    <div class="container">
+        <div class="intro-message">
+            <h1>Creer votre compte client </h1>
+            <hr class="intro-divider">
+        </div>
     </div>
+</header>
+<div class="separators"></div>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+<!-- Page Content -->
+<div class="row">
+    <div class="article clear-left col-lg-6">
+
+        <div class="container">
+            <div class="cadre ">
+                <form (ngSubmit)="onSubmit(clientForm.value);" [formGroup]="clientForm">
+                    <div class="form-group">
+                        <label for="name" class="cols-lg-2 control-label">nom</label>
+                        <div class="cols-lg-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="firstNameCustomer" name="firstNameCustomer" id="name" placeholder=" " />
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-danger" [hidden]="clientForm.controls.firstNameCustomer.invalid && clientForm.controls.firstNameCustomer.untouched && clientForm.controls.firstNameCustomer.pristine">*</span>
+                    <div class="form-group">
+                        <label for="pname" class="cols-lg-2 control-label">prenom</label>
+                        <div class="cols-lg-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="lastNameCustomer" name="lastNameCustomer" id="pname" placeholder=" " />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="cols-lg-2 control-label">email</label>
+                        <div class="cols-lg-8">
+                            <div class="input-group">
+                                <input type="email" class="form-control" formControlName="emailAddress" name="emailAddress" id="title" placeholder=" " />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="cols-lg-2 control-label">mot de passe</label>
+                        <div class="cols-lg-8">
+                            <div class="input-group">
+                                <input type="password" class="form-control" formControlName="password" name="password" id="title" placeholder=" " />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tel" class="cols-lg-2 control-label">telephone</label>
+                        <div class="cols-lg-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" formControlName="phoneNumber" name="phoneNumber" id="title" placeholder=" " />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+
+                        <a [routerLink]="['../sessionCostumer']"> <button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">creer compte</button> </a>
+                        <button class="btn btn-danger ">annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
+<div class="clear-both"></div>
+<aside class="banner">
 
+    <div class="container">
 
-<div *ngFor="let item of collectionJson">
-    <p> {{ item.userId }}, votre compte a ete crée avec succes</p>
+        <div class="row">
+            <div class="col-lg-6 my-auto">
+                <h2>suivre des sites profesionnelles</h2>
+            </div>
+            <div class="col-lg-6 my-auto">
+                <ul class="list-inline banner-social-buttons">
+                    <li class="list-inline-item">
+                        <a href="#" class="btn btn-secondary btn-lg">
+                            <i class="fa fa-github fa-fw"></i>
+                            <span class="network-name">Github</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#" class="btn btn-secondary btn-lg">
+                            <i class="fa fa-linkedin fa-fw"></i>
+                            <span class="network-name">Linkedin</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-</div>
+    </div>
+    <!-- /.container -->
+
+</aside>
+
+<!-- /.banner -->

@@ -105,9 +105,10 @@ body {
 .cadre {
     border-style: inset;
     border-color: #375A7F;
-    background-color: white;
+    background-color: #eee;
     margin-right: 250px;
     margin-top: 50px;
+    margin-bottom: 50px;
     padding-top: -100px;
     padding-bottom: 50px;
     padding-left: 50px;
@@ -150,6 +151,7 @@ h6 {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
+    background: url(./../../img/intro-bg.jpg) no-repeat center center;
     background-size: cover;
 }
 
@@ -230,6 +232,7 @@ h6 {
 .banner {
     padding: 100px 0;
     color: #f8f8f8;
+    background: url(./../../img/banner-bg.jpg) no-repeat center center;
     background-size: cover;
 }
 

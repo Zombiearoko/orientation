@@ -61,7 +61,7 @@ const options = new RequestOptions({  headers: headers1 });
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
       const urlSaph = 'http://192.168.8.105:8091/rencontre/Member/registration';
       const urlInno = 'http://localhost:8092/customer/addCustomer';
-    return  this.http.post(urlInno, object, options)
+    return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
