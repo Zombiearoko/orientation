@@ -8,6 +8,7 @@ public class Book {
 	
 	@Id
 	private String bookId;
+	
 	private String bookName;
 	private String bookAuthor;
 	private String bookEdition;
@@ -66,7 +67,7 @@ public class Book {
 	   @Override
 	    public String toString() {
 	        return String.format(
-	                "{\"bookId\":%s, \"bookName\":'%s', \"bookAuthor\":'%s',\"bookEdition\":'%s',\"bookEdition\":'%s',"
+	                "{\"bookId\":%s, \"bookName\":'%s', \"bookAuthor\":'%s',\"bookEdition\":'%s',"
 	                + "\"bookFile\":'%s'}",
 	                bookId, bookName, bookAuthor,bookEdition,bookFile);
 	    }

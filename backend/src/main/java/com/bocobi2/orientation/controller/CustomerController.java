@@ -3,7 +3,6 @@ package com.bocobi2.orientation.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,36 +13,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bocobi2.orientation.model.Book;
 import com.bocobi2.orientation.model.Client;
+import com.bocobi2.orientation.model.ErrorClass;
+import com.bocobi2.orientation.model.SuccessClass;
 import com.bocobi2.orientation.model.Testimony;
-import com.bocobi2.orientation.repositories.*;
+import com.bocobi2.orientation.repositories.BookRepository;
+import com.bocobi2.orientation.repositories.ClientRepository;
+import com.bocobi2.orientation.repositories.TestimonyRepository;
 
 @CrossOrigin(origins = "*")
 @RequestMapping("/customer")
 @RestController
 public class CustomerController {
-	
+
 	public static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
-	
+
 	@Autowired
 	private ClientRepository clientRepository;
-	
+
 	@Autowired
 	private TestimonyRepository testimonyRepository;
 
+	@Autowired
+	BookRepository bookRepository;
 
 	public CustomerController() {
 		// TODO Auto-generated constructor stub
 	}
-//***************************************************************************************************************	
-			//******************************************************************************//
-			//***********************methode d'ajout d'un nouveau client******************************//
-			//******************************************************************************//
-		
+	// ***************************************************************************************************************
+	// ******************************************************************************//
+	// ***********************methode d'ajout d'un nouveau
+	// client******************************//
+	// ******************************************************************************//
+
 	// methode d'ajout d'un nouveau client en get
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET, params = { "firstNameCustomer",
-			"lastNameCustomer", "phoneNumber", "emailAddress", "password" })
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
 	public ResponseEntity<?> addClientGet(HttpServletRequest request) {
 
 		// recuperation des informations du client
@@ -53,7 +59,7 @@ public class CustomerController {
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String emailAddress = (String) request.getParameter("emailAddress");
 		String password = (String) request.getParameter("password");
-
+		clientRepository.deleteAll();
 		// instanciation du client à ajouter
 
 		Client client = new Client();
@@ -65,19 +71,19 @@ public class CustomerController {
 		client.setPhoneNumber(phoneNumber);
 		client.setPassword(password);
 		client.setEmailAddress(emailAddress);
-		
-		logger.info("enregistrement du client {}",client);;
 
-			clientRepository.save(client);
-		
-		
-
-		
-		return new ResponseEntity<Client>(client,HttpStatus.CREATED);
+		logger.info("enregistrement du client {}", client);
+		if (clientRepository.findByEmailAddress(emailAddress) != null) {
+			logger.error("le client {} est deja enregistré dans la base de donnees", client);
+			return new ResponseEntity(new ErrorClass("le client est deja" + " enregistré dans la base de donnees"),
+					HttpStatus.CONFLICT);
+		}
+		clientRepository.save(client);
+		return new ResponseEntity<Client>(client, HttpStatus.CREATED);
 	}
 
 	// methode d'ajout d'un nouveau client en post
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
 	public ResponseEntity<?> addClientPost(HttpServletRequest request) {
 
@@ -100,269 +106,385 @@ public class CustomerController {
 		client.setPhoneNumber(phoneNumber);
 		client.setPassword(password);
 		client.setEmailAddress(emailAddress);
-		
-		logger.info("enregistrement du client {}",client);;
 
-			clientRepository.save(client);
-		
-		
-
-		
-		return new ResponseEntity<Client>(client,HttpStatus.CREATED);
-	}
-	//***************************************************************************************************************	
-			//******************************************************************************//
-			//***********************methode de connexion******************************//
-			//******************************************************************************//
-		
-	//methode d'authentification en get
-	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/authentication", method = RequestMethod.GET, params = { "login", "password" })
-	private JSONObject authenticationGet(HttpServletRequest request) {
-		JSONObject result, success, errors;
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
-
-		HttpSession session;
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
-		Client client = new Client();
-
-		
-			client = clientRepository.findByEmailAddress(login);
-		if(client==null)
-			errors.put("notFoundError", "l'utilisateur d'adresse email " + login + "est introuvable");
-		
-
-		if (errors.isEmpty()) {
-			try {
-				validatePasswordAndLogin(password, login);
-				session = request.getSession();
-				session.setAttribute("customerInSession", client);
-				success.put("customerInSession", client);
-				success.put("rapport", "session ouverte avec succes");
-			} catch (Exception e) {
-				errors.put("errorMessage", e.getMessage());
-			}
+		logger.info("enregistrement du client {}", client);
+		if (clientRepository.findByEmailAddress(emailAddress) != null) {
+			logger.error("le client {} est deja enregistré dans la base de donnees", client);
+			return new ResponseEntity(new ErrorClass("le client est deja" + " enregistré dans la base de donnees"),
+					HttpStatus.CONFLICT);
 		}
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
+		clientRepository.save(client);
+		return new ResponseEntity<Client>(client, HttpStatus.CREATED);
 	}
+	// ***************************************************************************************************************
+	// ******************************************************************************//
+	// ***********************methode de
+	// connexion******************************//
+	// ******************************************************************************//
 
-	//methode d'authentification en post
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/authentication", method = RequestMethod.POST, params = { "login", "password" })
-	private JSONObject authenticationPost(HttpServletRequest request) {
-		JSONObject result, success, errors;
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
+	// methode d'authentification en get
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/authentication", method = RequestMethod.GET, params = { "login", "password" })
+	private ResponseEntity<?> authenticationGet(HttpServletRequest request) {
 
 		HttpSession session;
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		Client client = new Client();
+
+		client = clientRepository.findByEmailAddress(login);
+		if (client == null) {
+			logger.error("l'utilisateur d'adresse email " + login + " est introuvable");
+			return new ResponseEntity(
+					new ErrorClass("l'utilisateur d'adresse email " + login + "" + " est introuvable"),
+					HttpStatus.NOT_FOUND);
+		}
 
 		try {
-			client = clientRepository.findByEmailAddress(login);
+			validatePasswordAndLogin(password, login);
+			session = request.getSession();
+			session.setAttribute("customerInSession", client);
+			logger.info("le client {} est actuelement en session", client);
+			return new ResponseEntity(new SuccessClass(client), HttpStatus.OK);
 		} catch (Exception e) {
-			errors.put("notFoundError", "l'utilisateur d'adresse email " + login + "est introuvable");
+			logger.error(e.getMessage());
+			return new ResponseEntity(new SuccessClass(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
 		}
 
-		if (errors.isEmpty()) { 
-			try {
-				validatePasswordAndLogin(password, login);
-				session = request.getSession();
-				session.setAttribute("customerInSession", client);
-				success.put("customerInSession", client.toString());
-				success.put("rapport", "session ouverte avec succes");
-			} catch (Exception e) {
-				errors.put("errorMessage", e.getMessage());
-			}
-		}
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
 	}
-	
-	
-	
-	//methode d'ajout d'un temoignage en get
-	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/postTestimony", method = RequestMethod.GET, params = { "testimonyContent" })
-	private JSONObject postTestimonyGet(HttpServletRequest request) {
-		JSONObject result, success, errors;
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
+
+	// methode d'authentification en post
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/authentication", method = RequestMethod.POST, params = { "login", "password" })
+	private ResponseEntity<?> authenticationPost(HttpServletRequest request) {
+
 		HttpSession session;
-		
+		String login = request.getParameter("login");
+		String password = request.getParameter("password");
+		Client client = new Client();
+
+		client = clientRepository.findByEmailAddress(login);
+		if (client == null) {
+			logger.error("l'utilisateur d'adresse email " + login + " est introuvable");
+			return new ResponseEntity(
+					new ErrorClass("l'utilisateur d'adresse email " + login + "" + " est introuvable"),
+					HttpStatus.NOT_FOUND);
+		}
+
+		try {
+			validatePasswordAndLogin(password, login);
+			session = request.getSession();
+			session.setAttribute("customerInSession", client);
+			logger.info("le client {} est actuelement en session", client);
+			return new ResponseEntity(new SuccessClass(client), HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			return new ResponseEntity(new SuccessClass(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
+		}
+
+	}
+
+	// methode d'ajout d'un temoignage en get
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/postTestimony", method = RequestMethod.GET, params = { "testimonyContent" })
+	private ResponseEntity postTestimonyGet(HttpServletRequest request) {
+
+		HttpSession session;
+
 		session = request.getSession();
 		Client client = (Client) session.getAttribute("customerInSession");
-		
-		//recupertion du temoignage
-		
+
+		// recupertion du temoignage
+
 		String testimonyContent = request.getParameter("testimonyContent");
-		String testimonyAuthor = client.getFirstNameCustomer()+" "+client.getLastNameCustomer();
-		
-		//cretion du temoignage
-		
+		String testimonyAuthor = client.getFirstNameCustomer() + " " + client.getLastNameCustomer();
+
+		// cretion du temoignage
+
 		Testimony testimony = new Testimony();
 		testimony.setTestimonyAuthor(testimonyAuthor);
 		testimony.setTestimonyContent(testimonyContent);
-		
-		try{
+
+		try {
+			logger.info("enregistrement du post");
 			testimonyRepository.save(testimony);
-			success.put("rapport", "temoignage enregistré avec succes");
-		}catch(Exception e){
-			errors.put("notSaveError", "le temoignage n'a pas été enregistré");
+			client.postTestimony(testimony);
+			clientRepository.save(client);
+			session.setAttribute("customerInSession", client);
+			return new ResponseEntity(new SuccessClass("temoignage enregistré avec succes"), HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("le temoignage n'a pas été enregistré");
+			return new ResponseEntity(new ErrorClass("le temoignage n'a pas été enregistré"),
+					HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
+	// methode d'ajout d'un temoignage en post
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/postTestimony", method = RequestMethod.POST, params = { "testimonyContent" })
+	private ResponseEntity postTestimonyPost(HttpServletRequest request) {
+
+		HttpSession session;
+
+		session = request.getSession();
+		Client client = (Client) session.getAttribute("customerInSession");
+
+		// recupertion du temoignage
+
+		String testimonyContent = request.getParameter("testimonyContent");
+		String testimonyAuthor = client.getFirstNameCustomer() + " " + client.getLastNameCustomer();
+
+		// cretion du temoignage
+
+		Testimony testimony = new Testimony();
+		testimony.setTestimonyAuthor(testimonyAuthor);
+		testimony.setTestimonyContent(testimonyContent);
+
+		try {
+			logger.info("enregistrement du post");
+			testimonyRepository.save(testimony);
+			client.postTestimony(testimony);
+			clientRepository.save(client);
+			session.setAttribute("customerInSession", client);
+			return new ResponseEntity(new SuccessClass("temoignage enregistré avec succes"), HttpStatus.OK);
+		} catch (Exception e) {
+			logger.error("le temoignage n'a pas été enregistré");
+			return new ResponseEntity(new ErrorClass("le temoignage n'a pas été enregistré"),
+					HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+
+	// ***************************************************************************************************************
+	// ******************************************************************************//
+	// ***********************methode de
+	// deconnexion******************************//
+	// ******************************************************************************//
+
+	// methode pour la gestion de la deconnexion du client en get
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/deconnection", method = RequestMethod.GET)
+	public ResponseEntity<?> deconnectionGet(HttpServletRequest request) {
+
+		// objets utils
+
+		HttpSession session;
+
+		// creation d'un objet clientistrateur
+
+		Client client = new Client();
+
+		// recheche dans la base de données de l'clientistrateur ayant les
+		// informations fournies
+
+		session = request.getSession();
+		client = (Client) session.getAttribute("customerInSession");
+
+		if (client != null) {
+			try {
+				session.removeAttribute("customerInSession");
+				session.invalidate();
+				return new ResponseEntity(new SuccessClass("deconnexion reussie"), HttpStatus.OK);
+			} catch (Exception e) {
+				logger.error("la session n'a pas pu etre fermé");
+				return new ResponseEntity(new ErrorClass("la session" + " n'a pas pu etre fermé"),
+						HttpStatus.NOT_FOUND);
+			}
+		} else {
+			logger.error("aucune session n'est ouverte");
+			return new ResponseEntity(new ErrorClass("aucune " + "session n'est ouverte"), HttpStatus.NOT_FOUND);
 		}
 
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
 	}
-	
-	//methode d'ajout d'un temoignage en post
-	
-		@SuppressWarnings("unchecked")
-		@RequestMapping(value = "/postTestimony", method = RequestMethod.POST, params = { "testimonyContent" })
-		private JSONObject postTestimonyPost(HttpServletRequest request) {
-			JSONObject result, success, errors;
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
-			HttpSession session;
-			
-			session = request.getSession();
-			Client client = (Client) session.getAttribute("customerInSession");
-			
-			//recupertion du temoignage
-			
-			String testimonyContent = request.getParameter("testimonyContent");
-			String testimonyAuthor = client.getFirstNameCustomer()+" "+client.getLastNameCustomer();
-			
-			//cretion du temoignage
-			
-			Testimony testimony = new Testimony();
-			testimony.setTestimonyAuthor(testimonyAuthor);
-			testimony.setTestimonyContent(testimonyContent);
-			
-			try{
-				testimonyRepository.save(testimony);
-				success.put("rapport", "temoignage enregistré avec succes");
-			}catch(Exception e){
-				errors.put("notSaveError", "le temoignage n'a pas été enregistré");
+
+	// methode pour la gestion de la connexion de l'clientistrateur en post
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/deconnection", method = RequestMethod.POST)
+	public ResponseEntity<?> deconnectionPost(HttpServletRequest request) {
+
+		// objets utils
+
+		HttpSession session;
+
+		// creation d'un objet clientistrateur
+
+		Client client = new Client();
+
+		// recheche dans la base de données de l'clientistrateur ayant les
+		// informations fournies
+
+		session = request.getSession();
+		client = (Client) session.getAttribute("customerInSession");
+
+		if (client != null) {
+			try {
+				session.removeAttribute("customerInSession");
+				session.invalidate();
+				return new ResponseEntity(new SuccessClass("deconnexion reussie"), HttpStatus.OK);
+			} catch (Exception e) {
+				logger.error("la session n'a pas pu etre fermé");
+				return new ResponseEntity(new ErrorClass("la session" + " n'a pas pu etre fermé"),
+						HttpStatus.NOT_FOUND);
+			}
+		} else {
+			logger.error("aucune session n'est ouverte");
+			return new ResponseEntity(new ErrorClass("aucune " + "session n'est ouverte"), HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	// ***************************************************************************************************************
+
+	// ******************************************************************************//
+	// ***********************methode d'ajout d'un nouveau livre dans le
+	// panier*****//
+	// ****************************************************************************//
+
+	// methode d'ajout d'un nouveau dans le panier en get
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/addInBasket", method = RequestMethod.GET)
+	public ResponseEntity<?> addInBasketGet(HttpServletRequest request) {
+
+		// recuperation du nom du livre
+
+		String bookName = request.getParameter("bookName");
+		HttpSession session = request.getSession();
+
+		// instanciation du livre à ajouter
+
+		Book book = new Book();
+		book = bookRepository.findByBookName(bookName);
+		Client client = (Client) session.getAttribute("customerInSession");
+
+		// action a menner apres reception des informations
+
+		logger.info("enregistrement du livre {} dans le pagner du client {} ", book, client);
+		if (book != null) {
+			client.getCustomerBasket().add(book);
+			clientRepository.save(client);
+			session.setAttribute("customerInSession", client);
+			return new ResponseEntity<Client>(client, HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity(new ErrorClass("le livre de nom " + bookName + " n'existe pas"),
+					HttpStatus.NOT_FOUND);
+		}
+
+	}
+
+	// methode d'ajout d'un nouveau livre dans le panier en post
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value = "/addInBasket", method = RequestMethod.POST)
+	public ResponseEntity<?> addInBasketPost(HttpServletRequest request) {
+
+		// recuperation du nom du livre
+
+		String bookName = request.getParameter("bookName");
+		HttpSession session = request.getSession();
+
+		// instanciation du livre à ajouter
+
+		Book book = new Book();
+		book = bookRepository.findByBookName(bookName);
+		Client client = (Client) session.getAttribute("customerInSession");
+
+		// action a menner apres reception des informations
+
+		logger.info("enregistrement du livre {} dans le pagner du client {} ", book, client);
+		if (book != null) {
+			client.getCustomerBasket().add(book);
+			clientRepository.save(client);
+			session.setAttribute("customerInSession", client);
+			return new ResponseEntity<Client>(client, HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity(new ErrorClass("le livre de nom " + bookName + " n'existe pas"),
+					HttpStatus.NOT_FOUND);
+		}
+
+	}
+	// ***************************************************************************************************************
+
+	// ******************************************************************************//
+	// ***********************methode de suppression d'un livre du
+	// panier d'un client*****//
+	// ****************************************************************************//
+
+	// methode de suppression d'un livre dans le panier en get
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/removeFromBasket", method = RequestMethod.GET)
+	public ResponseEntity<?> removeFromBasketGet(HttpServletRequest request) {
+
+		// recuperation du nom du livre
+
+		String bookName = request.getParameter("bookName");
+		HttpSession session = request.getSession();
+
+		// instanciation du livre à supprimer
+
+		Book book = new Book();
+		book = bookRepository.findByBookName(bookName);
+		Client client = (Client) session.getAttribute("customerInSession");
+		// action a menner apres reception des informations
+
+		logger.info("suppression du livre {} du pagner du client {} ", book, client);
+		
+		if (!client.getCustomerBasket().isEmpty()) {
+			if(client.getCustomerBasket().contains(book)){
+			client.getCustomerBasket().remove(client.getCustomerBasket().indexOf(book));
+			clientRepository.save(client);
+			session.setAttribute("customerInSession", client);
+			return new ResponseEntity<Client>(client, HttpStatus.OK);
+			}else{
+				return new ResponseEntity(new ErrorClass("le livre de nom"+bookName+" n'est pas present dans le "
+						+ "pagner de l'utilisateur en session "),
+						HttpStatus.NOT_FOUND);
 			}
 
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
+		} else {
+			return new ResponseEntity(new ErrorClass("desole votre pagner est vide "),
+					HttpStatus.NOT_FOUND);
 		}
-		
-//***************************************************************************************************************	
-		//******************************************************************************//
-		//***********************methode de deconnexion******************************//
-		//******************************************************************************//
-		
-		//methode pour la gestion de la deconnexion du client en get
-		
-		@SuppressWarnings("unchecked")
-		@RequestMapping(value="/deconnection", method=RequestMethod.GET)
-		public JSONObject deconnectionGet(HttpServletRequest request){
-			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
-			
-			//recuperation des parametres de la requete
-			
-			
-			//objets utils
-			
-			HttpSession session;
-			
-			//creation d'un objet clientistrateur
-			
-			Client client = new Client();
-			
-			//recheche dans la base de données de l'clientistrateur ayant les informations fournies
 
-					session = request.getSession();
-					client = (Client) session.getAttribute("customerInSession");
-					
-					if(client!=null){
-					try{
-						session.invalidate();
-						success.put("rapport", "deconnexion reussie");
-					}catch(Exception e){
-						errors.put("errorMessage", "la session n'a pas pu etre fermé");
-					}
-					}else{
-						errors.put("errorMessage", "aucune session n'est ouverte");
-					}
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
-			
+	}
+
+	// methode de suppression d'un livre dans le panier en post
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/removeFromBasket", method = RequestMethod.POST)
+	public ResponseEntity<?> removeFromBasketPost(HttpServletRequest request) {
+
+		// recuperation du nom du livre
+
+		String bookName = request.getParameter("bookName");
+		HttpSession session = request.getSession();
+
+		// instanciation du livre à supprimer
+
+		Book book = new Book();
+		book = bookRepository.findByBookName(bookName);
+		Client client = (Client) session.getAttribute("customerInSession");
+		// action a menner apres reception des informations
+
+		logger.info("enregistrement du livre {} dans le pagner du client {} ", book, client);
+		if (book != null) {
+			client.getCustomerBasket().remove(book);
+			clientRepository.save(client);
+			session.setAttribute("customerInSession", client);
+			return new ResponseEntity<Client>(client, HttpStatus.OK);
+
+		} else {
+			return new ResponseEntity(new ErrorClass("le livre de nom " + bookName + " n'existe"
+					+ " pas dans le pagner de l'utlisateur en session"),
+					HttpStatus.NOT_FOUND);
 		}
-		
-		
-		
-		//methode pour la gestion de la connexion de l'clientistrateur en post
-		
-			@SuppressWarnings("unchecked")
-			@RequestMapping(value="/deconnection", method=RequestMethod.POST)
-			public JSONObject deconnectionPost(HttpServletRequest request){
-				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-				
-				//recuperation des parametres de la requete
-				
-				
-				//objets utils
-				
-				HttpSession session;
-				
-				//creation d'un objet clientistrateur
-				
-				Client client = new Client();;
-				
-				//recheche dans la base de données de l'clientistrateur ayant les informations fournies
 
-						session = request.getSession();
-						client = (Client) session.getAttribute("customerInSession");
-						
-						if(client!=null){
-						try{
-							session.invalidate();
-							success.put("rapport", "deconnexion reussie");
-						}catch(Exception e){
-							errors.put("errorMessage", "la session n'a pas pu etre fermé");
-						}
-						}else{
-							errors.put("errorMessage", "aucune session n'est ouverte");
-						}
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
-			}			
-//***************************************************************************************************************	
+	}
 
-	
 	// definition des methodes de controle des donnees recues de la vue
 
 	private void validatePasswordAndLogin(String password, String login) throws Exception {
