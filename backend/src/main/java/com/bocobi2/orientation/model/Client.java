@@ -1,5 +1,6 @@
 package com.bocobi2.orientation.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
@@ -15,7 +16,8 @@ public class Client {
     private String lastNameCustomer;
 	private String password;
 	private String phoneNumber;
-	private List<Testimony> customerListOfTestimonies;
+	private List<Testimony> customerListOfTestimonies = new ArrayList<Testimony>();
+	private List<Book> customerBasket = new ArrayList<Book>(); 
 	
 	
 	public Client(){}
@@ -132,6 +134,20 @@ public class Client {
 	
 	public void postTestimony(Testimony testimony){
 		this.customerListOfTestimonies.add(testimony);
+	}
+
+
+	public List<Book> getCustomerBasket() {
+		return customerBasket;
+	}
+
+
+	public void setCustomerBasket(List<Book> customerBasket) {
+		this.customerBasket = customerBasket;
+	}
+	
+	public void addBookInBasket(Book book){
+		this.customerBasket.add(book);
 	}
 
 
