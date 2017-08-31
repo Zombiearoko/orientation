@@ -1,3 +1,6 @@
+import { AppComponent } from './app.component';
+import { SessionAdminComponent } from './session-admin/session-admin.component';
+import { SessionClientComponent } from './session-client/session-client.component';
 import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
 import { AboutComponent } from './about/about.component';
 import { ContactsComponent } from './contacts/contacts.component';
@@ -10,14 +13,16 @@ import { Routes, RouterModule} from '@angular/router';
 
 
 export const router: Routes = [
-  {path: '', redirectTo: 'about', pathMatch: 'prefix'},
-  {path: 'home', component: HomeComponent },
-  {path: 'services', component: ServiceComponent},
-  {path: 'contacts', component: ContactsComponent},
-  {path: 'about', component: AboutComponent},
-  {path: 'subcribe', component: AboutComponent},
-  {path: 'bookshoop', component: AboutComponent},
-   {path: 'account', component: CreateAccountCustomerComponent},
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'services', component: ServiceComponent },
+  { path: 'contacts', component: ContactsComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'subcribe', component: AboutComponent },
+  { path: 'bookshoop', component: AboutComponent },
+   { path: 'account', component: CreateAccountCustomerComponent },
+    { path: 'sessionCostumer', component: SessionClientComponent },
+    { path: 'sessionAdmin', component: SessionAdminComponent }
 
 ];
 

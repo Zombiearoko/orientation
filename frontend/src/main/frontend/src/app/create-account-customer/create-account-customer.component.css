@@ -1,14 +1,13 @@
 loginmodal-container {
     padding: 30px;
-    max-width: 350px;
     width: 100% !important;
-    background-color: #375A7F;
+    background-color: white;
     margin: 0 auto;
     border-radius: 2px;
-    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
     overflow: hidden;
     font-family: roboto;
     border-style: inset;
+    border-color: #375A7F;
 }
 
 .loginmodal-container h1 {
@@ -104,17 +103,19 @@ body {
 }
 
 .cadre {
-    background-color: #375A7F;
-    width: 300px;
-    margin-left: 250px;
+    border-style: inset;
+    border-color: #375A7F;
+    background-color: #eee;
+    margin-right: 250px;
     margin-top: 50px;
+    margin-bottom: 50px;
     padding-top: -100px;
     padding-bottom: 50px;
     padding-left: 50px;
     z-index: 10;
     font-weight: bold;
     color: black;
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
 .ng-valid[required],
@@ -150,6 +151,7 @@ h6 {
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
+    background: url(./../../img/intro-bg.jpg) no-repeat center center;
     background-size: cover;
 }
 
@@ -230,6 +232,7 @@ h6 {
 .banner {
     padding: 100px 0;
     color: #f8f8f8;
+    background: url(./../../img/banner-bg.jpg) no-repeat center center;
     background-size: cover;
 }
 
