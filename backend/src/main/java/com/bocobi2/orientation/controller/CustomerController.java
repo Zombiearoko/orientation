@@ -1,5 +1,7 @@
 package com.bocobi2.orientation.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -398,7 +400,6 @@ public class CustomerController {
 		logger.info("enregistrement du livre {} dans le pagner du client {} ", book, client);
 		if (book != null) {
 			client.getCustomerBasket().add(book);
-			clientRepository.save(client);
 			session.setAttribute("customerInSession", client);
 			return new ResponseEntity<Client>(client, HttpStatus.OK);
 
@@ -470,20 +471,73 @@ public class CustomerController {
 		Client client = (Client) session.getAttribute("customerInSession");
 		// action a menner apres reception des informations
 
-		logger.info("enregistrement du livre {} dans le pagner du client {} ", book, client);
-		if (book != null) {
-			client.getCustomerBasket().remove(book);
+		logger.info("suppression du livre {} du pagner du client {} ", book, client);
+		
+		if (!client.getCustomerBasket().isEmpty()) {
+			if(client.getCustomerBasket().contains(book)){
+			client.getCustomerBasket().remove(client.getCustomerBasket().indexOf(book));
 			clientRepository.save(client);
 			session.setAttribute("customerInSession", client);
 			return new ResponseEntity<Client>(client, HttpStatus.OK);
+			}else{
+				return new ResponseEntity(new ErrorClass("le livre de nom"+bookName+" n'est pas present dans le "
+						+ "pagner de l'utilisateur en session "),
+						HttpStatus.NOT_FOUND);
+			}
 
 		} else {
-			return new ResponseEntity(new ErrorClass("le livre de nom " + bookName + " n'existe"
-					+ " pas dans le pagner de l'utlisateur en session"),
+			return new ResponseEntity(new ErrorClass("desole votre pagner est vide "),
 					HttpStatus.NOT_FOUND);
 		}
 
 	}
+	
+// ***************************************************************************************************************
+
+	// ******************************************************************************//
+	// ***********************methode de recherche du
+	// panier d'un client*****//
+	// ****************************************************************************//
+
+	// methode de recherche du panier en get
+	@RequestMapping(value = "/findBasket", method = RequestMethod.GET)
+	public ResponseEntity<List<Book>> findBasketGet(HttpServletRequest request) {
+
+		// recuperation du nom du livre
+
+		HttpSession session = request.getSession();
+
+		// instanciation du livre à supprimer
+
+		Book book = new Book();
+		Client client = clientRepository.findByEmailAddress(((Client) session.getAttribute("customerInSession")).getEmailAddress());
+		// action a menner apres reception des informations
+
+			return new ResponseEntity<List<Book>>(client.getCustomerBasket(),HttpStatus.OK);
+		
+
+	}
+
+	// methode de recherche du panier en post
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/findBasket", method = RequestMethod.POST)
+	public ResponseEntity<List<Book>> findBasketPost(HttpServletRequest request) {
+
+		// recuperation du nom du livre
+
+		HttpSession session = request.getSession();
+
+		// instanciation du livre à supprimer
+
+		Book book = new Book();
+		Client client = clientRepository.findByEmailAddress(((Client) session.getAttribute("customerInSession")).getEmailAddress());
+		// action a menner apres reception des informations
+
+			return new ResponseEntity<List<Book>>(client.getCustomerBasket(),HttpStatus.OK);
+		
+
+	}
+
 
 	// definition des methodes de controle des donnees recues de la vue
 

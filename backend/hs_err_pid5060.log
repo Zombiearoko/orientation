@@ -1,0 +1,59 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_STACK_OVERFLOW (0xc00000fd) at pc=0x558ca663, pid=5060, tid=0x000015dc
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_131-b11) (build 1.8.0_131-b11)
+# Java VM: Java HotSpot(TM) Client VM (25.131-b11 mixed mode windows-x86 )
+# Problematic frame:
+# V  [jvm.dll+0x15a663]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x168ca400):  JavaThread "http-nio-8092-exec-4" daemon [_thread_in_vm, id=5596, stack(0x17940000,0x17990000)]
+
+siginfo: ExceptionCode=0xc00000fd, ExceptionInformation=0x00000001 0x1798c4cc 
+
+Registers:
+EAX=0x00003000, EBX=0x1798f6bc, ECX=0x1798c4cc, EDX=0x1589c3f8
+ESP=0x1798f4d8, EBP=0x1798f544, ESI=0x00000004, EDI=0x1798f4cc
+EIP=0x558ca663, EFLAGS=0x00010202
+
+Top of Stack: (sp=0x1798f4d8)
+0x1798f4d8:   155e8208 168ca400 558caef3 00000000
+0x1798f4e8:   168ca400 1798f62c 00000001 168ca400
+0x1798f4f8:   557f4425 168ca400 1589c3f8 13c211b8
+0x1798f508:   1798f564 557f4e3e 13c22990 177a1e98
+0x1798f518:   13c211b8 168ca400 13c211b8 168ca400
+0x1798f528:   1589c3f8 13c211b8 168ca400 0000000a
+0x1798f538:   1798f62c 155e8208 01a6ad50 1798f58c
+0x1798f548:   559913ae 1798f6b4 1798f5b8 1798f62c 
+
+Instructions: (pc=0x558ca663)
+0x558ca643:   59 6e 0c 00 be 01 00 00 00 8b f8 39 35 b4 a8 ac
+0x558ca653:   55 7c 1b e8 95 42 06 00 0f af c6 8b cf 2b c8 46
+0x558ca663:   c7 01 00 00 00 00 3b 35 b4 a8 ac 55 7e e5 5f 5e
+0x558ca673:   c3 cc cc cc cc cc cc cc cc cc cc cc cc 8b 01 8b 
+
+
+Register to memory mapping:
+
+EAX=0x00003000 is an unknown value
+EBX=0x1798f6bc is pointing into the stack for thread: 0x168ca400
+ECX=0x1798c4cc is pointing into the stack for thread: 0x168ca400
+EDX=0x1589c3f8 is an unknown value
+ESP=0x1798f4d8 is pointing into the stack for thread: 0x168ca400
+EBP=0x1798f544 is pointing into the stack for thread: 0x168ca400
+ESI=0x00000004 is an unknown value
+EDI=0x1798f4cc is pointing into the stack for thread: 0x168ca400
+
+
+Stack: [0x17940000,0x17990000],  sp=0x1798f4d8,  free space=317k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V
