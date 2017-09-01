@@ -4,86 +4,87 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 <div class="separators"></div>
+<div class="container">
+    <!--navigaton side-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-<!--navigaton side-->
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="nav-side-menu">
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
-<div class="nav-side-menu">
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+        <div class="menu-list">
 
-    <div class="menu-list">
+            <ul id="menu-content" class="menu-content collapse out">
 
-        <ul id="menu-content" class="menu-content collapse out">
+                <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                    <a> <i class="glyphicon glyphicon-off"></i>se deconnecter <span class="arrow"></span></a>
+                </li>
+                <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                    <a href="#"><i class="fa fa-gift fa-lg"></i>consulter les offres <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products">
+                    <li><a href="#">offre d'emploi</a></li>
+                    <li><a href="#">offre de stage</a></li>
+                    <li><a href="#">offre de bourse</a></li>
+                    <li><a href="#">conseiller d'orientation</a></li>
+                </ul>
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a [routerLink]="['../basket']"><i class="fa fa fa-lg"></i>gerer son panier<span class="arrow"></span></a>
+                </li>
 
-            <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                <a> <i class="glyphicon glyphicon-off"></i>se deconnecter <span class="arrow"></span></a>
-            </li>
-            <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                <a href="#"><i class="fa fa-gift fa-lg"></i>consulter les offres <span class="arrow"></span></a>
-            </li>
-            <ul class="sub-menu collapse" id="products">
-                <li><a href="#">offre d'emploi</a></li>
-                <li><a href="#">offre de stage</a></li>
-                <li><a href="#">offre de bourse</a></li>
-                <li><a href="#">conseiller d'orientation</a></li>
+
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a [routerLink]="['../bookshop']"><i class="fa fa-globe fa-lg"></i> Librairie <span class="arrow"></span></a>
+                </li>
+
             </ul>
-            <li data-toggle="collapse" data-target="#service" class="collapsed">
-                <a [routerLink]="['../basket']"><i class="fa fa fa-lg"></i>gerer son panier<span class="arrow"></span></a>
-            </li>
-
-
-            <li data-toggle="collapse" data-target="#service" class="collapsed">
-                <a [routerLink]="['../bookshop']"><i class="fa fa-globe fa-lg"></i> Librairie <span class="arrow"></span></a>
-            </li>
-
-        </ul>
-    </div>
-</div>
-
-
-<div class="separators"></div>
-
-
-<!-- Page Content -->
-<div class="row">
-    <div class="article clear-left col-lg-6">
-        <div class="container">
-            <form [formGroup]="basketForm">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Panier</div>
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th class="col-sm-4">livre</th>
-                                <th class="col-sm-2">Prix</th>
-                                <th class="col-sm-1"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let element of collectionJson; let i=index">
-                                <td>{{ element.title }}</td>
-                                <td>{{ element.id }}</td>
-                                <td><button class="btn btn-danger btn-block" (click)=deleteBook(i)><span class="fa fa-trash-o fa-lg"></span></button></td>
-                            </tr>
-                            <tr>
-                                <td>total</td>
-                                <td colspan="2">{{ total }}</td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" class="form-control" formControlName="bookName" name="bookName" placeholder="Nom">
-
-                                </td>
-                                <td><button type="submit" class="btn btn-primary btn-block" (click)=addInBasket(basketForm.value)>Ajouter</button></td>
-                                <td><button type="submit" class="btn btn-primary btn-block" (click)=buyBook()>Acheter</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </form>
         </div>
     </div>
 
+
+    <div class="separators"></div>
+
+
+    <!-- Page Content -->
+    <div class="row">
+        <div class="article clear-left col-lg-6">
+            <div class="container">
+                <form [formGroup]="basketForm">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Panier</div>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-4">livre</th>
+                                    <th class="col-sm-2">Prix</th>
+                                    <th class="col-sm-1"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let element of collectionJson; let i=index">
+                                    <td>{{ element.title }}</td>
+                                    <td>{{ element.id }}</td>
+                                    <td><button class="btn btn-danger btn-block" (click)=deleteBook(i)><span class="fa fa-trash-o fa-lg"></span></button></td>
+                                </tr>
+                                <tr>
+                                    <td>total</td>
+                                    <td colspan="2">{{ total }}</td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" formControlName="bookName" name="bookName" placeholder="Nom">
+
+                                    </td>
+                                    <td><button type="submit" class="btn btn-primary btn-block" (click)=addInBasket(basketForm.value)>Ajouter</button></td>
+                                    <td><button type="submit" class="btn btn-primary btn-block" (click)=buyBook()>Acheter</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
 </div>
 <div class="clear-both"></div>
