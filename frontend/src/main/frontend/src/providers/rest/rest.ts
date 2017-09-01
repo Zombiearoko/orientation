@@ -68,5 +68,31 @@ const options = new RequestOptions({  headers: headers1 });
           public   getAccount() {
 
     }
+          public postBookInBasket(bookName) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        bookName: bookName,
+       };
+    const url = 'http://192.168.8.102:8092/customer/addCustomer' + '?firstNameCustomer='
+    + bookName;
+      const url2 = 'https://jsonplaceholder.typicode.com/posts';
+    return  this.http.post(url, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}      public removeFromBasket(bookName) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        bookName: bookName,
+       };
+    const url = 'http://192.168.8.102:8092/customer/addCustomer' + '?firstNameCustomer='
+    + bookName;
+      const url2 = 'https://jsonplaceholder.typicode.com/posts';
+    return  this.http.post(url, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}
+
 
 }
