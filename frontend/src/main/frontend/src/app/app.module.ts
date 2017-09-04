@@ -16,6 +16,13 @@ import { AboutComponent } from './about/about.component';
 import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
 import { SessionClientComponent } from './session-client/session-client.component';
 import { SessionAdminComponent } from './session-admin/session-admin.component';
+import { BasketComponent } from './basket/basket.component';
+import { LibrairieComponent } from './librairie/librairie.component';
+import { StageComponent } from './stage/stage.component';
+import { ProgrammeComponent } from './programme/programme.component';
+import { BourseComponent } from './bourse/bourse.component';
+import { LoginCostumerComponent } from './login-costumer/login-costumer.component';
+import { PostTestimonyComponent } from './post-testimony/post-testimony.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +37,14 @@ import { SessionAdminComponent } from './session-admin/session-admin.component';
      AboutComponent,
      CreateAccountCustomerComponent,
      SessionClientComponent,
-     SessionAdminComponent
+     SessionAdminComponent,
+     BasketComponent,
+     LibrairieComponent,
+     StageComponent,
+     ProgrammeComponent,
+     BourseComponent,
+     LoginCostumerComponent,
+     PostTestimonyComponent
   ],
   imports: [
    BrowserModule,

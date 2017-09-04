@@ -36,7 +36,7 @@ const options = new RequestOptions({  headers: headers1 });
       const object = [
       { title: title, articleContent: articleContent }
     ];
-    const url = 'http://localhost/administrator/createArticle' + '?title=' + title + '&articleContent=' + articleContent;
+    const url = 'http://localhost:8092/administrator/createArticle' + '?title=' + title + '&articleContent=' + articleContent;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
@@ -55,7 +55,7 @@ const options = new RequestOptions({  headers: headers1 });
         motDePasse: password,
         telephone: phoneNumber
        };
-    const url = 'http://192.168.8.102:8092/customer/addCustomer' + '?firstNameCustomer='
+    const url = 'http://localhost:8092/customer/addCustomer' + '?firstNameCustomer='
     + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
     + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
@@ -65,8 +65,64 @@ const options = new RequestOptions({  headers: headers1 });
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
-          public   getAccount() {
 
-    }
+          public postBookInBasket(bookName) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        bookName: bookName,
+       };
+    const url = 'http://localhost:8092/customer/addCustomer' + '?firstNameCustomer='
+    + bookName;
+      const url2 = 'https://jsonplaceholder.typicode.com/posts';
+    return  this.http.post(url, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}
+
+public removeFromBasket(bookName) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        bookName: bookName,
+       };
+    const url = 'http://localhost:8092/customer/addCustomer' + '?firstNameCustomer='
+    + bookName;
+      const url2 = 'https://jsonplaceholder.typicode.com/posts';
+    return  this.http.post(url, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}
+
+ public postLoginCostumer(emailAddress, password) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        email: emailAddress,
+        motDePasse: password,
+       };
+    const url = 'http://localhost:8092/customer/loginCustomer'  + '?emailAddress=' + emailAddress
+    + '&password =' + password ;
+      const url2 = 'https://jsonplaceholder.typicode.com/posts';
+    return  this.http.post(url2, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}
+
+public postTestimony(testimonyAuthor, testimonyContent) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        testimonyAuthor: testimonyAuthor,
+        testimonyContent: testimonyContent,
+       };
+    const url = 'http://localhost:8092/customer/loginCustomer' + '?testimonyAuthor=' + testimonyAuthor
+    + '&testimonyContent =' + testimonyContent ;
+      const url2 = 'https://jsonplaceholder.typicode.com/posts';
+    return  this.http.post(url, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}
+
 
 }

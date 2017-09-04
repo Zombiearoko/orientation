@@ -26,7 +26,7 @@ export class CreateAccountCustomerComponent implements OnInit {
       this.clientForm = this.fb.group({
         'firstNameCustomer': [null, Validators.compose([Validators.required, Validators.maxLength(45)])],
        'lastNameCustomer': [null, Validators.compose([Validators.required, Validators.maxLength(45)])],
-      'emailAddress': [null, Validators.compose([Validators.required])],
+      'emailAddress': [null, Validators.compose([Validators.email])],
       'password': [null, Validators.compose([Validators.required])],
       'phoneNumber': [null, Validators.compose([Validators.required])]
       });
@@ -38,28 +38,24 @@ export class CreateAccountCustomerComponent implements OnInit {
       this.emailAdress = post.emailAdress;
       this.password = post.password;
       this.phoneNumber = post.phoneNumber;
-      const url = 'http://192.168.8.102:8092/customer/addCustomer' + '?firstNameCustomer='
+      const url = 'http://localhost:8092/customer/addCustomer' + '?firstNameCustomer='
     + post.firstNameCustomer + '&lastNameCustomer='
      + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
     + '&password =' + post.password;
-    const urlSaph = 'http://192.168.8.105:8091/rencontre/Member/registration';
-     const urlInno = 'http://localhost:8092/customer/addCustomer';
+     const urlInno = 'http://192.168.9.100:8092/customer/addCustomer';
       const url2 = 'https://jsonplaceholder.typicode.com/post';
- console.log(this.firstNameCustomer);
+// console.log(this.firstNameCustomer);
 this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emailAdress, this.password, this.phoneNumber  )
 .subscribe((data) => {
 
-        console.log(this.firstNameCustomer);
+      //  console.log(this.firstNameCustomer);
         this.submitted = true;
        });
-      this.http.get(url).subscribe(resp => {
- this.results = resp['results'];
-  this.collectionJson = resp.json();
-  console.log(this.collectionJson);
-});
+
   }
 
   ngOnInit() {
+
   }
 
 }
