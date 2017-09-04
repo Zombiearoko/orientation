@@ -1,5 +1,7 @@
 package com.bocobi2.orientation.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -23,7 +25,7 @@ import com.bocobi2.orientation.repositories.ClientRepository;
 import com.bocobi2.orientation.repositories.TestimonyRepository;
 
 @CrossOrigin(origins = "*")
-@RequestMapping("/customer")
+@RequestMapping("/orientation/customer")
 @RestController
 public class CustomerController {
 
@@ -59,7 +61,7 @@ public class CustomerController {
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String emailAddress = (String) request.getParameter("emailAddress");
 		String password = (String) request.getParameter("password");
-		clientRepository.deleteAll();
+		//clientRepository.deleteAll();
 		// instanciation du client à ajouter
 
 		Client client = new Client();
@@ -75,11 +77,12 @@ public class CustomerController {
 		logger.info("enregistrement du client {}", client);
 		if (clientRepository.findByEmailAddress(emailAddress) != null) {
 			logger.error("le client {} est deja enregistré dans la base de donnees", client);
-			return new ResponseEntity(new ErrorClass("le client est deja" + " enregistré dans la base de donnees"),
-					HttpStatus.CONFLICT);
+			return new ResponseEntity(new ErrorClass("le client est deja enregistré dans la base de donnees"),
+					HttpStatus.OK);
 		}
 		clientRepository.save(client);
-		return new ResponseEntity<Client>(client, HttpStatus.CREATED);
+		return new ResponseEntity(new SuccessClass("enregistrement "
+				+ "effectué avec succès",client), HttpStatus.CREATED);
 	}
 
 	// methode d'ajout d'un nouveau client en post
@@ -94,7 +97,7 @@ public class CustomerController {
 		String phoneNumber = (String) request.getParameter("phoneNumber");
 		String emailAddress = (String) request.getParameter("emailAddress");
 		String password = (String) request.getParameter("password");
-
+		//clientRepository.deleteAll();
 		// instanciation du client à ajouter
 
 		Client client = new Client();
@@ -110,11 +113,12 @@ public class CustomerController {
 		logger.info("enregistrement du client {}", client);
 		if (clientRepository.findByEmailAddress(emailAddress) != null) {
 			logger.error("le client {} est deja enregistré dans la base de donnees", client);
-			return new ResponseEntity(new ErrorClass("le client est deja" + " enregistré dans la base de donnees"),
-					HttpStatus.CONFLICT);
+			return new ResponseEntity(new ErrorClass("le client est deja enregistré dans la base de donnees"),
+					HttpStatus.OK);
 		}
 		clientRepository.save(client);
-		return new ResponseEntity<Client>(client, HttpStatus.CREATED);
+		return new ResponseEntity(new SuccessClass("enregistrement "
+				+ "effectué avec succès",client), HttpStatus.CREATED);
 	}
 	// ***************************************************************************************************************
 	// ******************************************************************************//
@@ -137,8 +141,8 @@ public class CustomerController {
 		if (client == null) {
 			logger.error("l'utilisateur d'adresse email " + login + " est introuvable");
 			return new ResponseEntity(
-					new ErrorClass("l'utilisateur d'adresse email " + login + "" + " est introuvable"),
-					HttpStatus.NOT_FOUND);
+					new ErrorClass("l'utilisateur d'adresse email " + login + " est introuvable"),
+					HttpStatus.OK);
 		}
 
 		try {
@@ -146,7 +150,7 @@ public class CustomerController {
 			session = request.getSession();
 			session.setAttribute("customerInSession", client);
 			logger.info("le client {} est actuelement en session", client);
-			return new ResponseEntity(new SuccessClass(client), HttpStatus.OK);
+			return new ResponseEntity(new SuccessClass("connection reussie!",client), HttpStatus.OK);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			return new ResponseEntity(new SuccessClass(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
@@ -169,7 +173,7 @@ public class CustomerController {
 			logger.error("l'utilisateur d'adresse email " + login + " est introuvable");
 			return new ResponseEntity(
 					new ErrorClass("l'utilisateur d'adresse email " + login + "" + " est introuvable"),
-					HttpStatus.NOT_FOUND);
+					HttpStatus.OK);
 		}
 
 		try {
@@ -184,6 +188,13 @@ public class CustomerController {
 		}
 
 	}
+	
+	// ***************************************************************************************************************
+		// ******************************************************************************//
+		// ***********************methode de post d'un temoignage
+		// par le client******************************//
+		// ******************************************************************************//
+
 
 	// methode d'ajout d'un temoignage en get
 
@@ -210,7 +221,7 @@ public class CustomerController {
 		try {
 			logger.info("enregistrement du post");
 			testimonyRepository.save(testimony);
-			client.postTestimony(testimony);
+			client.getCustomerListOfTestimonies().add(testimony);
 			clientRepository.save(client);
 			session.setAttribute("customerInSession", client);
 			return new ResponseEntity(new SuccessClass("temoignage enregistré avec succes"), HttpStatus.OK);
@@ -246,7 +257,7 @@ public class CustomerController {
 		try {
 			logger.info("enregistrement du post");
 			testimonyRepository.save(testimony);
-			client.postTestimony(testimony);
+			client.getCustomerListOfTestimonies().add(testimony);
 			clientRepository.save(client);
 			session.setAttribute("customerInSession", client);
 			return new ResponseEntity(new SuccessClass("temoignage enregistré avec succes"), HttpStatus.OK);
@@ -290,12 +301,12 @@ public class CustomerController {
 				return new ResponseEntity(new SuccessClass("deconnexion reussie"), HttpStatus.OK);
 			} catch (Exception e) {
 				logger.error("la session n'a pas pu etre fermé");
-				return new ResponseEntity(new ErrorClass("la session" + " n'a pas pu etre fermé"),
-						HttpStatus.NOT_FOUND);
+				return new ResponseEntity(new ErrorClass("la session n'a pas pu etre fermé"),
+						HttpStatus.OK);
 			}
 		} else {
 			logger.error("aucune session n'est ouverte");
-			return new ResponseEntity(new ErrorClass("aucune " + "session n'est ouverte"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity(new ErrorClass("aucune session n'est ouverte"), HttpStatus.OK);
 		}
 
 	}
@@ -327,12 +338,12 @@ public class CustomerController {
 				return new ResponseEntity(new SuccessClass("deconnexion reussie"), HttpStatus.OK);
 			} catch (Exception e) {
 				logger.error("la session n'a pas pu etre fermé");
-				return new ResponseEntity(new ErrorClass("la session" + " n'a pas pu etre fermé"),
-						HttpStatus.NOT_FOUND);
+				return new ResponseEntity(new ErrorClass("la session n'a pas pu etre fermé"),
+						HttpStatus.OK);
 			}
 		} else {
 			logger.error("aucune session n'est ouverte");
-			return new ResponseEntity(new ErrorClass("aucune " + "session n'est ouverte"), HttpStatus.NOT_FOUND);
+			return new ResponseEntity(new ErrorClass("aucune session n'est ouverte"), HttpStatus.OK);
 		}
 
 	}
@@ -367,11 +378,12 @@ public class CustomerController {
 			client.getCustomerBasket().add(book);
 			clientRepository.save(client);
 			session.setAttribute("customerInSession", client);
-			return new ResponseEntity<Client>(client, HttpStatus.OK);
+			return new ResponseEntity(new SuccessClass("client enregistré avec"
+					+ "succès",client), HttpStatus.OK);
 
 		} else {
 			return new ResponseEntity(new ErrorClass("le livre de nom " + bookName + " n'existe pas"),
-					HttpStatus.NOT_FOUND);
+					HttpStatus.OK);
 		}
 
 	}
@@ -400,11 +412,12 @@ public class CustomerController {
 			client.getCustomerBasket().add(book);
 			clientRepository.save(client);
 			session.setAttribute("customerInSession", client);
-			return new ResponseEntity<Client>(client, HttpStatus.OK);
+			return new ResponseEntity(new SuccessClass("client enregistré avec"
+					+ "succès",client), HttpStatus.OK);
 
 		} else {
 			return new ResponseEntity(new ErrorClass("le livre de nom " + bookName + " n'existe pas"),
-					HttpStatus.NOT_FOUND);
+					HttpStatus.OK);
 		}
 
 	}
@@ -439,16 +452,16 @@ public class CustomerController {
 			client.getCustomerBasket().remove(client.getCustomerBasket().indexOf(book));
 			clientRepository.save(client);
 			session.setAttribute("customerInSession", client);
-			return new ResponseEntity<Client>(client, HttpStatus.OK);
+			return new ResponseEntity(new SuccessClass("supression effectuée!",client), HttpStatus.OK);
 			}else{
 				return new ResponseEntity(new ErrorClass("le livre de nom"+bookName+" n'est pas present dans le "
 						+ "pagner de l'utilisateur en session "),
-						HttpStatus.NOT_FOUND);
+						HttpStatus.OK);
 			}
 
 		} else {
 			return new ResponseEntity(new ErrorClass("desole votre pagner est vide "),
-					HttpStatus.NOT_FOUND);
+					HttpStatus.OK);
 		}
 
 	}
@@ -470,20 +483,67 @@ public class CustomerController {
 		Client client = (Client) session.getAttribute("customerInSession");
 		// action a menner apres reception des informations
 
-		logger.info("enregistrement du livre {} dans le pagner du client {} ", book, client);
-		if (book != null) {
-			client.getCustomerBasket().remove(book);
+		logger.info("suppression du livre {} du pagner du client {} ", book, client);
+		
+		if (!client.getCustomerBasket().isEmpty()) {
+			if(client.getCustomerBasket().contains(book)){
+			client.getCustomerBasket().remove(client.getCustomerBasket().indexOf(book));
 			clientRepository.save(client);
 			session.setAttribute("customerInSession", client);
 			return new ResponseEntity<Client>(client, HttpStatus.OK);
+			}else{
+				return new ResponseEntity(new ErrorClass("le livre de nom"+bookName+" n'est pas present dans le "
+						+ "pagner de l'utilisateur en session "),
+						HttpStatus.OK);
+			}
 
 		} else {
-			return new ResponseEntity(new ErrorClass("le livre de nom " + bookName + " n'existe"
-					+ " pas dans le pagner de l'utlisateur en session"),
-					HttpStatus.NOT_FOUND);
+			return new ResponseEntity(new ErrorClass("desole votre pagner est vide "),
+					HttpStatus.OK);
 		}
 
 	}
+	
+// ***************************************************************************************************************
+
+	// ******************************************************************************//
+	// ***********************methode de recherche du
+	// panier d'un client*****//
+	// ****************************************************************************//
+
+	// methode de recherche du panier en get
+	@RequestMapping(value = "/findBasket", method = RequestMethod.GET)
+	public ResponseEntity<List<Book>> findBasketGet(HttpServletRequest request) {
+
+
+		HttpSession session = request.getSession();
+
+		Client client = clientRepository.findByEmailAddress(((Client) session.getAttribute("customerInSession")).getEmailAddress());
+		// action a menner apres reception des informations
+
+			return new ResponseEntity<List<Book>>(client.getCustomerBasket(),HttpStatus.OK);
+		
+
+	}
+
+	// methode de recherche du panier en post
+	@RequestMapping(value = "/findBasket", method = RequestMethod.POST)
+	public ResponseEntity<List<Book>> findBasketPost(HttpServletRequest request) {
+
+		// recuperation du nom du livre
+
+		HttpSession session = request.getSession();
+
+		// instanciation du livre à supprimer
+		Client client = clientRepository.findByEmailAddress(((Client) session.getAttribute("customer"
+				+ "InSession")).getEmailAddress());
+		// action a menner apres reception des informations
+
+			return new ResponseEntity<List<Book>>(client.getCustomerBasket(),HttpStatus.OK);
+		
+
+	}
+
 
 	// definition des methodes de controle des donnees recues de la vue
 

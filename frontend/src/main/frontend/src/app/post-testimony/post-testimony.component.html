@@ -1,0 +1,124 @@
+<div class="separator"></div>
+<!-- Header -->
+<header class="intro-header">
+    <div class="container">
+        <div class="intro-message">
+            <h1>connectez vous à votre compte client</h1>
+            <hr class="intro-divider">
+        </div>
+    </div>
+</header>
+<div class="separators"></div>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<!--navigaton side-->
+<!--navigaton side-->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container">
+    <div class="nav-side-menu">
+        <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+        <div class="menu-list">
+
+            <ul id="menu-content" class="menu-content collapse out">
+
+                <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                    <a> <i class="glyphicon glyphicon-off"></i>se deconnecter <span class="arrow"></span></a>
+                </li>
+                <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                    <a href="#"><i class="fa fa-gift fa-lg"></i>Consulter les offres <span class="arrow"></span></a>
+                </li>
+                <ul class="sub-menu collapse" id="products">
+                    <li><a href="#">offre d'emploi</a></li>
+                    <li><a href="#">offre de stage</a></li>
+                    <li><a href="#">offre de bourse</a></li>
+                    <li><a href="#">conseiller d'orientation</a></li>
+                </ul>
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a [routerLink]="['../basket']"><i class="fa fa-user fa-lg"></i>Gerer son panier<span class="arrow"></span></a>
+                </li>
+
+
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a [routerLink]="['../bookshop']"><i class="fa fa-globe fa-lg"></i> Librairie <span class="arrow"></span></a>
+                </li>
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a [routerLink]="['../postTestimony']"><i class="fa fa-globe fa-lg"></i> Poster temoignage<span class="arrow"></span></a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="article clear-left col-lg-6">
+
+                <div class="container">
+                    <div class=" ">
+                        <form (ngSubmit)="onSubmit(clientForm.value);" [formGroup]="clientForm" class="cadre">
+                            <div class="form-group">
+                                <label for="testimonyAuthor" class="cols-lg-2 control-label">nom</label>
+                                <div class="cols-lg-8">
+                                    <div class="input-group">
+                                        <input type="email" class="form-control" formControlName="testimonyAuthor" name="testimonyAuthor" id="title" placeholder=" " />
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-danger" [hidden]="clientForm.controls.testimonyAuthor.valid || clientForm.controls.testimonyAuthor.untouched">veuillez entrer votre nom d'auteur</span>
+                            <div class="form-group">
+                                <label for="testimonyContent" class="cols-lg-2 control-label">entrez votre temoignage ici</label>
+                                <div class="cols-lg-8">
+                                    <div class="input-group">
+                                        <textarea id="textarea" class="form-control" name="testimonyContent" formControlName="testimonyContent"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-danger" [hidden]="clientForm.controls.testimonyContent.valid || clientForm.controls.testimonyContent.untouched">la taille limite est de 500 caractères</span>
+                            <div class="form-group">
+                                <button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">poster</button>
+                                <button class="btn btn-danger"> annuler</button>
+                            </div>
+                            <span class="text-info" [hidden]="clientForm.valid || clientForm.untouched">votre témoignages à été posté avec succes</span>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="clear-both"></div>
+<aside class="banner">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-6 my-auto">
+                <h2>suivre des sites profesionnelles</h2>
+            </div>
+            <div class="col-lg-6 my-auto">
+                <ul class="list-inline banner-social-buttons">
+                    <li class="list-inline-item">
+                        <a href="#" class="btn btn-secondary btn-lg">
+                            <i class="fa fa-github fa-fw"></i>
+                            <span class="network-name">Github</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#" class="btn btn-secondary btn-lg">
+                            <i class="fa fa-linkedin fa-fw"></i>
+                            <span class="network-name">Linkedin</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+</aside>
+
+<!-- /.banner -->

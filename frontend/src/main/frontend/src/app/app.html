@@ -83,8 +83,12 @@ rõÐQ•¦Ëªg*DNÂÐÒ“AvÞ©J2ñÇ^{)~M7ZB1ÑY*ç*«®“÷êZN–5ù§A…~Þ]cµÂ´Æaì>U¯	[ï(“¤ë
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a [routerLink]="['subscribe']">librairie</a></li>
-                    <li><a [routerLink]="['bookshoop']">deconnexion</a></li>
+                    <li>
+                        <a [routerLink]="['loginCostumer']"> se connecter</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['account']"> creer un compte client</a>
+                    </li>
                 </ul>
                 <form class="navbar-form pull-right">
                     <input type="search" name="" class="input-small form-control" placeholder="Recherche">
@@ -95,9 +99,9 @@ rõÐQ•¦Ëªg*DNÂÐÒ“AvÞ©J2ñÇ^{)~M7ZB1ÑY*ç*«®“÷êZN–5ù§A…~Þ]cµÂ´Æaì>U¯	[ï(“¤ë
     </div>
 
 </div>
-<div class="container">
-    <router-outlet></router-outlet>
-</div>
+
+<router-outlet> </router-outlet>
+
 
 <<<<<<< HEAD
 <<<<<<< HEAD

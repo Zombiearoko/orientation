@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ import com.bocobi2.orientation.model.Book;
 import com.bocobi2.orientation.model.ErrorClass;
 import com.bocobi2.orientation.model.Scholarship;
 import com.bocobi2.orientation.model.SchoolCalender;
+import com.bocobi2.orientation.model.SuccessClass;
 import com.bocobi2.orientation.repositories.AdministratorRepository;
 import com.bocobi2.orientation.repositories.ArticleRepository;
 import com.bocobi2.orientation.repositories.BookRepository;
@@ -36,7 +36,7 @@ import com.bocobi2.orientation.repositories.SchoolCalenderRepository;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/administrator")
+@RequestMapping("/orientation/administrator")
 public class AdministratorController {
 	
 	public static final Logger logger = LoggerFactory.getLogger(AdministratorController.class);
@@ -91,7 +91,7 @@ public class AdministratorController {
 		if(admin==null){
 			logger.error("l'administrateur de login {} n'existe pas!",login);
 			return new ResponseEntity(new ErrorClass("l'administrateur de login "
-					+ login +" n'existe pas!"),HttpStatus.NOT_FOUND);
+					+ login +" n'existe pas!"),HttpStatus.OK);
 		}
 			if(admin.getLogin().equals(login) && admin.getPassword().equals(password)){
 				session = request.getSession();
@@ -110,7 +110,7 @@ public class AdministratorController {
 	
 	//methode pour la gestion de la connexion de l'administrateur en post
 	
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/authentication", method=RequestMethod.POST, params={"login","password"})
 		public ResponseEntity<?> authenticationPost(HttpServletRequest request){
 			
@@ -133,7 +133,7 @@ public class AdministratorController {
 			if(admin==null){
 				logger.error("l'administrateur de login {} n'existe pas!",login);
 				return new ResponseEntity(new ErrorClass("l'administrateur de login "
-						+ login +" n'existe pas!"),HttpStatus.NOT_FOUND);
+						+ login +" n'existe pas!"),HttpStatus.OK);
 			}
 				if(admin.getLogin().equals(login) && admin.getPassword().equals(password)){
 					session = request.getSession();
@@ -155,16 +155,10 @@ public class AdministratorController {
 	
 	//methode pour la creation d'un nouvel article en get
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/createArticle", method=RequestMethod.GET, params={"title","articleContent"})
-	public JSONObject createArticleGet(HttpServletRequest request){
-		
-		//creation des objects JSON à renvoyer à la vue
-		
-		JSONObject result,success,errors; 
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
+	public ResponseEntity<?> createArticleGet(HttpServletRequest request){
+
 		
 		//recuperation des parametres de la requete
 		
@@ -177,35 +171,25 @@ public class AdministratorController {
 		
 		//insertion de l'article dans la base de données
 
-			try{
+			if(articleRepository.findByTitle(title)==null){
 				articleRepository.save(article);
-				success.put("rapport", "article enregistré avec succes");
-			}catch(Exception e){
-				errors.put("insertionError", "echec de l'insertion dans la base de donnée!");
+				return new ResponseEntity(new SuccessClass("article enregistré avec succes"),HttpStatus.OK);
+			}else{
+				logger.error("echec de l'insertion dans la base de donnée!");
+				return new ResponseEntity(new ErrorClass("l'article de titre"
+						+ title+" existe deja!"),HttpStatus.OK);
 			}
 		
-		
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
-		
-	}
+		}
 	
 	
 	
 	
 	//methode pour la creation d'un nouvel article en post
 	
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/createArticle", method=RequestMethod.POST, params={"title","articleContent"})
-		public JSONObject createArticlePost(HttpServletRequest request){
-			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
+		public ResponseEntity<?> createArticlePost(HttpServletRequest request){
 			
 			//recuperation des parametres de la requete
 			
@@ -218,20 +202,18 @@ public class AdministratorController {
 			
 			//insertion de l'article dans la base de données
 
-				try{
+				if(articleRepository.findByTitle(title)==null){
 					articleRepository.save(article);
-					success.put("rapport", "article enregistré avec succes");
-				}catch(Exception e){
-					errors.put("insertionError", "echec de l'insertion dans la base de donnée!");
+					return new ResponseEntity(new SuccessClass("article enregistré avec succes"),HttpStatus.OK);
+				}else{
+					logger.error("echec de l'insertion dans la base de donnée!");
+					return new ResponseEntity(new ErrorClass("l'article de titre"
+							+ title+" existe deja!"),HttpStatus.OK);
 				}
 			
-			
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
-			
-		}
+			}
 		
+				
 //***************************************************************************************************************
 		//******************************************************************************//
 		//***********************methode pour la mise a jour des articles**********//
@@ -240,16 +222,10 @@ public class AdministratorController {
 		//methode pour la mise a jour des Articles en get
 		
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/updateArticle",method=RequestMethod.GET)
-		public JSONObject updateArticleGet(HttpServletRequest request){
+		public ResponseEntity<?> updateArticleGet(HttpServletRequest request){
 			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
 
 			//recuperation des parametres de la requete
 			String title = request.getParameter("title"); 
@@ -265,38 +241,33 @@ public class AdministratorController {
 					
 					
 				if(article==null){
-					errors.put("notFoundError", "l'article de titre "+title+" n'existe pas!");
+					logger.error("l'article de titre "+title+" n'existe pas!");
+					return new ResponseEntity (new ErrorClass("l'article de titre"
+							+ " "+title+" n'existe pas!"),HttpStatus.OK);
 				}else{
 					article.setArticleContent(newArticleContent);
-					try{articleRepository.save(article);
-					success.put("rapport", "mise à jour effectuée avec succes");
+					try{
+						articleRepository.save(article);
+						return new ResponseEntity(new SuccessClass("mise"
+								+ " à jour effectuée avec succes"),HttpStatus.OK);
 					}catch(Exception e){
-						errors.put("error", "echec de la mise à jour, le serveur est arreté");
+						logger.error("echec de la mise à jour, le serveur est arreté");
+						return new ResponseEntity(new ErrorClass("echec"
+								+ " de la mise à jour, le serveur est arreté"),HttpStatus.NO_CONTENT);
 					}
 					
 				}
 				
-			
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
 			
 		}
 		
 		//methode pour la mise a jour des articles en post
 		
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/updateArticle",method=RequestMethod.POST)
-		public JSONObject updateArticlePost(HttpServletRequest request){
+		public ResponseEntity<?> updateArticlePost(HttpServletRequest request){
 			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
-
 			//recuperation des parametres de la requete
 			String title = request.getParameter("title"); 
 			String newArticleContent = request.getParameter("newArticleContent");
@@ -311,21 +282,23 @@ public class AdministratorController {
 					
 					
 				if(article==null){
-					errors.put("notFoundError", "l'article de titre "+title+" n'existe pas!");
+					logger.error("l'article de titre "+title+" n'existe pas!");
+					return new ResponseEntity (new ErrorClass("l'article de titre"
+							+ " "+title+" n'existe pas!"),HttpStatus.OK);
 				}else{
 					article.setArticleContent(newArticleContent);
-					try{articleRepository.save(article);
-					success.put("rapport", "mise à jour effectuée avec succes");
+					try{
+						articleRepository.save(article);
+						return new ResponseEntity(new SuccessClass("mise"
+								+ " à jour effectuée avec succes"),HttpStatus.OK);
 					}catch(Exception e){
-						errors.put("error", "echec de la mise à jour, le serveur est arreté");
+						logger.error("echec de la mise à jour, le serveur est arreté");
+						return new ResponseEntity(new ErrorClass("echec"
+								+ " de la mise à jour, le serveur est arreté"),HttpStatus.NO_CONTENT);
 					}
 					
 				}
 				
-			
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
 			
 		}
 		
@@ -338,16 +311,10 @@ public class AdministratorController {
 		//methode pour la suppression d'un article en get
 		
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/deleteArticle",method=RequestMethod.GET)
-		public JSONObject deleteArticleGet(HttpServletRequest request){
+		public ResponseEntity<?> deleteArticleGet(HttpServletRequest request){
 			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
 
 			//recuperation des parametres de la requete
 			
@@ -362,56 +329,49 @@ public class AdministratorController {
 					
 					
 				if(article==null){
-					errors.put("notFoundError", "l'article de titre "+title+" n'existe pas!");
+					logger.error("l'article de titre "+title+" n'existe pas!");
+					return new ResponseEntity (new ErrorClass("l'article de"
+							+ " titre "+title+" n'existe pas!"),HttpStatus.OK);
 				}else{
 					articleRepository.deleteByArticleId(article.getArticleId());
-					success.put("rapport", "suppression effectuée avec succes");
+					return new ResponseEntity (new SuccessClass("suppression "
+							+ "effectuée avec succes"),HttpStatus.OK);
 				}
 				
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
-			
 		}
 		
 		//methode pour la suppression d'un article en post
 		
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/deleteArticle",method=RequestMethod.POST)
-		public JSONObject deleteArticlePost(HttpServletRequest request){
+		public ResponseEntity<?> deleteArticlePost(HttpServletRequest request){
 			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
 
 			//recuperation des parametres de la requete
 			
 			String title =request.getParameter("title");
-			//creation du livre a supprimer
+			//creation de l'article a supprimer
 			
 			Article article = new Article();
 			
-			//recuperation du livre dans la base de données
+			//recuperation de l'article dans la base de données
 				
 					article = articleRepository.findByTitle(title);
 					
 					
 				if(article==null){
-					errors.put("notFoundError", "l'article de titre "+title+" n'existe pas!");
+					logger.error("l'article de titre "+title+" n'existe pas!");
+					return new ResponseEntity (new ErrorClass("l'article de"
+							+ " titre "+title+" n'existe pas!"),HttpStatus.OK);
 				}else{
 					articleRepository.deleteByArticleId(article.getArticleId());
-					success.put("rapport", "suppression effectuée avec succes");
+					return new ResponseEntity (new SuccessClass("suppression "
+							+ "effectuée avec succes"),HttpStatus.OK);
 				}
 				
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
-			
 		}
+		
 //***************************************************************************************************************
 		
 		//******************************************************************************//
@@ -421,16 +381,11 @@ public class AdministratorController {
 		//methode pour la recherche d'un article en get
 		
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/researchArticleByTitle",method=RequestMethod.GET)
-		public JSONObject researchArticleByTitleGet(HttpServletRequest request){
+		public ResponseEntity<?> researchArticleByTitleGet(HttpServletRequest request){
 			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
+
 
 			//recuperation des parametres de la requete
 			
@@ -441,37 +396,29 @@ public class AdministratorController {
 			
 			//recuperation de l'article dans la base de données
 				
-					article = articleRepository.findByTitle(title);
+			article = articleRepository.findByTitle(title);
 					
 					
-				if(article==null){
-					errors.put("notFoundError", "aucun article de titre "+title+" n'est enrégisté!");
-				}else{
-					success.put("article", article);
+			if(article==null){
+				logger.error("aucun article de titre "+title+" n'est enrégisté!");
+				return new ResponseEntity (new ErrorClass("aucun article de titre "
+						+title+" n'est enrégisté!"),HttpStatus.OK);
+			}else{
+				return new ResponseEntity<Article>(article,HttpStatus.OK);
 
-				}
+			}
 			
-			
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
-			
+
 		}
 		
 		
-		//methode pour la recherche d'un article en get
+		//methode pour la recherche d'un article en post
 		
 
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/researchArticleByTitle",method=RequestMethod.POST)
-		public JSONObject researchArticleByTitlePost(HttpServletRequest request){
+		public ResponseEntity<?> researchArticleByTitlePost(HttpServletRequest request){
 			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
 
 			//recuperation des parametres de la requete
 			
@@ -482,21 +429,19 @@ public class AdministratorController {
 			
 			//recuperation de l'article dans la base de données
 				
-					article = articleRepository.findByTitle(title);
+			article = articleRepository.findByTitle(title);
 					
 					
-				if(article==null){
-					errors.put("notFoundError", "aucun article de titre "+title+" n'est enrégisté!");
-				}else{
-					success.put("article", article);
+			if(article==null){
+				logger.error("aucun article de titre "+title+" n'est enrégisté!");
+				return new ResponseEntity (new ErrorClass("aucun article de titre "
+						+title+" n'est enrégisté!"),HttpStatus.OK);
+			}else{
+				return new ResponseEntity<Article>(article,HttpStatus.OK);
 
-				}
+			}
 			
-			
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
-			
+
 		}
 
 
@@ -508,16 +453,10 @@ public class AdministratorController {
 		
 		//methode pour l'ajout d'un livre en get
 		
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/addBook",method=RequestMethod.GET)
-		public JSONObject addBookGet(HttpServletRequest request){
+		public ResponseEntity<?> addBookGet(HttpServletRequest request){
 			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
 			
 			//recuperation des parametres de la requete
 			
@@ -553,43 +492,38 @@ public class AdministratorController {
 				bookFile.write(nameOnTheDisk);
 				
 			}catch(Exception e){
-				errors.put("noMoreSpaceError", "le fichier n'a pas pu etre sauvegadé sur le disque");
+				logger.error("le fichier n'a pas pu etre sauvegadé sur le disque");
+				return new ResponseEntity(new ErrorClass("le fichier n'a pas pu "
+						+ "etre sauvegadé sur le disque"),HttpStatus.OK);
 			}
 			//creation du livre
 			
 			Book book = new Book(bookName,bookAuthor,bookEdition,bookPrice,nameOnTheDisk);
 			
 			//insertion du livre dans la base de données
-				if(errors.isEmpty()){
+
 				try{
 					bookRepository.save(book);
-					success.put("rapport", "livre enregistré avec succès");
+					return new ResponseEntity(new SuccessClass("livre enregistré avec succès"),HttpStatus.OK);
 					
 				}catch(Exception e){
-					errors.put("notSaveError", "le livre a été enregistré sur le disque mais son nom n'a pas"
+					logger.error("le livre a été enregistré sur le disque mais son nom n'a pas"
 							+ "été enregistré dans la base de données");
+					return new ResponseEntity(new ErrorClass("le livre a été enregistré sur "
+							+ "le disque mais son nom n'a pas été enregistré dans la base de "
+							+ "données"),HttpStatus.OK);
 				}
-				}
-			
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
+						 
 			
 		}
 			
 		
 		//methode pour l'ajout d'un livre en post
 		
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/addBook",method=RequestMethod.POST)
-		public JSONObject addBookPost(HttpServletRequest request){
+		public ResponseEntity<?> addBookPost(HttpServletRequest request){
 			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
 			
 			//recuperation des parametres de la requete
 			
@@ -623,31 +557,33 @@ public class AdministratorController {
 			
 			try{
 				bookFile.write(nameOnTheDisk);
+				
 			}catch(Exception e){
-				errors.put("noMoreSpaceError", "le fichier n'a pas pu etre sauvegadé sur le disque");
+				logger.error("le fichier n'a pas pu etre sauvegadé sur le disque");
+				return new ResponseEntity(new ErrorClass("le fichier n'a pas pu "
+						+ "etre sauvegadé sur le disque"),HttpStatus.OK);
 			}
 			//creation du livre
 			
 			Book book = new Book(bookName,bookAuthor,bookEdition,bookPrice,nameOnTheDisk);
 			
 			//insertion du livre dans la base de données
-				if(errors.isEmpty()){
+
 				try{
 					bookRepository.save(book);
-					success.put("rapport", "livre enregistré avec succès");
+					return new ResponseEntity(new SuccessClass("livre enregistré avec succès"),HttpStatus.OK);
 					
 				}catch(Exception e){
-					errors.put("notSaveError", "le livre a été enregistré sur le disque mais son nom n'a pas"
+					logger.error("le livre a été enregistré sur le disque mais son nom n'a pas"
 							+ "été enregistré dans la base de données");
+					return new ResponseEntity(new ErrorClass("le livre a été enregistré sur "
+							+ "le disque mais son nom n'a pas été enregistré dans la base de "
+							+ "données"),HttpStatus.OK);
 				}
-				}
-			
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
+						 
 			
 		}
-
+	
 		
 //***************************************************************************************************************		
 		//******************************************************************************//
@@ -657,17 +593,9 @@ public class AdministratorController {
 			//methode pour la recherche des livre en get
 			
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/researchBookByName",method=RequestMethod.GET)
-			public JSONObject researchBookByNameGet(HttpServletRequest request){
-				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-	
+			public ResponseEntity<?> researchBookByNameGet(HttpServletRequest request){
 				//recuperation des parametres de la requete
 				
 				String bookName =request.getParameter("bookName");
@@ -681,31 +609,20 @@ public class AdministratorController {
 						
 						
 					if(book==null){
-						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
+						logger.error("le livre de nom "+bookName+" n'existe pas!");
+						return new ResponseEntity(new ErrorClass("le livre de nom "
+						+bookName+" n'existe pas!"),HttpStatus.OK);
 					}else{
-						success.put("rapport", book);
+						return new ResponseEntity(new SuccessClass("recherche effectuée!", book),HttpStatus.OK);
 					}
-				
-				
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
+					
 			}
 			//methode pour la recherche des livre en post
 		
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/researchBookByName",method=RequestMethod.POST)
-			public JSONObject researchBookByNamePost(HttpServletRequest request){
-				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-	
+			public ResponseEntity<?> researchBookByNamePost(HttpServletRequest request){
 				//recuperation des parametres de la requete
 				
 				String bookName =request.getParameter("bookName");
@@ -713,22 +630,19 @@ public class AdministratorController {
 				
 				Book book = new Book();
 				
-				//recherche du livre dans la base de données
+				//insertion du livre dans la base de données
 					
 						book = bookRepository.findByBookName(bookName);
 						
 						
 					if(book==null){
-						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
+						logger.error("le livre de nom "+bookName+" n'existe pas!");
+						return new ResponseEntity(new ErrorClass("le livre de nom "
+						+bookName+" n'existe pas!"),HttpStatus.OK);
 					}else{
-						success.put("rapport", book);
+						return new ResponseEntity(new SuccessClass("recherche effectuée!", book),HttpStatus.OK);
 					}
-				
-				
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
+					
 			}
 //***************************************************************************************************************
 			//******************************************************************************//
@@ -738,81 +652,54 @@ public class AdministratorController {
 			//methode pour la recherche de tous les livres en get
 			
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/researchAllBook",method=RequestMethod.GET)
-			public JSONObject researchAllBookGet(HttpServletRequest request){
+			public ResponseEntity<List<Book>> researchAllBookGet(HttpServletRequest request){
 				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-	
+
 				//creation de laliste des livres
 				
 				List<Book> listOfBook = new ArrayList<Book>();
 				
 				//recuperation des livres dans la base de données
 					
-						listOfBook = bookRepository.findAll();
-						
-						
-					if(listOfBook.isEmpty()){
-						errors.put("notFoundError", "aucun livre n'est enregistré dans la base de données");
-					}else{
-						int i=1;
-						for(Book bookFind:listOfBook){
-						success.put("book"+i, bookFind);
-						i++;
-						}
-					}
+				listOfBook = bookRepository.findAll();	
+				if(listOfBook.isEmpty()){
+					logger.error("aucun livre n'est enregistré dans la base de données");
+					return new ResponseEntity(new ErrorClass("aucun livre n'est enregistré "
+							+ "dans la base de données"),HttpStatus.OK);
+				}else{
+					return new ResponseEntity<List<Book>>(listOfBook,HttpStatus.OK);
+				}
 				
-				
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
-			}
+	
+		}
 			
 			//methode pour la recherche de tous les livres en post
 			
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/researchAllBook",method=RequestMethod.POST)
-			public JSONObject researchAllBookPost(HttpServletRequest request){
+			public ResponseEntity<List<Book>> researchAllBookPost(HttpServletRequest request){
 				
-				//creation des objects JSON à renvoyer à la vue
+
+				//creation de laliste des livres
 				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-	
-				//creation de la liste des livres
 				List<Book> listOfBook = new ArrayList<Book>();
 				
-				//insertion du livre dans la base de données
+				//recuperation des livres dans la base de données
 					
-						listOfBook = bookRepository.findAll();
-						
-						
-					if(listOfBook.isEmpty()){
-						errors.put("notFoundError", "aucun livre n'est enregistré dans la base de données");
-					}else{
-						int i=1;
-						for(Book bookFind:listOfBook){
-						success.put("book"+i, bookFind);
-						i++;
-						}
-					}
+				listOfBook = bookRepository.findAll();	
+				if(listOfBook.isEmpty()){
+					logger.error("aucun livre n'est enregistré dans la base de données");
+					return new ResponseEntity(new ErrorClass("aucun livre n'est enregistré "
+							+ "dans la base de données"),HttpStatus.OK);
+				}else{
+					return new ResponseEntity<List<Book>>(listOfBook,HttpStatus.OK);
+				}
 				
-				
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
-			}
+	
+		}
 			
 //***************************************************************************************************************
 			
@@ -823,17 +710,10 @@ public class AdministratorController {
 			//methode pour la recherche des livre par auteur en get
 			
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/researchBookByAuthor",method=RequestMethod.GET)
-			public JSONObject researchBookByAuthorGet(HttpServletRequest request){
-				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-	
+			public ResponseEntity<?> researchBookByAuthorGet(HttpServletRequest request){
+
 				//recuperation des parametres de la requete
 				
 				String bookAuthor =request.getParameter("bookAuthor");
@@ -843,41 +723,27 @@ public class AdministratorController {
 				
 				//recuperation des livres dans la base de données
 					
-						listOfBook = bookRepository.findByBookAuthor(bookAuthor);
+				listOfBook = bookRepository.findByBookAuthor(bookAuthor);
 						
-						
-					if(listOfBook.isEmpty()){
-						errors.put("notFoundError", "aucun livre d'auteur "+bookAuthor+" n'est enrégisté!");
-					}else{
-						int i=1;
-						for(Book bookFind:listOfBook){
-						success.put("book"+i, bookFind);
-						i++;
-						}
-					}
+				if(listOfBook.isEmpty()){
+					logger.error("l'auteur "+bookAuthor+" n'a aucun livre"
+							+ " n'est enregistré dans la base de données");
+					return new ResponseEntity(new ErrorClass("l'auteur "+bookAuthor+" n'a aucun livre"
+							+ " n'est enregistré dans la base de données"),HttpStatus.OK);
+				}else{
+					return new ResponseEntity<List<Book>>(listOfBook,HttpStatus.OK);
+				}
 				
-				
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
-			}
-			
+	
+		}
+		
 			
 			//methode pour la recherche des livre par auteur en post
 			
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/researchBookByAuthor",method=RequestMethod.POST)
-			public JSONObject researchBookByAuthorPost(HttpServletRequest request){
-				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-	
+			public ResponseEntity<?> researchBookByAuthorPost(HttpServletRequest request){
 				//recuperation des parametres de la requete
 				
 				String bookAuthor =request.getParameter("bookAuthor");
@@ -887,26 +753,19 @@ public class AdministratorController {
 				
 				//recuperation des livres dans la base de données
 					
-						listOfBook = bookRepository.findByBookAuthor(bookAuthor);
+				listOfBook = bookRepository.findByBookAuthor(bookAuthor);
 						
-						
-					if(listOfBook.isEmpty()){
-						errors.put("notFoundError", "aucun livre d'auteur "+bookAuthor+" n'est enrégisté!");
-					}else{
-						int i=1;
-						for(Book bookFind:listOfBook){
-						success.put("book"+i, bookFind);
-						i++;
-						}
-					}
+				if(listOfBook.isEmpty()){
+					logger.error("l'auteur "+bookAuthor+" n'a aucun livre"
+							+ " n'est enregistré dans la base de données");
+					return new ResponseEntity(new ErrorClass("l'auteur "+bookAuthor+" n'a aucun livre"
+							+ " n'est enregistré dans la base de données"),HttpStatus.OK);
+				}else{
+					return new ResponseEntity<List<Book>>(listOfBook,HttpStatus.OK);
+				}
 				
-				
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
-			}
-			
+	
+		}
 //***************************************************************************************************************
 			
 			//******************************************************************************//
@@ -917,16 +776,9 @@ public class AdministratorController {
 			//methode pour la suppression d'un livre en get
 			
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/deleteBook",method=RequestMethod.GET)
-			public JSONObject deleteBookGet(HttpServletRequest request){
-				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
+			public ResponseEntity<?> deleteBookGet(HttpServletRequest request){
 	
 				//recuperation des parametres de la requete
 				
@@ -937,36 +789,30 @@ public class AdministratorController {
 				
 				//recuperation du livre dans la base de données
 					
-						book = bookRepository.findByBookName(bookName);
+				book = bookRepository.findByBookName(bookName);
 						
 						
-					if(book==null){
-						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
-					}else{
-						bookRepository.deleteByBookId(book.getBookId());
-						success.put("rapport", "suppression effectuée avec succes");
-					}
-					
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
-			}
+				if(book==null){
+					logger.error("le livre de nom "+bookName+" n'existe pas!");
+					return new ResponseEntity(new ErrorClass("le livre de nom "
+					+bookName+" n'existe pas!"),HttpStatus.OK);
+				}else{
+					bookRepository.deleteByBookId(book.getBookId());
+					return new ResponseEntity(new SuccessClass("suppression "
+							+ "effectuée avec succes"),HttpStatus.OK);
+				}
+					 
 			
+		}
+		
 			//methode pour la suppression des livre en post
 			
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/deleteBook",method=RequestMethod.POST)
-			public JSONObject deleteBookPost(HttpServletRequest request){
+			public ResponseEntity<?> deleteBookPost(HttpServletRequest request){
 				
-				//creation des objects JSON à renvoyer à la vue
 				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-	
 				//recuperation des parametres de la requete
 				
 				String bookName =request.getParameter("bookName");
@@ -976,20 +822,21 @@ public class AdministratorController {
 				
 				//recuperation du livre dans la base de données
 					
-						book = bookRepository.findByBookName(bookName);
+				book = bookRepository.findByBookName(bookName);
 						
 						
-					if(book==null){
-						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
-					}else{
-						bookRepository.deleteByBookId(book.getBookId());
-					}
-					
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
-			}
+				if(book==null){
+					logger.error("le livre de nom "+bookName+" n'existe pas!");
+					return new ResponseEntity(new ErrorClass("le livre de nom "
+					+bookName+" n'existe pas!"),HttpStatus.OK);
+				}else{
+					bookRepository.deleteByBookId(book.getBookId());
+					return new ResponseEntity(new SuccessClass("suppression "
+							+ "effectuée avec succes"),HttpStatus.OK);
+				}
+					 
+			
+		}
 //***************************************************************************************************************
 			//******************************************************************************//
 			//***********************methode pour la mise a jour des livres**********//
@@ -998,17 +845,10 @@ public class AdministratorController {
 			//methode pour la mise a jour des livres en get
 			
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/updateBook",method=RequestMethod.GET)
-			public JSONObject updateBookGet(HttpServletRequest request){
-				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-	
+			public ResponseEntity<?> updateBookGet(HttpServletRequest request){
+
 				//recuperation des parametres de la requete
 				String bookName = request.getParameter("bookName"); 
 				double newBookPrice = Double.parseDouble(request.getParameter("newBookPrice"));
@@ -1019,42 +859,36 @@ public class AdministratorController {
 				
 				//recuperation du livre dans la base de données
 					
-						book = bookRepository.findByBookName(bookName);
+					book = bookRepository.findByBookName(bookName);
 						
 						
 					if(book==null){
-						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
+						logger.error("le livre de nom "+bookName+" n'existe pas!");
+						return new ResponseEntity(new ErrorClass("le livre de nom "
+						+bookName+" n'existe pas!"), HttpStatus.OK);
 					}else{
 						book.setBookPrice(newBookPrice);
-						try{bookRepository.save(book);
-						success.put("rapport", "mise à jour effectuée avec succes");
+						try{
+						bookRepository.save(book);
+						return new ResponseEntity(new SuccessClass("mise à jour"
+								+ " effectuée avec succes"),HttpStatus.OK);
 						}catch(Exception e){
-							errors.put("error", "echec de la mise à jour, le serveur est arreté");
+							logger.error("echec de la mise à jour, le serveur est arreté");
+							return new ResponseEntity(new ErrorClass("echec de la mise à"
+									+ " jour, le serveur est arreté"),HttpStatus.OK);
 						}
 						
-					}
-					
-				
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
+					}	
 			}
 			
 			//methode pour la mise a jour des livres en post
 			
 
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/updateBook",method=RequestMethod.POST)
-			public JSONObject updateBookPost(HttpServletRequest request){
+			public ResponseEntity<?> updateBookPost(HttpServletRequest request){
 				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-	
+
 				//recuperation des parametres de la requete
 				String bookName = request.getParameter("bookName"); 
 				double newBookPrice = Double.parseDouble(request.getParameter("newBookPrice"));
@@ -1065,28 +899,27 @@ public class AdministratorController {
 				
 				//recuperation du livre dans la base de données
 					
-						book = bookRepository.findByBookName(bookName);
+					book = bookRepository.findByBookName(bookName);
 						
 						
 					if(book==null){
-						errors.put("notFoundError", "le livre de nom "+bookName+" n'existe pas!");
+						logger.error("le livre de nom "+bookName+" n'existe pas!");
+						return new ResponseEntity(new ErrorClass("le livre de nom "
+						+bookName+" n'existe pas!"), HttpStatus.OK);
 					}else{
 						book.setBookPrice(newBookPrice);
-						try{bookRepository.save(book);
-						success.put("rapport", "mise à jour effectuée avec succes");
+						try{
+						bookRepository.save(book);
+						return new ResponseEntity(new SuccessClass("mise à jour"
+								+ " effectuée avec succes"),HttpStatus.OK);
 						}catch(Exception e){
-							errors.put("error", "echec de la mise à jour, le serveur est arreté");
+							logger.error("echec de la mise à jour, le serveur est arreté");
+							return new ResponseEntity(new ErrorClass("echec de la mise à"
+									+ " jour, le serveur est arreté"),HttpStatus.OK);
 						}
 						
-					}
-					
-				
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
-				
+					}	
 			}
-
 			
 //***************************************************************************************************************	
 			//******************************************************************************//
@@ -1095,20 +928,11 @@ public class AdministratorController {
 			
 			//methode pour la gestion de la deconnexion de l'administrateur en get
 			
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@RequestMapping(value="/deconnection", method=RequestMethod.GET)
-			public JSONObject deconnectionGet(HttpServletRequest request){
+			public ResponseEntity<?> deconnectionGet(HttpServletRequest request){
 				
-				//creation des objects JSON à renvoyer à la vue
-				
-				JSONObject result,success,errors; 
-				result = new JSONObject();
-				success = new JSONObject();
-				errors = new JSONObject();
-				
-				//recuperation des parametres de la requete
-				
-				
+
 				//objets utils
 				
 				HttpSession session;
@@ -1119,110 +943,74 @@ public class AdministratorController {
 				
 				//recheche dans la base de données de l'administrateur ayant les informations fournies
 
-						session = request.getSession();
-						admin = (Administrator) session.getAttribute("administratorInSession");
-						
-						if(admin!=null){
-						try{
-							session.invalidate();
-							success.put("rapport", "deconnexion reussie");
-						}catch(Exception e){
-							errors.put("errorMessage", "la session n'a pas pu etre fermé");
-						}
-						}else{
-							errors.put("errorMessage", "aucune session n'est ouverte");
-						}
-				result.put("success", success);
-				result.put("errors", errors);
-				return result;
+				session = request.getSession();
+				admin = (Administrator) session.getAttribute("administratorInSession");
 				
+				if(admin!=null){
+				try{
+					session.invalidate();
+					return new ResponseEntity(new SuccessClass("deconnexion reussie!"),HttpStatus.OK);
+				}catch(Exception e){
+					logger.error("la session n'a pas pu etre fermé!");
+					return new ResponseEntity(new ErrorClass("la "
+							+ "session n'a pas pu etre fermé"),HttpStatus.OK);
+				}
+				}else{
+					logger.error("aucune session n'est ouverte");
+					return new ResponseEntity(new ErrorClass("aucune session n'est ouverte"),HttpStatus.OK);
+				}
+		
 			}
-			
+	
 			
 			
 			//methode pour la gestion de la connexion de l'administrateur en post
 			
-				@SuppressWarnings("unchecked")
-				@RequestMapping(value="/deconnection", method=RequestMethod.POST)
-				public JSONObject deconnectionPost(HttpServletRequest request){
-					
-					//creation des objects JSON à renvoyer à la vue
-					
-					JSONObject result,success,errors; 
-					result = new JSONObject();
-					success = new JSONObject();
-					errors = new JSONObject();
-					
-					//recuperation des parametres de la requete
-					
-					
-					//objets utils
-					
-					HttpSession session;
-					
-					//creation d'un objet administrateur
-					
-					Administrator admin = new Administrator();;
-					
-					//recheche dans la base de données de l'administrateur ayant les informations fournies
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/deconnection", method=RequestMethod.POST)
+		public ResponseEntity<?> deconnectionPost(HttpServletRequest request){
+			
+			//objets utils
+			
+			HttpSession session;
+			
+			//creation d'un objet administrateur
+			
+			Administrator admin = new Administrator();;
+			
+			//recheche dans la base de données de l'administrateur ayant les informations fournies
 
-							session = request.getSession();
-							admin = (Administrator) session.getAttribute("administratorInSession");
-							
-							if(admin!=null){
-							try{
-								session.invalidate();
-								success.put("rapport", "deconnexion reussie");
-							}catch(Exception e){
-								errors.put("errorMessage", "la session n'a pas pu etre fermé");
-							}
-							}else{
-								errors.put("errorMessage", "aucune session n'est ouverte");
-							}
-					result.put("success", success);
-					result.put("errors", errors);
-					return result;
-					
-				}			
-//***************************************************************************************************************	
-
+			session = request.getSession();
+			admin = (Administrator) session.getAttribute("administratorInSession");
+			
+			if(admin!=null){
+			try{
+				session.invalidate();
+				return new ResponseEntity(new SuccessClass("deconnexion reussie!"),HttpStatus.OK);
+			}catch(Exception e){
+				logger.error("la session n'a pas pu etre fermé!");
+				return new ResponseEntity(new ErrorClass("la "
+						+ "session n'a pas pu etre fermé"),HttpStatus.OK);
+			}
+			}else{
+				logger.error("aucune session n'est ouverte");
+				return new ResponseEntity(new ErrorClass("aucune session n'est ouverte"),HttpStatus.OK);
+			}
+	
+		}
 				
 				
-				
-
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-//***************************************************************************************************************	
+//***********************************************************************************************************	
 				//******************************************************************************//
-				//***********************methode creation d'un nouveau programme*******************//
-//******************************************************************************//
+				//***********************methode creation d'un nouveau programme****************//
+				//******************************************************************************//
 
 
 		//methode pour la creation d'un nouvel article en get
 		
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/addSchoolCalender", method=RequestMethod.GET)
-		public JSONObject addSchoolCalenderGet(HttpServletRequest request){
-			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
+		public ResponseEntity<?> addSchoolCalenderGet(HttpServletRequest request){
 			
 			//recuperation des parametres de la requete
 			
@@ -1251,7 +1039,11 @@ public class AdministratorController {
 				schoolCalenderFile.write(nameOnTheDisk);
 				
 			}catch(Exception e){
-				errors.put("noMoreSpaceError", "le fichier n'a pas pu etre sauvegadé sur le disque");
+				logger.error("le fichier n'a pas pu"
+						+ " etre sauvegadé sur le disque");
+				return new ResponseEntity(new ErrorClass("le fichier n'a pas pu"
+						+ " etre sauvegadé sur le disque"),HttpStatus.OK);
+
 			}
 			//creation du programme
 			
@@ -1261,152 +1053,96 @@ public class AdministratorController {
 																nameOnTheDisk);
 			
 			//insertion du livre dans la base de données
-				if(errors.isEmpty()){
-				try{
-					 schoolCalenderRepository.save(schoolCalender);
-					success.put("rapport", "programme enregistré avec succès");
-					
-				}catch(Exception e){
-					errors.put("notSaveError", "le programme a été enregistré sur le disque mais son nom n'a pas"
-							+ "été enregistré dans la base de données");
-				}
-				}
 			
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
-			
+			try{
+				 schoolCalenderRepository.save(schoolCalender);
+				return new ResponseEntity(new SuccessClass("programme enregistré avec succès"),HttpStatus.OK);
+				
+			}catch(Exception e){
+				logger.error("le programme a été enregistré sur le disque mais son nom n'a pas"
+						+ "été enregistré dans la base de données");
+				return new ResponseEntity(new ErrorClass("le programme a été"
+						+ " enregistré sur le disque mais son nom n'a pas"
+						+ "été enregistré dans la base de données"),HttpStatus.OK);
+			}
+	
 		}
-
-
-
 
 		//methode pour la creation d'un nouvel article en post
 		
-				@SuppressWarnings("unchecked")
-				@RequestMapping(value="/addSchoolCalender", method=RequestMethod.POST)
-				public JSONObject createSchoolCalenderPost(HttpServletRequest request){
-					
-					//creation des objects JSON à renvoyer à la vue
-					
-					JSONObject result,success,errors; 
-					result = new JSONObject();
-					success = new JSONObject();
-					errors = new JSONObject();
-					
-					//recuperation des parametres de la requete
-					
-					String schoolCalenderName = request.getParameter("schoolCalenderName");
-					String schoolCalenderType = request.getParameter("schoolCalenderType");
-					String schoolCalenderYear = request.getParameter("schoolCalenderYear");
-					Part schoolCalenderFile = null;
-					try{
-					schoolCalenderFile = request.getPart("schoolCalenderFile");
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-					
-					String schoolCalenderFileName = schoolCalenderName+".pdf";
-					
-					//definition logique du repertoire d'enregistrement
-					
-					File fileRepository = new File(schoolCalenderFolder);
-					if(!fileRepository.exists()){
-						fileRepository.mkdir();
-					}
-					
-					String nameOnTheDisk = schoolCalenderFolder+File.separator+schoolCalenderFileName;
-					
-					try{
-						schoolCalenderFile.write(nameOnTheDisk);
-						
-					}catch(Exception e){
-						errors.put("noMoreSpaceError", "le fichier n'a pas pu etre sauvegadé sur le disque");
-					}
-					//creation du programme
-					
-					SchoolCalender schoolCalender = new SchoolCalender(schoolCalenderName,
-																		schoolCalenderType,
-																		schoolCalenderYear,
-																		nameOnTheDisk);
-					
-					//insertion du livre dans la base de données
-						if(errors.isEmpty()){
-						try{
-							 schoolCalenderRepository.save(schoolCalender);
-							success.put("rapport", "programme enregistré avec succès");
-							
-						}catch(Exception e){
-							errors.put("notSaveError", "le programme a été enregistré sur le disque mais son nom n'a pas"
-									+ "été enregistré dans la base de données");
-						}
-						}
-					
-					result.put("success", success);
-					result.put("errors", errors);
-					return result;
-					
-				}
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/addSchoolCalender", method=RequestMethod.POST)
+		public ResponseEntity<?> createSchoolCalenderPost(HttpServletRequest request){
+			
+			//recuperation des parametres de la requete
+			
+			String schoolCalenderName = request.getParameter("schoolCalenderName");
+			String schoolCalenderType = request.getParameter("schoolCalenderType");
+			String schoolCalenderYear = request.getParameter("schoolCalenderYear");
+			Part schoolCalenderFile = null;
+			try{
+			schoolCalenderFile = request.getPart("schoolCalenderFile");
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			String schoolCalenderFileName = schoolCalenderName+".pdf";
+			
+			//definition logique du repertoire d'enregistrement
+			
+			File fileRepository = new File(schoolCalenderFolder);
+			if(!fileRepository.exists()){
+				fileRepository.mkdir();
+			}
+			
+			String nameOnTheDisk = schoolCalenderFolder+File.separator+schoolCalenderFileName;
+			
+			try{
+				schoolCalenderFile.write(nameOnTheDisk);
+				
+			}catch(Exception e){
+				logger.error("le fichier n'a pas pu"
+						+ " etre sauvegadé sur le disque");
+				return new ResponseEntity(new ErrorClass("le fichier n'a pas pu"
+						+ " etre sauvegadé sur le disque"),HttpStatus.OK);
+
+			}
+			//creation du programme
+			
+			SchoolCalender schoolCalender = new SchoolCalender(schoolCalenderName,
+																schoolCalenderType,
+																schoolCalenderYear,
+																nameOnTheDisk);
+			
+			//insertion du livre dans la base de données
+			
+			try{
+				 schoolCalenderRepository.save(schoolCalender);
+				return new ResponseEntity(new SuccessClass("programme enregistré avec succès"),HttpStatus.OK);
+				
+			}catch(Exception e){
+				logger.error("le programme a été enregistré sur le disque mais son nom n'a pas"
+						+ "été enregistré dans la base de données");
+				return new ResponseEntity(new ErrorClass("le programme a été"
+						+ " enregistré sur le disque mais son nom n'a pas"
+						+ "été enregistré dans la base de données"),HttpStatus.OK);
+			}
 	
+		}
+
 //***************************************************************************************************************
 	//******************************************************************************//
 	//***********************methode pour la suppression d'un programme**********//
 	//******************************************************************************//		
 
 	
-	//methode pour la suppression d'un programme en get
+		//methode pour la suppression d'un programme en get
+		
 	
-
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/deleteSchoolCalender",method=RequestMethod.GET)
-	public JSONObject deleteSchoolCalenderGet(HttpServletRequest request){
-		
-		//creation des objects JSON à renvoyer à la vue
-		
-		JSONObject result,success,errors; 
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
-
-		//recuperation des parametres de la requete
-		
-		String schoolCalenderName =request.getParameter("schoolCalenderName");
-		//creation du programme à supprimer
-		
-		SchoolCalender schoolCalender = new SchoolCalender();
-		
-		//recuperation de l'article dans la base de données
-			
-				schoolCalender = schoolCalenderRepository.findBySchoolCalenderName(schoolCalenderName);
-				
-				
-			if(schoolCalender==null){
-				errors.put("notFoundError", "le programme de nom "+schoolCalenderName+" n'existe pas!");
-			}else{
-				schoolCalenderRepository.deleteByschoolCalenderId(schoolCalender.getSchoolCalenderId());
-				success.put("rapport", "suppression effectuée avec succes");
-			}
-			
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
-		
-	}
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/deleteSchoolCalender",method=RequestMethod.GET)
+		public ResponseEntity<?> deleteSchoolCalenderGet(HttpServletRequest request){
 	
-	//methode pour la suppression d'un programme en post
-	
-
-		@SuppressWarnings("unchecked")
-		@RequestMapping(value="/deleteSchoolCalender",method=RequestMethod.POST)
-		public JSONObject deleteSchoolCalenderPost(HttpServletRequest request){
-			
-			//creation des objects JSON à renvoyer à la vue
-			
-			JSONObject result,success,errors; 
-			result = new JSONObject();
-			success = new JSONObject();
-			errors = new JSONObject();
-
 			//recuperation des parametres de la requete
 			
 			String schoolCalenderName =request.getParameter("schoolCalenderName");
@@ -1416,407 +1152,336 @@ public class AdministratorController {
 			
 			//recuperation de l'article dans la base de données
 				
-					schoolCalender = schoolCalenderRepository.findBySchoolCalenderName(schoolCalenderName);
-					
-					
-				if(schoolCalender==null){
-					errors.put("notFoundError", "le programme de nom "+schoolCalenderName+" n'existe pas!");
-				}else{
-					schoolCalenderRepository.deleteByschoolCalenderId(schoolCalender.getSchoolCalenderId());
-					success.put("rapport", "suppression effectuée avec succes");
-				}
+			schoolCalender = schoolCalenderRepository.findBySchoolCalenderName(schoolCalenderName);
 				
-			result.put("success", success);
-			result.put("errors", errors);
-			return result;
+				
+			if(schoolCalender==null){
+				logger.error("notFoundError", "le programme de nom "+schoolCalenderName+" n'existe pas!");
+				return new ResponseEntity(new ErrorClass("le programme de nom "
+				+schoolCalenderName+" n'existe pas!"),HttpStatus.OK);
+			}else{
+				schoolCalenderRepository.deleteByschoolCalenderId(schoolCalender.getSchoolCalenderId());
+				return new ResponseEntity(new SuccessClass("suppression effectuée avec succes"),HttpStatus.OK);
+			}
+			
+		 
+		
+		}
+	
+	//methode pour la suppression d'un programme en post
+	
+
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/deleteSchoolCalender",method=RequestMethod.POST)
+		public ResponseEntity<?> deleteSchoolCalenderPost(HttpServletRequest request){
+			
+			
+			//recuperation des parametres de la requete
+			
+			String schoolCalenderName =request.getParameter("schoolCalenderName");
+			//creation du programme à supprimer
+			
+			SchoolCalender schoolCalender = new SchoolCalender();
+			
+			//recuperation de l'article dans la base de données
+				
+			schoolCalender = schoolCalenderRepository.findBySchoolCalenderName(schoolCalenderName);
+				
+				
+			if(schoolCalender==null){
+				logger.error("notFoundError", "le programme de nom "+schoolCalenderName+" n'existe pas!");
+				return new ResponseEntity(new ErrorClass("le programme de nom "
+				+schoolCalenderName+" n'existe pas!"),HttpStatus.OK);
+			}else{
+				schoolCalenderRepository.deleteByschoolCalenderId(schoolCalender.getSchoolCalenderId());
+				return new ResponseEntity(new SuccessClass("suppression effectuée avec succes"),HttpStatus.OK);
+			}
 			
 		}
 		
 //***************************************************************************************************************
+		
+		//******************************************************************************//
+		//*************methode pour la recherche des programmes suivant l'année**********//
+		//******************************************************************************//		
+		
+		//methode pour la recherche d'un programme en get
+		
 	
-	//******************************************************************************//
-	//*************methode pour la recherche des programmes suivant l'année**********//
-	//******************************************************************************//		
-	
-	//methode pour la recherche d'un programme en get
-	
-
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/researchSchoolCalenderByYear",method=RequestMethod.GET)
-	public JSONObject researchSchoolCalenderByYearGet(HttpServletRequest request){
-		
-		//creation des objects JSON à renvoyer à la vue
-		
-		JSONObject result,success,errors; 
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
-
-		//recuperation des parametres de la requete
-		
-		String schoolCalenderYear =request.getParameter("schoolCalenderyear");
-		//creation de l'article à renvoyer
-		
-		List<SchoolCalender> listOfSchoolCalender = new ArrayList<SchoolCalender>();
-		
-		//recuperation de l'article dans la base de données
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/researchSchoolCalenderByYear",method=RequestMethod.GET)
+		public ResponseEntity<List<SchoolCalender>> researchSchoolCalenderByYearGet(HttpServletRequest request){
 			
-		listOfSchoolCalender = schoolCalenderRepository.findBySchoolCalenderYear(schoolCalenderYear);
-				
-			int i=1;	
-			if(listOfSchoolCalender.isEmpty()){
-				errors.put("notFoundError", "aucun programme pour le compte de l'année "+schoolCalenderYear+" n'est enrégisté!");
-			}else{
-				for(SchoolCalender sc:listOfSchoolCalender){
-				success.put("programme"+i, sc);
-				i++;
-				}
-			}
-		
-		
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
-		
-	}
 	
-
-	//methode pour la recherche d'un programme en get
-	
-
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/researchSchoolCalenderByYear",method=RequestMethod.POST)
-	public JSONObject researchSchoolCalenderByYearPost(HttpServletRequest request){
-		
-		//creation des objects JSON à renvoyer à la vue
-		
-		JSONObject result,success,errors; 
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
-
-		//recuperation des parametres de la requete
-		
-		String schoolCalenderYear =request.getParameter("schoolCalenderyear");
-		//creation de l'article à renvoyer
-		
-		List<SchoolCalender> listOfSchoolCalender = new ArrayList<SchoolCalender>();
-		
-		//recuperation de l'article dans la base de données
+			//recuperation des parametres de la requete
 			
-		listOfSchoolCalender = schoolCalenderRepository.findBySchoolCalenderYear(schoolCalenderYear);
+			String schoolCalenderYear =request.getParameter("schoolCalenderyear");
+			//creation de l'article à renvoyer
+			
+			List<SchoolCalender> listOfSchoolCalender = new ArrayList<SchoolCalender>();
+			
+			//recuperation de l'article dans la base de données
 				
-			int i=1;	
+			listOfSchoolCalender = schoolCalenderRepository.findBySchoolCalenderYear(schoolCalenderYear);
+				
 			if(listOfSchoolCalender.isEmpty()){
-				errors.put("notFoundError", "aucun programme pour le compte de l'année "+schoolCalenderYear+" n'est enrégisté!");
+				logger.error("aucun programme pour le compte de l'année "
+			+schoolCalenderYear+" n'est enrégisté!");
+				return new ResponseEntity(new ErrorClass("aucun programme pour le compte de l'année "
+						+schoolCalenderYear+" n'est enrégisté!"),HttpStatus.OK);
 			}else{
-				for(SchoolCalender sc:listOfSchoolCalender){
-				success.put("programme"+i, sc);
-				i++;
-				}
+				return new ResponseEntity<List<SchoolCalender>>(listOfSchoolCalender,HttpStatus.OK);
 			}
-		
-		
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
-		
-	}
+			
+		}
+	
 
+		//methode pour la recherche d'un programme en get
+		
+	
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/researchSchoolCalenderByYear",method=RequestMethod.POST)
+		public ResponseEntity<?> researchSchoolCalenderByYearPost(HttpServletRequest request){
+			
+			//recuperation des parametres de la requete
+			
+			String schoolCalenderYear =request.getParameter("schoolCalenderyear");
+			//creation de l'article à renvoyer
+			
+			List<SchoolCalender> listOfSchoolCalender = new ArrayList<SchoolCalender>();
+			
+			//recuperation de l'article dans la base de données
+				
+			listOfSchoolCalender = schoolCalenderRepository.findBySchoolCalenderYear(schoolCalenderYear);
+				
+			if(listOfSchoolCalender.isEmpty()){
+				logger.error("aucun programme pour le compte de l'année "
+			+schoolCalenderYear+" n'est enrégisté!");
+				return new ResponseEntity(new ErrorClass("aucun programme pour le compte de l'année "
+						+schoolCalenderYear+" n'est enrégisté!"),HttpStatus.OK);
+			}else{
+				return new ResponseEntity<List<SchoolCalender>>(listOfSchoolCalender,HttpStatus.OK);
+			}
+			
+		}
+	
 
-//***************************************************************************************************************
-
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//***************************************************************************************************************	
+//************************************************************************************************************	
 	//******************************************************************************//
 	//***********************methode creation d'une nouvelle bourse*******************//
-//******************************************************************************//
-
-
-//methode pour la creation d'un nouvel article en get
-
-@SuppressWarnings("unchecked")
-@RequestMapping(value="/addScolarship", method=RequestMethod.GET)
-public JSONObject addScolarshipGet(HttpServletRequest request){
-
-//creation des objects JSON à renvoyer à la vue
-
-JSONObject result,success,errors; 
-result = new JSONObject();
-success = new JSONObject();
-errors = new JSONObject();
-
-//recuperation des parametres de la requete
-
-String scholarshipName = request.getParameter("scholarshipName");
-String scholarshipType = request.getParameter("scholarshipType");
-String scholarshipPublishingDate = request.getParameter("scholarshipPublishingDate");
-String scholarshipExpirationDate = request.getParameter("scholarshipExpirationDate");
-String scholarshipWebLink = request.getParameter("scholarshipWebLink");
-
-//creation du programme
-
-Scholarship scholarship = new Scholarship(scholarshipName,
-											scholarshipType,
-											scholarshipPublishingDate,
-											scholarshipExpirationDate,
-											scholarshipWebLink);
-
-//insertion de la bourse dans la base de données
-	try{
-		 scholarshipRepository.save(scholarship);
-		success.put("rapport", "bourse enregistrée avec succès");
+		//******************************************************************************//
 		
-	}catch(Exception e){
-		errors.put("notSaveError", "echec de l'enregistrement de la bourse");
-	}
-	
-
-result.put("success", success);
-result.put("errors", errors);
-return result;
-
-}
-
-
-
-
-//methode pour la creation d'une nouvelle bourse en post
-
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/addScolarship", method=RequestMethod.POST)
-	public JSONObject addScolarshipPost(HttpServletRequest request){
 		
-
-		//creation des objects JSON à renvoyer à la vue
-
-		JSONObject result,success,errors; 
-		result = new JSONObject();
-		success = new JSONObject();
-		errors = new JSONObject();
+		//methode pour la creation d'une nouvelle bourse en get
+		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/addScolarship", method=RequestMethod.GET)
+		public ResponseEntity<?> addScolarshipGet(HttpServletRequest request){
+		
 
 		//recuperation des parametres de la requete
-
+		
 		String scholarshipName = request.getParameter("scholarshipName");
 		String scholarshipType = request.getParameter("scholarshipType");
 		String scholarshipPublishingDate = request.getParameter("scholarshipPublishingDate");
 		String scholarshipExpirationDate = request.getParameter("scholarshipExpirationDate");
 		String scholarshipWebLink = request.getParameter("scholarshipWebLink");
-
+		
 		//creation du programme
-
+		
 		Scholarship scholarship = new Scholarship(scholarshipName,
 													scholarshipType,
 													scholarshipPublishingDate,
 													scholarshipExpirationDate,
 													scholarshipWebLink);
-
+		
 		//insertion de la bourse dans la base de données
 			try{
 				 scholarshipRepository.save(scholarship);
-				success.put("rapport", "bourse enregistrée avec succès");
+				return new ResponseEntity(new SuccessClass("bourse enregistrée avec succès"),HttpStatus.OK);
 				
 			}catch(Exception e){
-				errors.put("notSaveError", "echec de l'enregistrement de la bourse");
+				logger.error("echec de l'enregistrement de la bourse");
+				return new ResponseEntity(new ErrorClass("echec de "
+						+ "l'enregistrement de la bourse"),HttpStatus.OK);
+			}
+	
+		}
+
+
+
+
+		//methode pour la creation d'une nouvelle bourse en post
+
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/addScolarship", method=RequestMethod.POST)
+		public ResponseEntity<?> addScolarshipPost(HttpServletRequest request){
+			
+			//recuperation des parametres de la requete
+			
+			String scholarshipName = request.getParameter("scholarshipName");
+			String scholarshipType = request.getParameter("scholarshipType");
+			String scholarshipPublishingDate = request.getParameter("scholarshipPublishingDate");
+			String scholarshipExpirationDate = request.getParameter("scholarshipExpirationDate");
+			String scholarshipWebLink = request.getParameter("scholarshipWebLink");
+			
+			//creation du programme
+			
+			Scholarship scholarship = new Scholarship(scholarshipName,
+														scholarshipType,
+														scholarshipPublishingDate,
+														scholarshipExpirationDate,
+														scholarshipWebLink);
+			
+			//insertion de la bourse dans la base de données
+				try{
+					 scholarshipRepository.save(scholarship);
+					return new ResponseEntity(new SuccessClass("bourse enregistrée avec succès"),HttpStatus.OK);
+					
+				}catch(Exception e){
+					logger.error("echec de l'enregistrement de la bourse");
+					return new ResponseEntity(new ErrorClass("echec de "
+							+ "l'enregistrement de la bourse"),HttpStatus.OK);
+				}
+		
+			}
+
+	
+//***************************************************************************************************************
+		//******************************************************************************//
+		//***********************methode pour la suppression d'une bourse**********//
+		//******************************************************************************//		
+		
+		
+		//methode pour la suppression d'une bourse en get
+		
+		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/deleteScholarship",method=RequestMethod.GET)
+		public ResponseEntity<?> deleteScholarshipGet(HttpServletRequest request){
+
+			//recuperation des parametres de la requete
+			
+			String scholarshipName =request.getParameter("scholarshipName");
+			//creation du programme à supprimer
+			
+			Scholarship scholarship = new Scholarship();
+			
+			//recuperation de la bourse dans la base de données
+			
+			scholarship = scholarshipRepository.findByScholarshipName(scholarshipName);
+				
+				
+			if(scholarship==null){
+				logger.error("la bourse de nom "+scholarshipName+" n'existe pas!");
+				return new ResponseEntity(new ErrorClass("la bourse de nom "
+				+scholarshipName+" n'existe pas!"), HttpStatus.OK);
+			}else{
+				schoolCalenderRepository.deleteByschoolCalenderId(scholarship.getScholarshipId());
+				return new ResponseEntity(new SuccessClass("suppression "
+						+ "effectuée avec succes"),HttpStatus.OK);
 			}
 			
+			 
+		}
+		
+		//methode pour la suppression d'une bourse en post
+		
+		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/deleteScholarship",method=RequestMethod.POST)
+		public ResponseEntity<?> deleteScholarshipPost(HttpServletRequest request){
+		
+			//recuperation des parametres de la requete
+			
+			String scholarshipName =request.getParameter("scholarshipName");
+			//creation du programme à supprimer
+			
+			Scholarship scholarship = new Scholarship();
+			
+			//recuperation de la bourse dans la base de données
+			
+			scholarship = scholarshipRepository.findByScholarshipName(scholarshipName);
+				
+				
+			if(scholarship==null){
+				logger.error("la bourse de nom "+scholarshipName+" n'existe pas!");
+				return new ResponseEntity(new ErrorClass("la bourse de nom "
+				+scholarshipName+" n'existe pas!"), HttpStatus.OK);
+			}else{
+				schoolCalenderRepository.deleteByschoolCalenderId(scholarship.getScholarshipId());
+				return new ResponseEntity(new SuccessClass("suppression "
+						+ "effectuée avec succes"),HttpStatus.OK);
+			}
+			
+			 
+		}
+		
+		
+//************************************************************************************************************
 
-		result.put("success", success);
-		result.put("errors", errors);
-		return result;
+		//******************************************************************************//
+		//*************methode pour la recherche des bourses suivant le type**********//
+		//******************************************************************************//		
+		
+		//methode pour la recherche des bourses en get
+		
+		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.GET)
+		public ResponseEntity<?> researchScholarshipByTypeGet(HttpServletRequest request){
+			
+			//recuperation des parametres de la requete
+			
+			String scholarshipType =request.getParameter("scholarshipType");
+			//creation de la liste des bourses trouvées
+			
+			List<Scholarship> listOfScholarship = new ArrayList<Scholarship>();
+			
+			//recuperation de l'article dans la base de données
+			
+			listOfScholarship = scholarshipRepository.findByScholarshipType(scholarshipType);
+					
+			if(listOfScholarship.isEmpty()){
+				logger.error("aucune bourse "+scholarshipType+" n'est enrégisté!");
+				return new ResponseEntity(new ErrorClass("aucune bourse "
+				+scholarshipType+" n'est enrégisté!"),HttpStatus.OK);
+			}else{
+				return new ResponseEntity<List<Scholarship>>(listOfScholarship,HttpStatus.OK);
+			}
 
 		}
-//***************************************************************************************************************
-//******************************************************************************//
-//***********************methode pour la suppression d'une bourse**********//
-//******************************************************************************//		
 
 
-//methode pour la suppression d'une bourse en get
-
-
-@SuppressWarnings("unchecked")
-@RequestMapping(value="/deleteScholarship",method=RequestMethod.GET)
-public JSONObject deleteScholarshipGet(HttpServletRequest request){
-
-//creation des objects JSON à renvoyer à la vue
-
-JSONObject result,success,errors; 
-result = new JSONObject();
-success = new JSONObject();
-errors = new JSONObject();
-
+		//methode pour la recherche des bourses en get
+		
+		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.POST)
+		public ResponseEntity<?> researchScholarshipByTypePost(HttpServletRequest request){
 //recuperation des parametres de la requete
+			
+			String scholarshipType =request.getParameter("scholarshipType");
+			//creation de la liste des bourses trouvées
+			
+			List<Scholarship> listOfScholarship = new ArrayList<Scholarship>();
+			
+			//recuperation de l'article dans la base de données
+			
+			listOfScholarship = scholarshipRepository.findByScholarshipType(scholarshipType);
+					
+			if(listOfScholarship.isEmpty()){
+				logger.error("aucune bourse "+scholarshipType+" n'est enrégisté!");
+				return new ResponseEntity(new ErrorClass("aucune bourse "
+				+scholarshipType+" n'est enrégisté!"),HttpStatus.OK);
+			}else{
+				return new ResponseEntity<List<Scholarship>>(listOfScholarship,HttpStatus.OK);
+			}
 
-String scholarshipName =request.getParameter("scholarshipName");
-//creation du programme à supprimer
-
-Scholarship scholarship = new Scholarship();
-
-//recuperation de la bourse dans la base de données
-
-scholarship = scholarshipRepository.findByScholarshipName(scholarshipName);
-	
-	
-if(scholarship==null){
-	errors.put("notFoundError", "la bourse de nom "+scholarshipName+" n'existe pas!");
-}else{
-	schoolCalenderRepository.deleteByschoolCalenderId(scholarship.getScholarshipId());
-	success.put("rapport", "suppression effectuée avec succes");
-}
-
-result.put("success", success);
-result.put("errors", errors);
-return result;
-
-}
-
-//methode pour la suppression d'une bourse en post
-
-
-@SuppressWarnings("unchecked")
-@RequestMapping(value="/deleteScholarship",method=RequestMethod.POST)
-public JSONObject deleteScholarshipPost(HttpServletRequest request){
-
-	//creation des objects JSON à renvoyer à la vue
-
-	JSONObject result,success,errors; 
-	result = new JSONObject();
-	success = new JSONObject();
-	errors = new JSONObject();
-
-	//recuperation des parametres de la requete
-
-	String scholarshipName =request.getParameter("scholarshipName");
-	//creation du programme à supprimer
-
-	Scholarship scholarship = new Scholarship();
-
-	//recuperation de la bourse dans la base de données
-
-	scholarship = scholarshipRepository.findByScholarshipName(scholarshipName);
-		
-		
-	if(scholarship==null){
-		errors.put("notFoundError", "la bourse de nom "+scholarshipName+" n'existe pas!");
-	}else{
-		schoolCalenderRepository.deleteByschoolCalenderId(scholarship.getScholarshipId());
-		success.put("rapport", "suppression effectuée avec succes");
-	}
-
-	result.put("success", success);
-	result.put("errors", errors);
-	return result;
-
-	}
-
-//***************************************************************************************************************
-
-//******************************************************************************//
-//*************methode pour la recherche des bourses suivant le type**********//
-//******************************************************************************//		
-
-//methode pour la recherche des bourses en get
-
-
-@SuppressWarnings("unchecked")
-@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.GET)
-public JSONObject researchScholarshipByTypeGet(HttpServletRequest request){
-
-//creation des objects JSON à renvoyer à la vue
-
-JSONObject result,success,errors; 
-result = new JSONObject();
-success = new JSONObject();
-errors = new JSONObject();
-
-//recuperation des parametres de la requete
-
-String scholarshipType =request.getParameter("scholarshipType");
-//creation de la liste des bourses trouvées
-
-List<Scholarship> listOfScholarship = new ArrayList<Scholarship>();
-
-//recuperation de l'article dans la base de données
-
-listOfScholarship = scholarshipRepository.findByScholarshipType(scholarshipType);
-	
-int i=1;	
-if(listOfScholarship.isEmpty()){
-	errors.put("notFoundError", "aucune bourse "+scholarshipType+" n'est enrégisté!");
-}else{
-	for(Scholarship sc:listOfScholarship){
-	success.put("bourse"+i, sc);
-	i++;
-	}
-}
-
-
-result.put("success", success);
-result.put("errors", errors);
-return result;
-
-}
-
-
-//methode pour la recherche des bourses en get
-
-
-@SuppressWarnings("unchecked")
-@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.POST)
-public JSONObject researchScholarshipByTypePost(HttpServletRequest request){
-
-	//creation des objects JSON à renvoyer à la vue
-
-	JSONObject result,success,errors; 
-	result = new JSONObject();
-	success = new JSONObject();
-	errors = new JSONObject();
-
-	//recuperation des parametres de la requete
-
-	String scholarshipType =request.getParameter("scholarshipType");
-	//creation de la liste des bourses trouvées
-
-	List<Scholarship> listOfScholarship = new ArrayList<Scholarship>();
-
-	//recuperation de l'article dans la base de données
-
-	listOfScholarship = scholarshipRepository.findByScholarshipType(scholarshipType);
-		
-	int i=1;	
-	if(listOfScholarship.isEmpty()){
-		errors.put("notFoundError", "aucune bourse "+scholarshipType+" n'est enrégisté!");
-	}else{
-		for(Scholarship sc:listOfScholarship){
-		success.put("bourse"+i, sc);
-		i++;
 		}
-	}
 
-
-	result.put("success", success);
-	result.put("errors", errors);
-	return result;
-
-	}
 
 //***************************************************************************************************************
 

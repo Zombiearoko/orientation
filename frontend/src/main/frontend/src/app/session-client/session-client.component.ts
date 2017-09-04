@@ -12,7 +12,8 @@ import { Http } from '@angular/http';
 })
 export class SessionClientComponent implements OnInit {
   private results: [any];
-   private collectionJson: Object;
+   collectionJson: Object;
+collection: any[] = [];
 
   constructor(public rest: RestProvider, private http: Http) {
 
@@ -22,11 +23,13 @@ export class SessionClientComponent implements OnInit {
   }
 
   ngOnInit() {
+    const url = 'http://localhost:8092/customer/addCustomer';
   const url2 = 'https://jsonplaceholder.typicode.com/posts';
-      this.http.get(url2).subscribe(resp => {
+      this.http.get(url).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
-  console.log(this.collectionJson);
+this.collection.push(this.collectionJson);
+  console.log(this.collection);
 });
 
   }
