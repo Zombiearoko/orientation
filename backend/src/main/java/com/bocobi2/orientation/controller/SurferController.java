@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bocobi2.orientation.model.Client;
 import com.bocobi2.orientation.model.ErrorClass;
+import com.bocobi2.orientation.model.NewsletterConcern;
 import com.bocobi2.orientation.model.SuccessClass;
 import com.bocobi2.orientation.repositories.AdministratorRepository;
 import com.bocobi2.orientation.repositories.ArticleRepository;
 import com.bocobi2.orientation.repositories.BookRepository;
 import com.bocobi2.orientation.repositories.ClientRepository;
+import com.bocobi2.orientation.repositories.NewsletterConcernRepository;
+import com.bocobi2.orientation.repositories.NewsletterRepository;
 import com.bocobi2.orientation.repositories.ScholarshipRepository;
 import com.bocobi2.orientation.repositories.SchoolCalenderRepository;
 
@@ -49,6 +52,13 @@ public class SurferController {
 	@Autowired
 	ScholarshipRepository scholarshipRepository;
 	
+	@Autowired
+	NewsletterRepository newsletterRepository;
+	
+	@Autowired
+	NewsletterConcernRepository newsletterConcernRepository;
+
+	
 // *************************************************************************************************************
 	// ******************************************************************************//
 	// ***********************methode d'ajout d'un nouveau
@@ -57,7 +67,7 @@ public class SurferController {
 
 	// methode d'ajout d'un nouveau client en get
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
+	@RequestMapping(value = "/inscription", method = RequestMethod.GET)
 	public ResponseEntity<?> addClientGet(HttpServletRequest request) {
 
 		// recuperation des informations du client
@@ -93,7 +103,7 @@ public class SurferController {
 
 	// methode d'ajout d'un nouveau client en post
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
+	@RequestMapping(value = "/inscription", method = RequestMethod.POST)
 	public ResponseEntity<?> addClientPost(HttpServletRequest request) {
 
 		// recuperation des informations du client
@@ -131,5 +141,54 @@ public class SurferController {
 		// ******************************************************************************//
 		// ***********************methode d'inscription à la news letter****************//
 		// ******************************************************************************//
+
+	// methode d'ajout d'un nouveau client en get
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/inscriptionToNewsletter", method = RequestMethod.GET)
+	public ResponseEntity<?> inscriptionToNewsLetterGet(HttpServletRequest request) {
+
+		// recuperation des informations du client
+		String newsletterConcernEmail = (String) request.getParameter("newsletterConcernEmail");
+		
+		NewsletterConcern newsletterConcern = new NewsletterConcern(newsletterConcernEmail);
+
+
+		logger.info("enregistrement de l'adresse email {}", newsletterConcernEmail);
+		if (newsletterConcernRepository.findByNewsletterConcernEmail(newsletterConcernEmail) != null) {
+			logger.error("l'adresse {} est deja enregistré dans la base de donnees", newsletterConcernEmail);
+			return new ResponseEntity(new ErrorClass("l'adresse "
+					+ newsletterConcernEmail +" est deja enregistré dans la base de donnees"),
+					HttpStatus.OK);
+		}
+		newsletterConcernRepository.save(newsletterConcern);
+		return new ResponseEntity(new SuccessClass("enregistrement "
+				+ "effectué avec succès"), HttpStatus.OK);
+	}
+
+	
+	// methode d'ajout d'un nouveau client en get
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value = "/inscriptionToNewsletter", method = RequestMethod.POST)
+	public ResponseEntity<?> inscriptionToNewsLetterPost(HttpServletRequest request) {
+
+		// recuperation des informations du client
+		String newsletterConcernEmail = (String) request.getParameter("newsletterConcernEmail");
+		
+		NewsletterConcern newsletterConcern = new NewsletterConcern(newsletterConcernEmail);
+
+
+		logger.info("enregistrement de l'adresse email {}", newsletterConcernEmail);
+		if (newsletterConcernRepository.findByNewsletterConcernEmail(newsletterConcernEmail) != null) {
+			logger.error("l'adresse {} est deja enregistré dans la base de donnees", newsletterConcernEmail);
+			return new ResponseEntity(new ErrorClass("l'adresse "
+					+ newsletterConcernEmail +" est deja enregistré dans la base de donnees"),
+					HttpStatus.OK);
+		}
+		newsletterConcernRepository.save(newsletterConcern);
+		return new ResponseEntity(new SuccessClass("enregistrement "
+				+ "effectué avec succès"), HttpStatus.OK);
+	}
+
+
 
 }

@@ -24,12 +24,14 @@ import com.bocobi2.orientation.model.Administrator;
 import com.bocobi2.orientation.model.Article;
 import com.bocobi2.orientation.model.Book;
 import com.bocobi2.orientation.model.ErrorClass;
+import com.bocobi2.orientation.model.Newsletter;
 import com.bocobi2.orientation.model.Scholarship;
 import com.bocobi2.orientation.model.SchoolCalender;
 import com.bocobi2.orientation.model.SuccessClass;
 import com.bocobi2.orientation.repositories.AdministratorRepository;
 import com.bocobi2.orientation.repositories.ArticleRepository;
 import com.bocobi2.orientation.repositories.BookRepository;
+import com.bocobi2.orientation.repositories.NewsletterRepository;
 import com.bocobi2.orientation.repositories.ScholarshipRepository;
 import com.bocobi2.orientation.repositories.SchoolCalenderRepository;
 
@@ -56,6 +58,8 @@ public class AdministratorController {
 	@Autowired
 	ScholarshipRepository scholarshipRepository;
 	
+	@Autowired
+	NewsletterRepository newsletterRepository;
 	
 	String booksFolder ="D:/workspacegithub/orientation/backend/src/main/resources/booksFolder";
 	String schoolCalenderFolder = "D:/workspacegithub/orientation/backend/src/main/resources/schoolCalenderFolder";
@@ -1481,6 +1485,36 @@ public class AdministratorController {
 			}
 
 		}
+		
+		
+//************************************************************************************************************
+
+				//******************************************************************************//
+				//*************methode pour l'envoie des newsletters***************************//
+				//******************************************************************************//		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.GET)
+		public ResponseEntity<?> sendNewsletter(HttpServletRequest request){
+			
+			//recuperation des parametres de la requete
+			
+			String newsletterContent =request.getParameter("newsletterContent");
+
+			Newsletter newsletter = new Newsletter(newsletterContent);
+					
+			if(newsletterRepository.findByNewsletterContent(newsletterContent)!=null){
+				
+				newsletterRepository.save(newsletter);
+				
+				logger.error("aucune bourse "+scholarshipType+" n'est enrégisté!");
+				return new ResponseEntity(new ErrorClass("aucune bourse "
+				+scholarshipType+" n'est enrégisté!"),HttpStatus.OK);
+			}else{
+				return new ResponseEntity<List<Scholarship>>(listOfScholarship,HttpStatus.OK);
+			}
+
+		}
+
 
 
 //***************************************************************************************************************
