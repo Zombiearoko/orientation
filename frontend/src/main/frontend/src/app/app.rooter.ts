@@ -12,7 +12,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { ServiceComponent } from './service/service.component';
 import { HomeComponent } from './home/home.component';
 import { ModuleWithProviders, Component } from '@angular/core';
-import { Routes, RouterModule} from '@angular/router';
+import { Routes, RouterModule, Router} from '@angular/router';
 
 export const router: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,5 +30,6 @@ export const router: Routes = [
 { path: 'loginCostumer', component: LoginCostumerComponent},
 { path: 'postTestimony', component: PostTestimonyComponent}
 ];
+
 
 export const routes: ModuleWithProviders = RouterModule.forRoot(router);
