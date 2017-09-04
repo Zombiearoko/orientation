@@ -45,83 +45,6 @@ public class CustomerController {
 	}
 	// ***************************************************************************************************************
 	// ******************************************************************************//
-	// ***********************methode d'ajout d'un nouveau
-	// client******************************//
-	// ******************************************************************************//
-
-	// methode d'ajout d'un nouveau client en get
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value = "/addCustomer", method = RequestMethod.GET)
-	public ResponseEntity<?> addClientGet(HttpServletRequest request) {
-
-		// recuperation des informations du client
-
-		String firstNameCustomer = (String) request.getParameter("firstNameCustomer");
-		String lastNameCustomer = (String) request.getParameter("lastNameCustomer");
-		String phoneNumber = (String) request.getParameter("phoneNumber");
-		String emailAddress = (String) request.getParameter("emailAddress");
-		String password = (String) request.getParameter("password");
-		//clientRepository.deleteAll();
-		// instanciation du client à ajouter
-
-		Client client = new Client();
-
-		// action a menner apres reception des informations
-
-		client.setFirstNameCustomer(firstNameCustomer);
-		client.setLastNameCustomer(lastNameCustomer);
-		client.setPhoneNumber(phoneNumber);
-		client.setPassword(password);
-		client.setEmailAddress(emailAddress);
-
-		logger.info("enregistrement du client {}", client);
-		if (clientRepository.findByEmailAddress(emailAddress) != null) {
-			logger.error("le client {} est deja enregistré dans la base de donnees", client);
-			return new ResponseEntity(new ErrorClass("le client est deja enregistré dans la base de donnees"),
-					HttpStatus.OK);
-		}
-		clientRepository.save(client);
-		return new ResponseEntity(new SuccessClass("enregistrement "
-				+ "effectué avec succès",client), HttpStatus.CREATED);
-	}
-
-	// methode d'ajout d'un nouveau client en post
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
-	public ResponseEntity<?> addClientPost(HttpServletRequest request) {
-
-		// recuperation des informations du client
-
-		String firstNameCustomer = (String) request.getParameter("firstNameCustomer");
-		String lastNameCustomer = (String) request.getParameter("lastNameCustomer");
-		String phoneNumber = (String) request.getParameter("phoneNumber");
-		String emailAddress = (String) request.getParameter("emailAddress");
-		String password = (String) request.getParameter("password");
-		//clientRepository.deleteAll();
-		// instanciation du client à ajouter
-
-		Client client = new Client();
-
-		// action a menner apres reception des informations
-
-		client.setFirstNameCustomer(firstNameCustomer);
-		client.setLastNameCustomer(lastNameCustomer);
-		client.setPhoneNumber(phoneNumber);
-		client.setPassword(password);
-		client.setEmailAddress(emailAddress);
-
-		logger.info("enregistrement du client {}", client);
-		if (clientRepository.findByEmailAddress(emailAddress) != null) {
-			logger.error("le client {} est deja enregistré dans la base de donnees", client);
-			return new ResponseEntity(new ErrorClass("le client est deja enregistré dans la base de donnees"),
-					HttpStatus.OK);
-		}
-		clientRepository.save(client);
-		return new ResponseEntity(new SuccessClass("enregistrement "
-				+ "effectué avec succès",client), HttpStatus.CREATED);
-	}
-	// ***************************************************************************************************************
-	// ******************************************************************************//
 	// ***********************methode de
 	// connexion******************************//
 	// ******************************************************************************//
@@ -373,7 +296,7 @@ public class CustomerController {
 
 		// action a menner apres reception des informations
 
-		logger.info("enregistrement du livre {} dans le pagner du client {} ", book, client);
+		logger.info("enregistrement du livre {} dans le panier du client {} ", book, client);
 		if (book != null) {
 			client.getCustomerBasket().add(book);
 			clientRepository.save(client);
@@ -407,7 +330,7 @@ public class CustomerController {
 
 		// action a menner apres reception des informations
 
-		logger.info("enregistrement du livre {} dans le pagner du client {} ", book, client);
+		logger.info("enregistrement du livre {} dans le panier du client {} ", book, client);
 		if (book != null) {
 			client.getCustomerBasket().add(book);
 			clientRepository.save(client);
@@ -445,7 +368,7 @@ public class CustomerController {
 		Client client = (Client) session.getAttribute("customerInSession");
 		// action a menner apres reception des informations
 
-		logger.info("suppression du livre {} du pagner du client {} ", book, client);
+		logger.info("suppression du livre {} du panier du client {} ", book, client);
 		
 		if (!client.getCustomerBasket().isEmpty()) {
 			if(client.getCustomerBasket().contains(book)){
@@ -455,12 +378,12 @@ public class CustomerController {
 			return new ResponseEntity(new SuccessClass("supression effectuée!",client), HttpStatus.OK);
 			}else{
 				return new ResponseEntity(new ErrorClass("le livre de nom"+bookName+" n'est pas present dans le "
-						+ "pagner de l'utilisateur en session "),
+						+ "panier de l'utilisateur en session "),
 						HttpStatus.OK);
 			}
 
 		} else {
-			return new ResponseEntity(new ErrorClass("desole votre pagner est vide "),
+			return new ResponseEntity(new ErrorClass("desole votre panier est vide "),
 					HttpStatus.OK);
 		}
 
@@ -483,7 +406,7 @@ public class CustomerController {
 		Client client = (Client) session.getAttribute("customerInSession");
 		// action a menner apres reception des informations
 
-		logger.info("suppression du livre {} du pagner du client {} ", book, client);
+		logger.info("suppression du livre {} du panier du client {} ", book, client);
 		
 		if (!client.getCustomerBasket().isEmpty()) {
 			if(client.getCustomerBasket().contains(book)){
@@ -493,12 +416,12 @@ public class CustomerController {
 			return new ResponseEntity<Client>(client, HttpStatus.OK);
 			}else{
 				return new ResponseEntity(new ErrorClass("le livre de nom"+bookName+" n'est pas present dans le "
-						+ "pagner de l'utilisateur en session "),
+						+ "panier de l'utilisateur en session "),
 						HttpStatus.OK);
 			}
 
 		} else {
-			return new ResponseEntity(new ErrorClass("desole votre pagner est vide "),
+			return new ResponseEntity(new ErrorClass("desole votre panier est vide "),
 					HttpStatus.OK);
 		}
 

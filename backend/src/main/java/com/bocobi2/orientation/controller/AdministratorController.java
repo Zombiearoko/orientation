@@ -1431,7 +1431,7 @@ public class AdministratorController {
 		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.GET)
-		public ResponseEntity<?> researchScholarshipByTypeGet(HttpServletRequest request){
+		public ResponseEntity<List<Scholarship>> researchScholarshipByTypeGet(HttpServletRequest request){
 			
 			//recuperation des parametres de la requete
 			
@@ -1460,7 +1460,7 @@ public class AdministratorController {
 		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.POST)
-		public ResponseEntity<?> researchScholarshipByTypePost(HttpServletRequest request){
+		public ResponseEntity<List<Scholarship>> researchScholarshipByTypePost(HttpServletRequest request){
 //recuperation des parametres de la requete
 			
 			String scholarshipType =request.getParameter("scholarshipType");

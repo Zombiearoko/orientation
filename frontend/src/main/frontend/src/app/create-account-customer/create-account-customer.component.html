@@ -30,6 +30,8 @@
                             </div>
                         </div>
                         <span class="text-danger" [hidden]="clientForm.controls.firstNameCustomer.valid || clientForm.controls.firstNameCustomer.untouched">veuillez entrer votre nom</span>
+
+
                         <div class="form-group">
                             <label for="pname" class="cols-lg-2 control-label">prenom</label>
                             <div class="cols-lg-8">
@@ -48,6 +50,12 @@
                             </div>
                         </div>
                         <span class="text-danger" [hidden]="clientForm.controls.emailAddress.valid || clientForm.controls.emailAddress.untouched">veuillez entrer une adresse email valide</span>
+                        <span *ngFor="let item of collection">
+
+                        <span *ngIf="item.status == 0" class ="text-danger">un client avec cette adresse email existe deja</span>
+                        <span *ngIf="item.status == 1" class="text-danger"></span>
+                        </span>
+
                         <div class="form-group">
                             <label for="name" class="cols-lg-2 control-label">mot de passe</label>
                             <div class="cols-lg-8">
@@ -68,7 +76,8 @@
                         <span class="text-danger" [hidden]="clientForm.controls.phoneNumber.valid || clientForm.controls.phoneNumber.untouched">veuillez entrer votre numero de telephone</span>
                         <div class="form-group ">
 
-                            <a [routerLink]="['../sessionCostumer']"> <button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">creer compte</button></a>
+                            <a [routerLink]="['../sessionCostumer']"><button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">creer compte</button>
+                            </a>
                             <button class="btn btn-danger ">annuler</button>
                         </div>
                     </form>
