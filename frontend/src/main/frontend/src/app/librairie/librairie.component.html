@@ -1,6 +1,7 @@
 <div class="separator">
 </div>
 <!--navigaton side-->
+<!--navigaton side-->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
     <div class="nav-side-menu">
@@ -14,7 +15,7 @@
                     <a> <i class="glyphicon glyphicon-off"></i>se deconnecter <span class="arrow"></span></a>
                 </li>
                 <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                    <a href="#"><i class="fa fa-gift fa-lg"></i>consulter les offres <span class="arrow"></span></a>
+                    <a href="#"><i class="fa fa-gift fa-lg"></i>Consulter les offres <span class="arrow"></span></a>
                 </li>
                 <ul class="sub-menu collapse" id="products">
                     <li><a href="#">offre d'emploi</a></li>
@@ -23,12 +24,15 @@
                     <li><a href="#">conseiller d'orientation</a></li>
                 </ul>
                 <li data-toggle="collapse" data-target="#service" class="collapsed">
-                    <a [routerLink]="['../basket']"><i class="fa fa fa-lg"></i>gerer son panier<span class="arrow"></span></a>
+                    <a [routerLink]="['../basket']"><i class="fa fa-user fa-lg"></i>Gerer son panier<span class="arrow"></span></a>
                 </li>
 
 
                 <li data-toggle="collapse" data-target="#service" class="collapsed">
                     <a [routerLink]="['../bookshop']"><i class="fa fa-globe fa-lg"></i> Librairie <span class="arrow"></span></a>
+                </li>
+                <li data-toggle="collapse" data-target="#service" class="collapsed">
+                    <a [routerLink]="['../postTestimony']"><i class="fa fa-globe fa-lg"></i> Poster temoignage<span class="arrow"></span></a>
                 </li>
 
             </ul>
