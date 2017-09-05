@@ -23,7 +23,6 @@ import { ProgrammeComponent } from './programme/programme.component';
 import { BourseComponent } from './bourse/bourse.component';
 import { LoginCostumerComponent } from './login-costumer/login-costumer.component';
 import { PostTestimonyComponent } from './post-testimony/post-testimony.component';
-import { PopupModule } from 'ng2-opd-popup';
 
 @NgModule({
   declarations: [
@@ -53,7 +52,6 @@ import { PopupModule } from 'ng2-opd-popup';
     ReactiveFormsModule,
     HttpModule,
     routes,
-    PopupModule.forRoot(),
   ],
   providers: [
   RestProvider
