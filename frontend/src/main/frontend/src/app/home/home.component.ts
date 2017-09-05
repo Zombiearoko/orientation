@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Popup} from 'ng2-opd-popup';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private popup: Popup) { }
+  oneclick() {
+    this.popup.show();
+  }
 
   ngOnInit() {
   }
