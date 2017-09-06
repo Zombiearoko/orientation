@@ -63,7 +63,9 @@
                                 <tr *ngFor="let element of collectionJson; let i=index">
                                     <td>{{ element.title }}</td>
                                     <td>{{ element.id }}</td>
-                                    <td><button class="btn btn-danger btn-block" (click)=deleteBook(i)><span class="fa fa-trash-o fa-lg"></span></button></td>
+                                    <td>
+                                        <popup> voulez vous vraiment supprimmer ce livre du panier?</popup>
+                                        <button class="btn btn-danger btn-block" (click)=deleteBook()><span class="fa fa-trash-o fa-lg"></span></button></td>
                                 </tr>
                                 <tr>
                                     <td>total</td>
