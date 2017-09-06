@@ -1,13 +1,5 @@
 <div class="separator"></div>
 <!-- Header -->
-<header class="intro-header">
-    <div class="container">
-        <div class="intro-message">
-            <h1>Creer votre compte client </h1>
-            <hr class="intro-divider">
-        </div>
-    </div>
-</header>
 <div class="separators"></div>
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -20,12 +12,13 @@
 
             <div class="container">
                 <div class="cadre ">
+                    <div class="backgroundTitle"></div>
                     <form (ngSubmit)="onSubmit(clientForm.value);" [formGroup]="clientForm">
                         <div class="form-group">
-                            <label for="name" class="cols-lg-2 control-label">nom</label>
+
                             <div class="cols-lg-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" formControlName="firstNameCustomer" name="firstNameCustomer" id="name" placeholder=" " />
+                                    <input type="text" placeholder="Entrez votre nom" class="form-control" formControlName="firstNameCustomer" name="firstNameCustomer" id="name" />
                                 </div>
                             </div>
                         </div>
@@ -33,19 +26,19 @@
 
 
                         <div class="form-group">
-                            <label for="pname" class="cols-lg-2 control-label">prenom</label>
+
                             <div class="cols-lg-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" formControlName="lastNameCustomer" name="lastNameCustomer" id="pname" placeholder=" " />
+                                    <input type="text" placeholder="Entrez votre prenom" class="form-control" formControlName="lastNameCustomer" name="lastNameCustomer" id="pname" />
                                 </div>
                             </div>
                         </div>
                         <span class="text-danger" [hidden]="clientForm.controls.lastNameCustomer.valid || clientForm.controls.lastNameCustomer.untouched">veuillez entrer votre prenom</span>
                         <div class="form-group">
-                            <label for="email" class="cols-lg-2 control-label">email</label>
+
                             <div class="cols-lg-8">
                                 <div class="input-group">
-                                    <input type="email" class="form-control" formControlName="emailAddress" name="emailAddress" id="title" placeholder=" " />
+                                    <input type="email" placeholder="Entrez votre mail" class="form-control" formControlName="emailAddress" name="emailAddress" id="title" />
                                 </div>
                             </div>
                         </div>
@@ -57,26 +50,26 @@
                         </span>
 
                         <div class="form-group">
-                            <label for="name" class="cols-lg-2 control-label">mot de passe</label>
+
                             <div class="cols-lg-8">
                                 <div class="input-group">
-                                    <input type="password" class="form-control" formControlName="password" name="password" id="title" placeholder=" " />
+                                    <input type="password" placeholder="Entrez votre mot de passe" class="form-control" formControlName="password" name="password" id="title" />
                                 </div>
                             </div>
                         </div>
                         <span class="text-danger" [hidden]="clientForm.controls.password.valid || clientForm.controls.password.untouched">veuillez entrer un mot de passe</span>
                         <div class="form-group">
-                            <label for="tel" class="cols-lg-2 control-label">telephone</label>
+
                             <div class="cols-lg-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" formControlName="phoneNumber" name="phoneNumber" id="title" placeholder=" " />
+                                    <input type="text" placeholder="Entrez votre Telephone" class="form-control" formControlName="phoneNumber" name="phoneNumber" id="title" />
                                 </div>
                             </div>
                         </div>
                         <span class="text-danger" [hidden]="clientForm.controls.phoneNumber.valid || clientForm.controls.phoneNumber.untouched">veuillez entrer votre numero de telephone</span>
                         <div class="form-group ">
 
-                            <a [routerLink]="['../sessionCostumer']"><button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">creer compte</button>
+                            <a [routerLink]="['../sessionCostumer']"><button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">Creer mon compte</button>
                             </a>
                             <button class="btn btn-danger ">annuler</button>
                         </div>

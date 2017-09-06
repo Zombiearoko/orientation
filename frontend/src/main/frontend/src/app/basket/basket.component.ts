@@ -9,6 +9,7 @@ import { Http } from '@angular/http';
 /* import {NumberValidator}   from './validators/number.validator';
 import {ValidationMessages}   from './validators/validation-messages.component'; */
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Popup } from 'ng2-opd-popup';
 @Component({
   selector: 'app-basket',
   templateUrl: './basket.component.html',
@@ -21,7 +22,7 @@ export class BasketComponent implements OnInit {
    private results: [any];
    private collectionJson: Object;
    submitted = false;
-  constructor(public rest: RestProvider, private builder: FormBuilder, private http: Http) {}
+  constructor(public rest: RestProvider, private builder: FormBuilder, private http: Http, private popup: Popup) {}
   ngOnInit() {
      this.createForm();
 const url2 = 'https://jsonplaceholder.typicode.com/posts';
@@ -38,12 +39,16 @@ const url2 = 'https://jsonplaceholder.typicode.com/posts';
 
   }
 
-  deleteBook(index: number) {
-    this.rest.removeFromBasket(this.bookName)
+  deleteBook(/*index: number*/) {
+    this.popup.options = {
+color: 'red'
+    };
+this.popup.show();
+   /* this.rest.removeFromBasket(this.bookName)
     .subscribe((data) => {
 
         this.submitted = true;
-       });
+       });*/
 
 
   }
