@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,22 +16,28 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bocobi2.orientation.model.Administrator;
 import com.bocobi2.orientation.model.Article;
 import com.bocobi2.orientation.model.Book;
 import com.bocobi2.orientation.model.ErrorClass;
+import com.bocobi2.orientation.model.MailSender;
 import com.bocobi2.orientation.model.Newsletter;
+import com.bocobi2.orientation.model.NewsletterConcern;
 import com.bocobi2.orientation.model.Scholarship;
 import com.bocobi2.orientation.model.SchoolCalender;
 import com.bocobi2.orientation.model.SuccessClass;
 import com.bocobi2.orientation.repositories.AdministratorRepository;
 import com.bocobi2.orientation.repositories.ArticleRepository;
 import com.bocobi2.orientation.repositories.BookRepository;
+import com.bocobi2.orientation.repositories.NewsletterConcernRepository;
 import com.bocobi2.orientation.repositories.NewsletterRepository;
 import com.bocobi2.orientation.repositories.ScholarshipRepository;
 import com.bocobi2.orientation.repositories.SchoolCalenderRepository;
@@ -60,6 +67,13 @@ public class AdministratorController {
 	
 	@Autowired
 	NewsletterRepository newsletterRepository;
+	
+	@Autowired
+	NewsletterConcernRepository newsletterConcernRepository;
+	
+	@Autowired
+	JavaMailSender sender;
+
 	
 	String booksFolder ="D:/workspacegithub/orientation/backend/src/main/resources/booksFolder";
 	String schoolCalenderFolder = "D:/workspacegithub/orientation/backend/src/main/resources/schoolCalenderFolder";
@@ -1353,7 +1367,7 @@ public class AdministratorController {
 			}
 
 	
-//***************************************************************************************************************
+//************************************************************************************************************
 		//******************************************************************************//
 		//***********************methode pour la suppression d'une bourse**********//
 		//******************************************************************************//		
@@ -1424,7 +1438,7 @@ public class AdministratorController {
 		}
 		
 		
-//************************************************************************************************************
+//***********************************************************************************************************
 
 		//******************************************************************************//
 		//*************methode pour la recherche des bourses suivant le type**********//
@@ -1487,40 +1501,56 @@ public class AdministratorController {
 		}
 		
 		
-//************************************************************************************************************
+//**********************************************************************************************************
 
 				//******************************************************************************//
 				//*************methode pour l'envoie des newsletters***************************//
 				//******************************************************************************//		
+	
+		
+		//@SuppressWarnings({ "rawtypes", "unchecked" })
+		//@RequestMapping(value="/sendNewsletter",method=RequestMethod.GET)
+		
+
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.GET)
-		public ResponseEntity<?> sendNewsletter(HttpServletRequest request){
-			
+		@RequestMapping(value="/sendNewsletter",method=RequestMethod.GET)
+		public ResponseEntity<?> sendNewsletterGet(HttpServletRequest request){
 			//recuperation des parametres de la requete
 			
 			String newsletterContent =request.getParameter("newsletterContent");
 
 			Newsletter newsletter = new Newsletter(newsletterContent);
+			MailSender mailSender = new MailSender();
 					
-			if(newsletterRepository.findByNewsletterContent(newsletterContent)!=null){
-				
+
+			List<NewsletterConcern> listOfNewsletterConcern = new ArrayList<NewsletterConcern>();
+				listOfNewsletterConcern = newsletterConcernRepository.findAll();
+			try {
+				newsletterRepository.deleteAll();
 				newsletterRepository.save(newsletter);
-				
-				logger.error("aucune bourse "+scholarshipType+" n'est enrégisté!");
-				return new ResponseEntity(new ErrorClass("aucune bourse "
-				+scholarshipType+" n'est enrégisté!"),HttpStatus.OK);
-			}else{
-				return new ResponseEntity<List<Scholarship>>(listOfScholarship,HttpStatus.OK);
+				for(NewsletterConcern nc:listOfNewsletterConcern){
+				 mailSender.sendSimpleEmail(nc.getNewsletterConcernEmail(),
+						 "newsletterOrientationBocobi2","ca c'est du lourd");
+				}
+				return new ResponseEntity(new SuccessClass("newsletter envoyée avec succès!!"),HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity(new ErrorClass("echec de l'envoie"
+						+ " de la newsletter aux differents inscrits!!"),HttpStatus.OK);
 			}
+
 
 		}
 
 
 
-//***************************************************************************************************************
+//************************************************************************************************************
 
+		
 
-	//methodes de controle des formulaires
+	//methodes utiles
+		
+		
+	
 	
 	
 }
