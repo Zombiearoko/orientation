@@ -1,5 +1,8 @@
 package com.bocobi2.orientation.controller;
 
-public class GuidanceCounselorController {
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+public class GuidanceCounselorController {
+		 
 }

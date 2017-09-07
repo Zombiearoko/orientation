@@ -3,7 +3,9 @@ package com.bocobi2.orientation.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
@@ -18,10 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bocobi2.orientation.model.Administrator;
@@ -41,6 +43,9 @@ import com.bocobi2.orientation.repositories.NewsletterConcernRepository;
 import com.bocobi2.orientation.repositories.NewsletterRepository;
 import com.bocobi2.orientation.repositories.ScholarshipRepository;
 import com.bocobi2.orientation.repositories.SchoolCalenderRepository;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 
 
 @CrossOrigin(origins = "*")
@@ -71,13 +76,12 @@ public class AdministratorController {
 	@Autowired
 	NewsletterConcernRepository newsletterConcernRepository;
 	
-	@Autowired
-	JavaMailSender sender;
 
 	
 	String booksFolder ="D:/workspacegithub/orientation/backend/src/main/resources/booksFolder";
 	String schoolCalenderFolder = "D:/workspacegithub/orientation/backend/src/main/resources/schoolCalenderFolder";
 
+	String newsletterSubject = "newsletter orientation";
 	
 //***************************************************************************************************************	
 	//******************************************************************************//
@@ -1479,7 +1483,7 @@ public class AdministratorController {
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@RequestMapping(value="/researchScholarshipByType",method=RequestMethod.POST)
 		public ResponseEntity<List<Scholarship>> researchScholarshipByTypePost(HttpServletRequest request){
-//recuperation des parametres de la requete
+			//recuperation des parametres de la requete
 			
 			String scholarshipType =request.getParameter("scholarshipType");
 			//creation de la liste des bourses trouvées
@@ -1500,16 +1504,106 @@ public class AdministratorController {
 
 		}
 		
+		//**********************************************************************************************************
+
+		//******************************************************************************//
+		//*************methode pour la sauvegarde des newsletters***************************//
+		//******************************************************************************//		
+
+
+		//methode pour la sauvegarde des newsletters en get
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/addNewsletter",method=RequestMethod.GET)
+		public ResponseEntity<?> addNewsletterGet(HttpServletRequest request){
+			//recuperation des parametres de la requete
+			
+			String newsletterId =request.getParameter("newsletterId");
+			String publication = request.getParameter("publication");
+			String actuality = request.getParameter("actuality");
+		
+			Newsletter newsletter;
+			
+			newsletter = newsletterRepository.findByNewsletterId(newsletterId);
+			if(newsletter != null){
+				if(actuality!=null)
+					newsletter.getListOfPrincipalActuality().add(actuality);
+				if(publication!=null)
+					newsletter.getListOfPublication().add(publication);
+			}else{
+				newsletter = new Newsletter(newsletterId);
+				if(actuality!=null){
+					if(!(newsletter.getListOfPrincipalActuality().contains(actuality))){
+						newsletter.getListOfPrincipalActuality().add(actuality);
+					}else{
+						return new ResponseEntity(new ErrorClass("echec de l'enregistrement"
+								+ " de l'actualité elle est deja presente dans la liste des actualités!!"),HttpStatus.OK);
+					}
+				}
+				if(publication!=null){
+					if(!(newsletter.getListOfPublication().contains(publication))){
+						newsletter.getListOfPublication().add(publication);
+					}else{
+						return new ResponseEntity(new ErrorClass("echec de l'enregistrement"
+						+ " de la publication elle est deja presente dans la liste des actualités!!"),HttpStatus.OK);
+					}
+				}	
+			}
+			try {
+				newsletterRepository.save(newsletter);
+				return new ResponseEntity(new SuccessClass("newsletter enregistrée avec succès!!"),HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity(new ErrorClass("echec de l'enregistrement"
+						+ " de la newsletter!!"),HttpStatus.OK);
+			}
+		
+		
+		}
+
+		//methode pour la sauvegarde des newsletters en get
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@RequestMapping(value="/addNewsletter",method=RequestMethod.POST)
+		public ResponseEntity<?> addNewsletterPost(HttpServletRequest request){
+			//recuperation des parametres de la requete
+			
+			String newsletterId =request.getParameter("newsletterId");
+			String publication = request.getParameter("publication");
+			String actuality = request.getParameter("actuality");
+		
+			Newsletter newsletter;
+			
+			newsletter = newsletterRepository.findByNewsletterId(newsletterId);
+			if(newsletter != null){
+				if(actuality!=null)
+					newsletter.getListOfPrincipalActuality().add(actuality);
+				if(publication!=null)
+					newsletter.getListOfPublication().add(publication);
+			}else{
+				newsletter = new Newsletter(newsletterId);
+				if(actuality!=null)
+					newsletter.getListOfPrincipalActuality().add(actuality);
+				if(publication!=null)
+					newsletter.getListOfPublication().add(publication);
+
+			}
+			try {
+				newsletterRepository.save(newsletter);
+				return new ResponseEntity(new SuccessClass("newsletter enregistrée avec succès!!"),HttpStatus.OK);
+			} catch (Exception e) {
+				return new ResponseEntity(new ErrorClass("echec de l'enregistrement"
+						+ " de la newsletter!!"),HttpStatus.OK);
+			}
+		
+		
+		}
+
+		
 		
 //**********************************************************************************************************
 
 				//******************************************************************************//
 				//*************methode pour l'envoie des newsletters***************************//
 				//******************************************************************************//		
-	
-		
-		//@SuppressWarnings({ "rawtypes", "unchecked" })
-		//@RequestMapping(value="/sendNewsletter",method=RequestMethod.GET)
+
 		
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -1517,30 +1611,34 @@ public class AdministratorController {
 		public ResponseEntity<?> sendNewsletterGet(HttpServletRequest request){
 			//recuperation des parametres de la requete
 			
-			String newsletterContent =request.getParameter("newsletterContent");
+			String newsletterId =request.getParameter("newsletterId");
 
-			Newsletter newsletter = new Newsletter(newsletterContent);
-			MailSender mailSender = new MailSender();
-					
+			Newsletter newsletter = new Newsletter();
+			
+			newsletter = newsletterRepository.findByNewsletterId(newsletterId);
+			MailSender mailSender = new MailSender();		
 
 			List<NewsletterConcern> listOfNewsletterConcern = new ArrayList<NewsletterConcern>();
 				listOfNewsletterConcern = newsletterConcernRepository.findAll();
 			try {
-				newsletterRepository.deleteAll();
-				newsletterRepository.save(newsletter);
+				
 				for(NewsletterConcern nc:listOfNewsletterConcern){
-				 mailSender.sendSimpleEmail(nc.getNewsletterConcernEmail(),
-						 "newsletterOrientationBocobi2","ca c'est du lourd");
+					MailSender.sendEmailWithFreemarker(nc.getNewsletterConcernEmail(),newsletterSubject,
+						 newsletter.getListOfPrincipalActuality(),
+						 newsletter.getListOfPublication(), "newsletterTemplate.jsp", mailSender);
+					/*MailSender.sendSimpleEmail(nc.getNewsletterConcernEmail(), "l'envoie marche quand meme",
+							"newsletter du site d'orientation de l'entreprise bocobi2");*/
 				}
 				return new ResponseEntity(new SuccessClass("newsletter envoyée avec succès!!"),HttpStatus.OK);
 			} catch (Exception e) {
+				e.printStackTrace();
 				return new ResponseEntity(new ErrorClass("echec de l'envoie"
 						+ " de la newsletter aux differents inscrits!!"),HttpStatus.OK);
 			}
 
 
 		}
-
+	
 
 
 //************************************************************************************************************
@@ -1549,8 +1647,7 @@ public class AdministratorController {
 
 	//methodes utiles
 		
-		
-	
-	
-	
+
+	 
+
 }

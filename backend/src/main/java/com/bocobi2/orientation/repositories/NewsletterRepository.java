@@ -6,6 +6,6 @@ import com.bocobi2.orientation.model.Newsletter;
 public interface NewsletterRepository extends MongoRepository<Newsletter, String> {
 
    
-    public Newsletter findByNewsletterContent(String NewsletterContent);
+    public Newsletter findByNewsletterId(String newsletterId);
 
 }

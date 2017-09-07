@@ -152,7 +152,7 @@ public class SurferController {
 		
 		NewsletterConcern newsletterConcern = new NewsletterConcern(newsletterConcernEmail);
 
-
+		newsletterConcernRepository.deleteAll();
 		logger.info("enregistrement de l'adresse email {}", newsletterConcernEmail);
 		if (newsletterConcernRepository.findByNewsletterConcernEmail(newsletterConcernEmail) != null) {
 			logger.error("l'adresse {} est deja enregistré dans la base de donnees", newsletterConcernEmail);
@@ -160,6 +160,7 @@ public class SurferController {
 					+ newsletterConcernEmail +" est deja enregistré dans la base de donnees"),
 					HttpStatus.OK);
 		}
+		
 		newsletterConcernRepository.save(newsletterConcern);
 		return new ResponseEntity(new SuccessClass("enregistrement "
 				+ "effectué avec succès"), HttpStatus.OK);

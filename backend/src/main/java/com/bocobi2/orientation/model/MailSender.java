@@ -18,14 +18,14 @@ import freemarker.template.Template;
 public class MailSender {
 
 	@Autowired
-	private JavaMailSender sender;
+	private static JavaMailSender sender;
 	
 	@Autowired
-	private Configuration freemarkerConfig;
+	private static Configuration freemarkerConfig;
 	
 	//methode pour l'envoe d'un simple mail
 	
-	 public void sendSimpleEmail(String recipient, String mailContent, String subject) throws Exception{
+	 public static void sendSimpleEmail(String recipient, String mailContent, String subject) throws Exception{
 	        MimeMessage message = sender.createMimeMessage();
 	        MimeMessageHelper helper = new MimeMessageHelper(message);
 	        helper.setTo(recipient);
@@ -57,21 +57,27 @@ public class MailSender {
 	 
 	 
 
-	    public void sendEmail() throws Exception {
+	   public static void sendEmailWithFreemarker(String recipient,
+				  String subject,List<String> listOfPrincipalActuality,
+				  List<String> listOfPublication,
+				  String templateFileName, MailSender mailSender) throws Exception {
 	        MimeMessage message = sender.createMimeMessage();
 	        MimeMessageHelper helper = new MimeMessageHelper(message);
-	        Map<String, Object> model = new HashMap();
-	        model.put("user", "qpt");
+	        Map<String, Object> model = new HashMap<String, Object>();
+	        model.put("listOfPrincipalActuality", listOfPrincipalActuality);
+	        model.put("listOfPublication", listOfPublication);
+	        
 	        // set loading location to src/main/resources
 	        // You may want to use a subfolder such as /templates here
-	        freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/");
-	        Template t = freemarkerConfig.getTemplate("welcome.ftl");
+	        freemarkerConfig.setClassForTemplateLoading(mailSender.getClass(), "/backend/"
+	        		+ "src/main/resources/email-templates/");
+	        Template t = freemarkerConfig.getTemplate(templateFileName);
 	        String text = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
-	        helper.setTo("set-your-recipient-email-here@gmail.com");
+	        helper.setTo(recipient);
 	        helper.setText(text, true);
 
 			// set to html
-	        helper.setSubject("Hi");
+	        helper.setSubject(subject);
 	        sender.send(message);
 	    }
 	 
