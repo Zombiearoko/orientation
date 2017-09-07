@@ -40,11 +40,10 @@ export class CreateAccountCustomerComponent implements OnInit {
       this.emailAddress = post.emailAddress;
       this.password = post.password;
       this.phoneNumber = post.phoneNumber;
-      const url = 'http://192.168.9.101:8092/orientation/customer/addCustomer' + '?firstNameCustomer='
+      const url = 'http://192.168.9.101:8092/orientation/surfer/addCustomer' + '?firstNameCustomer='
     + post.firstNameCustomer + '&lastNameCustomer='
      + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
     + '&password =' + post.password;
-     const urlInno = 'http://192.168.9.100:8092/customer/addCustomer';
       const url2 = 'https://jsonplaceholder.typicode.com/post';
 // console.log(this.firstNameCustomer);
 this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emailAddress, this.password, this.phoneNumber  )

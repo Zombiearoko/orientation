@@ -55,7 +55,7 @@ const options = new RequestOptions({  headers: headers1 });
         motDePasse: password,
         telephone: phoneNumber
        };
-    const url = 'http://192.168.9.101:8092/orientation/customer/addCustomer' + '?firstNameCustomer='
+    const url = 'http://192.168.9.101:8092/orientation/surfer/addCustomer' + '?firstNameCustomer='
     + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
     + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
@@ -118,6 +118,23 @@ const options = new RequestOptions({  headers: headers1 });
        };
     const url = 'http://localhost:8092/customer/loginCustomer' + '?testimonyAuthor=' + testimonyAuthor
     + '&testimonyContent =' + testimonyContent ;
+      const url2 = 'https://jsonplaceholder.typicode.com/posts';
+    return  this.http.post(url, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}
+
+
+
+public postAccountNewsLetter(newsletterConcernEmail) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        email: newsletterConcernEmail,
+       };
+    const url = 'http://192.168.9.101:8092/orientation/surfer/inscriptionToNewsletter' +
+     '&newsletterConcernEmail=' + newsletterConcernEmail;
+
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
