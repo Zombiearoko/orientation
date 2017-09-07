@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en">
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-
-<<<<<<< HEAD
-<app-article [articleForm]="articleForm"> load...</app-article>
-=======
 <!-- Navigation -->
 <div class="nav">
     <div class="navbar navbar-defaultt navbar-fixed-top  navbar-inverse">
@@ -76,25 +63,43 @@
 
 <!-- Footer -->
 <footer>
+
     <div class="container">
-        <ul class="list-inline">
-            <li class="list-inline-item">
-                <a href="#">Home</a>
-            </li>
-            <li class="footer-menu-divider list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-                <a href="#about">About</a>
-            </li>
-            <li class="footer-menu-divider list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-                <a href="#services">Services</a>
-            </li>
-            <li class="footer-menu-divider list-inline-item">&sdot;</li>
-            <li class="list-inline-item">
-                <a href="#contact">Contact</a>
-            </li>
-        </ul>
-        <p class="copyright text-muted small">Copyright &copy; bocobi2 2017. All Rights Reserved</p>
+        <section class="section-footer1">
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a href="#">Home</a>
+                </li>
+                <li class="footer-menu-divider list-inline-item">&sdot;</li>
+                <li class="list-inline-item">
+                    <a href="#about">About</a>
+                </li>
+                <li class="footer-menu-divider list-inline-item">&sdot;</li>
+                <li class="list-inline-item">
+                    <a href="#services">Services</a>
+                </li>
+                <li class="footer-menu-divider list-inline-item">&sdot;</li>
+                <li class="list-inline-item">
+                    <a href="#contact">Contact</a>
+                </li>
+            </ul>
+            <p class="copyright text-muted small">Copyright &copy; bocobi2 2017. All Rights Reserved</p>
+
+        </section>
+        <section class="section-footer2">
+            <div class="newsletter-container">
+                <p class="copyright text-muted small"> Inscrivez-vous à la Newsletters </p>
+                <form class="navbar-form pull-right" (ngSubmit)="onSubmit(clientForm.value);" [formGroup]="clientForm">
+                    <input type="mail" formControlName="newsletterConcernEmail" name="newsletterConcernEmail" class="input-small form-control" placeholder="Entrez votre adresse mail">
+                    <button class="btn btn-primary " type="submit"><span class="glyphicon glyphicon-send"></span> m'inscrire</button>
+                    <span class="text-danger" [hidden]="clientForm.controls.newsletterConcernEmail.valid || clientForm.controls.newsletterConcernEmail.untouched">veuillez entrer une adresse email valide</span>
+                    <span *ngFor="let item of collection">
+
+                        <span *ngIf="item.status == 0" class ="text-danger">un client avec cette adresse email existe deja</span>
+                    <span *ngIf="item.status == 1" class="text-danger"></span>
+                    </span>
+                </form>
+            </div>
+        </section>
     </div>
 </footer>
->>>>>>> fa662e0805425de64f94c49b76e19b0446507bc8

@@ -23,7 +23,7 @@ collection: any[] = [];
   }
 
   ngOnInit() {
-    const url = 'http://localhost:8092/customer/addCustomer';
+    const url = 'http://localhost:8092/surfer/addCustomer';
   const url2 = 'https://jsonplaceholder.typicode.com/posts';
       this.http.get(url).subscribe(resp => {
  this.results = resp['results'];
