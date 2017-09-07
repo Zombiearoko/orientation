@@ -79,12 +79,14 @@ h6 {
 .content-section-a {
     padding: 50px 0;
     background-color: #f8f8f8;
+    width: 100%;
 }
 
 .content-section-b {
     padding: 50px 0;
     border-top: 1px solid #e7e7e7;
     border-bottom: 1px solid #e7e7e7;
+    width: 100%;
 }
 
 .section-heading {
@@ -352,4 +354,55 @@ body {
     text-align: center;
     padding-top: 8px;
     margin-left: 65px;
+}
+.container[_ngcontent-c1]
+{
+    width: 100%;
+}
+.container section
+{
+    display: inline-block;
+    vertical-align: top;
+
+}
+
+.section-princ
+{
+    width: 75%;
+}
+.section-princ .row section
+{
+    display: inline-block;
+    vertical-align: top;
+}
+.section-article
+{
+    width: 65%;
+    margin-left: 30px;
+}
+.section-pub
+{
+    margin-left: 30px;
+    width: 25%;
+}
+.section-princ .col-lg-6[_ngcontent-c1]
+{
+    width: 100%;
+}
+.section-princ .col-lg-6[_ngcontent-c1] .col-lg-5[_ngcontent-c1]
+{
+    width: 100%;
+}
+.section-heading-spacer[_ngcontent-c1]
+{
+    width: 100%;
+}
+.section-pub .col-lg-3[_ngcontent-c1]
+{
+    width: 100%;
+    margin: 0px;
+}
+.pub
+{
+    margin: 0px;
 }

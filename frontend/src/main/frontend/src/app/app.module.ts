@@ -1,3 +1,4 @@
+import { NavigationComponent } from './navigation/navigation.component';
 import { routes } from './app.rooter';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -45,7 +46,8 @@ import { PopupModule } from 'ng2-opd-popup';
      ProgrammeComponent,
      BourseComponent,
      LoginCostumerComponent,
-     PostTestimonyComponent
+     PostTestimonyComponent,
+     NavigationComponent
   ],
   imports: [
    BrowserModule,

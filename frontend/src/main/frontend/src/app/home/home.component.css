@@ -58,30 +58,6 @@ h6 {
     font-size: 80%;
 }
 
-.section-article
-{
-    width: 50%;
-}
-.section-nav-side-menu
-{
-    width: 22%;
-}
-.pub
-{
-    width: 100%;
-    margin-left: 0px;
-}
-h3
-{
-    margin-top: 0px;
-}
-.section-pub
-{
-    width: 21%;
-    margin-left: 40px;
-    padding: 0px;
-    border: 0px; 
-}
 @media(max-width:767px) {
     .intro-message {
         padding-bottom: 15%;
@@ -151,21 +127,7 @@ h3
     float: right;
     margin-top: 0;
 }
-.row section
-{
-    display: inline-block;
-    vertical-align: top;
-}
-.main
-{
-    width: 117%;
-    margin-top: 20px;
-    margin-left: 0px;
-}
-.back
-{
-    margin-left: 0px;
-}
+
 @media(max-width:1199px) {
     ul.banner-social-buttons {
         float: left;
@@ -411,10 +373,8 @@ body {
     padding: 15px;
     background: #fff;
     border: 1px solid #999;
-    border-radius: 10px 10px 0 0 ;
+    border-radius: 10px 10px 0 0;
     box-shadow: 0px 2px 10px #1c1a19;
-
-
 }
 
 #body-right h2 {
@@ -435,11 +395,12 @@ body {
     padding-top: 10px;
     position: relative;
 }
-.box
-{
+
+.box {
     margin-top: 0px;
     margin-bottom: 50px;
 }
+
 .btns a {
     background: left #CC0000 url(./../../img/btn.gif) repeat-y;
     border: 2px solid #E68282;
@@ -462,4 +423,96 @@ body {
 .btns a:hover {
     background-color: #EF1818;
     color: #fff;
+}
+
+
+/* css rajouté par Descartes */
+
+.ancres-header div {
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+}
+
+.head {
+    background-color: red;
+    border-radius: 10px 0 0 0;
+}
+
+.middle {
+    background-color: green;
+}
+
+.foot {
+    background-color: blue;
+    border-radius: 0 10px 0 0;
+    ;
+}
+
+.section-article {
+    width: 50%;
+}
+
+.section-nav-side-menu {
+    width: 22%;
+}
+
+.pub {
+    width: 100%;
+    margin-left: 0px;
+}
+
+h3 {
+    margin-top: 0px;
+}
+
+.section-pub {
+    width: 21%;
+    margin-left: 40px;
+    padding: 0px;
+    border: 0px;
+}
+
+.row section {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.main {
+    width: 117%;
+    margin-top: 20px;
+    margin-left: 0px;
+}
+
+.back {
+    margin-left: 0px;
+}
+
+header .ancres-header {
+    position: fixed;
+    transform: rotate(-90deg);
+    width: 100%;
+    margin-left: 52%;
+    height: 30%;
+    margin-top: 10%;
+}
+
+header .ancres-header a {
+    color: white;
+    text-decoration: none;
+}
+
+header .header a {
+    color: white;
+    text-decoration: none;
+}
+
+header .middle a {
+    color: white;
+    text-decoration: none;
+}
+
+header .foot a {
+    color: white;
+    text-decoration: none;
 }

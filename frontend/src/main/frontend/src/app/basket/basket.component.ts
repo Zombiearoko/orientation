@@ -1,3 +1,4 @@
+import { NavigationComponent } from './../navigation/navigation.component';
 import { FrancPipe } from './../pipes/francPipe';
 import { el } from '@angular/platform-browser/testing/src/browser_util';
 import { Livre } from './../livre';
@@ -13,7 +14,8 @@ import { Popup } from 'ng2-opd-popup';
 @Component({
   selector: 'app-basket',
   templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.css', '../../bootstrap/css/bootstrap.css']
+  styleUrls: ['./basket.component.css', '../../bootstrap/css/bootstrap.css'],
+  entryComponents: [NavigationComponent]
 })
 export class BasketComponent implements OnInit {
   private total: number;

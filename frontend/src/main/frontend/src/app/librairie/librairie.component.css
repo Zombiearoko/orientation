@@ -50,11 +50,11 @@ h6 {
 }
 .section-article
 {
-    width: 50%;
+    width: 78%;
 }
 .section-nav-side-menu
 {
-    width: 22%;
+    width: 20%;
 }
 .content-aside {
     width: 100%;
@@ -71,13 +71,6 @@ h6 {
 h3
 {
     margin-top: 0px;
-}
-.section-pub
-{
-    width: 20%;
-    margin-left: 40px;
-    padding: 0px;
-    border: 0px; 
 }
 
 .row section
@@ -325,7 +318,6 @@ p.copyright {
     padding-right: 10px;
     vertical-align: middle;
 }
-
 .nav-side-menu li {
     padding-left: 0px;
     border-left: 3px solid #2e353d;

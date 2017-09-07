@@ -1,6 +1,72 @@
+<!-- Navigation -->
+<div class="nav">
+    <div class="navbar navbar-defaultt navbar-fixed-top  navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a [routerLink]="['../home']"> Accueil</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['../services']" id="themes">services <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="themes">
+                            <li><a href="../default/">conseiller d'orientation</a></li>
+                            <li class="divider"></li>
+                            <li><a href="../cerulean/">offres de bourses</a></li>
+                            <li><a href="../yeti/">offres d'emplois</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a [routerLink]="['../contacts']">Contacts</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" [routerLink]="['../about']" id="download">A propos <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="download">
+                            <li><a href="">navigation</a></li>
+                            <li class="divider"></li>
+                            <li><a href="">presentation</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a [routerLink]="['../loginCostumer']"><span class="glyphicon glyphicon-user"></span> se connecter</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['../account']"><span class="glyphicon glyphicon-user"></span> creer un compte client</a>
+                    </li>
+                </ul>
+                <form class="navbar-form pull-right">
+                    <input type="search" name="" class="input-small form-control" placeholder="Recherche">
+                    <button class="btn btn-primary "><span class="glyphicon glyphicon-search"></span>Rechercher</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
 <div class="separator"></div>
 <!-- Header -->
 <header class="intro-header">
+    <section class="ancres-header">
+        <div class="head">
+            <a href="#ourOffer">Nos offres</a>
+        </div>
+        <!--  <div class="middle">
+            <a href="#newsletter">blabla</a>
+        </div>-->
+        <div class="foot">
+            <a href="#newsletter">Newsletter</a>
+        </div>
+    </section>
     <div class="container">
         <div class="intro-message">
             <h1>Orientation academique et professionnelle </h1>
@@ -8,7 +74,7 @@
         </div>
     </div>
 </header>
-<a href="#newsletter"> news</a>
+
 
 <div class="separators"></div>
 <div class="container back">
@@ -40,11 +106,11 @@
             </div>
         </section>
         <section class="section-article">
-            <div class="article clear-left col-lg-6">
+            <div class="article clear-left col-lg-6" id="ourOffer">
                 <div id="body-right">
 
                     <div class="box">
-                        <img src="" alt="" class="clear-left" height="86" width="130" />
+                        <img src="https://previews.123rf.com/images/coramax/coramax1209/coramax120900095/15117889-3d-personnes-homme-personne-lit-un-livre-le-dos-appuy-contre-une-pile-de-livres-Banque-d%27images.jpg" alt="" class="clear-left" height="86" width="130" />
                         <div class="titleRubric" style="background-color:#375A7F;">
                             <h2>Offres de bourse</h2>
 
@@ -55,7 +121,7 @@
                         <div class="clear"></div>
                     </div>
                     <div class="box">
-                        <img src="" alt="" class="clear-left" height="86" width="130" />
+                        <img src="https://www.babelio.com/users/liste_Les-livres-les-plus-attendus-de-la-rentree-littera_9705.jpeg" alt="" class="clear-left" height="86" width="130" />
                         <div class="titleRubric" style="background-color:#375A7F;">
                             <h2>Offres stage</h2>
                         </div>
@@ -65,7 +131,7 @@
                         <div class="clear"></div>
                     </div>
                     <div class="box">
-                        <img src="" alt="" class="clear-left" height="86" width="130" />
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQaHRv5z8jmlvreNfWXSEiQ-lMDB7phBZ6TQKrQHpIDiLjQ-1k" alt="" class="clear-left" height="86" width="130" />
                         <div class="titleRubric" style="background-color:#375A7F;">
                             <h2>Offres d'emploi</h2>
                         </div>
@@ -75,7 +141,7 @@
                         <div class="clear"></div>
                     </div>
                     <div class="box">
-                        <img src="" alt="" class="clear-left" height="86" width="130" />
+                        <img src="http://www.enviedecrire.com/wp-content/uploads/ecrire-un-livre-jeunesse.jpg" alt="" class="clear-left" height="86" width="130" />
                         <div class="titleRubric" style="background-color:#375A7F;">
                             <h2>programmes scolaire et academique</h2>
                         </div>
@@ -85,7 +151,7 @@
                         <div class="clear"></div>
                     </div>
                     <div class="box">
-                        <img src="" alt="" class="clear-left" height="86" width="130" />
+                        <img src="http://acheter.mon-livre-en-ligne.com/wp-content/uploads/sites/3/2015/01/Acheter-mon-livre-en-ligne-collection-librairie-livres1.jpg" alt="" class="clear-left" height="86" width="130" />
                         <div class="titleRubric" style="background-color:#375A7F;">
                             <h2> les specialités scolaire et academique</h2>
                         </div>
@@ -108,37 +174,8 @@
     </div>
 </div>
 <div class="clear-both"></div>
-<aside class="banner">
 
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-6 my-auto">
-                <h2>suivre des sites profesionnelles</h2>
-            </div>
-            <div class="col-lg-6 my-auto">
-                <ul class="list-inline banner-social-buttons">
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-secondary btn-lg">
-                            <i class="fa fa-github fa-fw"></i>
-                            <span class="network-name">Github</span>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-secondary btn-lg">
-                            <i class="fa fa-linkedin fa-fw"></i>
-                            <span class="network-name">Linkedin</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-    <!-- /.container -->
-
-</aside>
-<div id="newsletter"> hey</div>
+<div id="newsletter"></div>
 <!-- /.banner -->
 <!-- Zone reserver aux modals-->
 <!-- -->
