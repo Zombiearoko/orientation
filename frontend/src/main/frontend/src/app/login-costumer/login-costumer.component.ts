@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RestProvider } from '../../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
+import { MdDialog, MdDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-login-costumer',
@@ -21,7 +22,7 @@ export class LoginCostumerComponent implements OnInit {
    submitted = false;
    collection: any[] = [];
 
-  constructor(public rest: RestProvider, public fb: FormBuilder, private http: Http) {
+  constructor(public rest: RestProvider, public fb: FormBuilder, private http: Http, public dialogRef: MdDialogRef<MdDialog>) {
 
       this.clientForm = this.fb.group({
       'emailAddress': [null, Validators.compose([Validators.email])],

@@ -116,7 +116,7 @@ const options = new RequestOptions({  headers: headers1 });
         testimonyAuthor: testimonyAuthor,
         testimonyContent: testimonyContent,
        };
-    const url = 'http://192.168.9.102:8092/customer/loginCustomer' + '?testimonyAuthor=' + testimonyAuthor
+    const url = 'http://192.168.9.102:8092/customer/postTestimony' + '?testimonyAuthor=' + testimonyAuthor
     + '&testimonyContent =' + testimonyContent ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
