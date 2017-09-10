@@ -58,8 +58,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let element of collectionJson; let i=index">
-                                    <td>{{ element.title }}</td>
+                                <tr *ngFor="let element of heroes; let i=index">
+                                    <td>{{ element.name }}</td>
                                     <td>{{ element.id }}</td>
                                     <td>
                                         <popup> voulez vous vraiment supprimmer ce livre du panier?</popup>
@@ -88,3 +88,5 @@
     </div>
 </div>
 <div class="clear-both"></div>
+<button class="btn btn-primary" (click)="pdfHtml()">Download to PDF</button>
+<button class="btn btn-primary" (click)="download()">Download to PDF</button>

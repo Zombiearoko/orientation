@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RestProvider } from '../../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
-
+declare let jsPDF;
 @Component({
   selector: 'app-librairie',
   templateUrl: './librairie.component.html',
@@ -21,6 +21,17 @@ private results: [any];
   onSubmit() {
 
   }
+public download() {
+
+        const doc = new jsPDF();
+        doc.text(20, 20, 'Hello world!');
+        doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+        doc.addPage();
+        doc.text(20, 20, 'Do you like that?');
+
+        // Save the PDF
+        doc.save('Test.pdf');
+    }
 
   ngOnInit() {
   const url = 'http://192.168.9.102:8092/orientation/customer/researchAllBook';

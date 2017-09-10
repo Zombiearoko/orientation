@@ -3,7 +3,7 @@ import { FrancPipe } from './../pipes/francPipe';
 import { el } from '@angular/platform-browser/testing/src/browser_util';
 import { Livre } from './../livre';
 import { HttpModule } from '@angular/http';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { RestProvider } from '../../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
@@ -11,6 +11,7 @@ import { Http } from '@angular/http';
 import {ValidationMessages}   from './validators/validation-messages.component'; */
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Popup } from 'ng2-opd-popup';
+declare let jsPDF;
 @Component({
   selector: 'app-basket',
   templateUrl: './basket.component.html',
@@ -18,14 +19,51 @@ import { Popup } from 'ng2-opd-popup';
   entryComponents: [NavigationComponent]
 })
 export class BasketComponent implements OnInit {
+  @ViewChild('test') el: ElementRef;
   private total: number;
   private bookName: string;
   basketForm: FormGroup;
    private results: [any];
    private collectionJson: Object;
    submitted = false;
+isClassVisible: true;
+    heroes = [
+    {id: 1, name: 'Superman'},
+    {id: 2, name: 'Batman'},
+    {id: 5, name: 'BatGirl'},
+    {id: 3, name: 'Robin'},
+    {id: 4, name: 'Flash'},
+     {id: 1, name: 'Superman'},
+    {id: 2, name: 'Batman'},
+    {id: 5, name: 'BatGirl'},
+    {id: 3, name: 'Robin'},
+    {id: 4, name: 'Flash'}
+];
+
+
+
   constructor(public rest: RestProvider, private builder: FormBuilder, private http: Http, private popup: Popup) {}
-  ngOnInit() {
+
+   public download() {
+       const doc = new jsPDF();
+        doc.text(20, 20, 'Hello world!');
+        doc.save('Test1.pdf');
+    }
+    public pdfHtml() {
+      alert(this.el.nativeElement.innerHTML);
+        const pdf = new jsPDF();
+        const options = {
+            pagesplit: true
+        };
+        pdf.addHTML(this.el.nativeElement, 0, 0, options, () => {
+            pdf.save('test1.pdf');
+        });
+
+    }
+
+
+
+ngOnInit() {
      this.createForm();
 const url2 = 'https://jsonplaceholder.typicode.com/posts';
       this.http.get(url2).subscribe(resp => {
