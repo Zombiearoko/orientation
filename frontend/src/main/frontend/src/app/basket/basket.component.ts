@@ -11,7 +11,9 @@ import { Http } from '@angular/http';
 import {ValidationMessages}   from './validators/validation-messages.component'; */
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Popup } from 'ng2-opd-popup';
-declare let jsPDF;
+// declare let jsPDF;
+import * as jsPDF from 'jspdf';
+
 @Component({
   selector: 'app-basket',
   templateUrl: './basket.component.html',
@@ -27,6 +29,8 @@ export class BasketComponent implements OnInit {
    private collectionJson: Object;
    submitted = false;
 isClassVisible: true;
+i: any;
+key: any;
     heroes = [
     {id: 1, name: 'Superman'},
     {id: 2, name: 'Batman'},
@@ -46,22 +50,16 @@ isClassVisible: true;
 
    public download() {
        const doc = new jsPDF();
-        doc.text(20, 20, 'Hello world!');
-        doc.save('Test1.pdf');
+        doc.text(1, 1, 'Hello world!');
+         this.i = 0;
+        for ( this.key in this.heroes) {
+          if (2 === 2) {
+           doc.text(20, 10 + this.i, this.heroes[this.key].id + '    ' +  this.heroes[this.key].name );
+           this.i = this.i + 10;
+        }
+          }
+        doc.save('Test.pdf');
     }
-    public pdfHtml() {
-      alert(this.el.nativeElement.innerHTML);
-        const pdf = new jsPDF();
-        const options = {
-            pagesplit: true
-        };
-        pdf.addHTML(this.el.nativeElement, 0, 0, options, () => {
-            pdf.save('test1.pdf');
-        });
-
-    }
-
-
 
 ngOnInit() {
      this.createForm();
