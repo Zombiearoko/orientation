@@ -50,11 +50,12 @@ key: any;
 
    public download() {
        const doc = new jsPDF();
-        doc.text(1, 1, 'Hello world!');
          this.i = 0;
+         doc.text(16,10, 'prix');
+         doc.text(35,10, 'livre');
         for ( this.key in this.heroes) {
           if (2 === 2) {
-           doc.text(20, 10 + this.i, this.heroes[this.key].id + '    ' +  this.heroes[this.key].name );
+           doc.text(20, 20 + this.i, this.heroes[this.key].id + '    ' +  this.heroes[this.key].name );
            this.i = this.i + 10;
         }
           }

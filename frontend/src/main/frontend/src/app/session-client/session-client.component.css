@@ -368,7 +368,7 @@ body {
 
 .section-princ
 {
-    width: 75%;
+    width: 65%;
 }
 .section-princ .row section
 {
@@ -377,13 +377,13 @@ body {
 }
 .section-article
 {
-    width: 65%;
+    width: 70%;
     margin-left: 30px;
 }
 .section-pub
 {
-    margin-left: 30px;
-    width: 25%;
+    margin-left: -100px;
+    width: 15%;
 }
 .section-princ .col-lg-6[_ngcontent-c1]
 {

@@ -1,4 +1,3 @@
-<app-navigation></app-navigation>
 <div class="nav">
     <div class="navbar navbar-defaultt navbar-fixed-top  navbar-inverse">
         <div class="container">
@@ -73,9 +72,9 @@
                             <label for="email" class="cols-lg-2 control-label">email</label>
                             <div class="cols-lg-8">
                                 <div class="input-group">
-                                    <md-input-container>
-                                        <input type="email" #mail class="form-control" formControlName="emailAddress" name="emailAddress" id="title" placeholder=" " />
-                                    </md-input-container>
+                                    
+                                        <input type="email"  class="form-control" formControlName="emailAddress" name="emailAddress" id="title" placeholder=" " />
+                                    
                                 </div>
                             </div>
                         </div>
@@ -84,19 +83,18 @@
                             <label for="name" class="cols-lg-2 control-label">mot de passe</label>
                             <div class="cols-lg-8">
                                 <div class="input-group">
-                                    <md-input-container>
-                                        <input type="password" #pwd class="form-control" formControlName="password" name="password" id="title" placeholder=" " />
-                                    </md-input-container>
+                                    
+                                        <input type="password"  class="form-control" formControlName="password" name="password" id="title" placeholder=" " />
+                                    
                                 </div>
                             </div>
                         </div>
                         <span class="text-danger" [hidden]="clientForm.controls.password.valid || clientForm.controls.password.untouched">veuillez entrer un mot de passe</span>
                         <div class="form-group ">
-                            <div md-dialog-actions>
-                                <!-- <a [routerLink]="['../sessionCostumer']">--><button md-button class="popup-btn " type="submit" [disabled]="!clientForm.valid" (click)="dialoRef.close({email: email.value, pwd: pwd.value})">
-                                  se connecter</button>
-                                <!--</a>-->
-                            </div>
+                           
+                                <a [routerLink]="['../sessionCostumer']"><button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">Se connecter</button>
+                            </a>
+                            
                             <button class="btn btn-danger ">annuler</button>
                         </div>
                     </form>
@@ -107,35 +105,6 @@
     </div>
 </div>
 <div class="clear-both"></div>
-<aside class="banner">
 
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-6 my-auto">
-                <h2>suivre des sites profesionnelles</h2>
-            </div>
-            <div class="col-lg-6 my-auto">
-                <ul class="list-inline banner-social-buttons">
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-secondary btn-lg">
-                            <i class="fa fa-github fa-fw"></i>
-                            <span class="network-name">Github</span>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" class="btn btn-secondary btn-lg">
-                            <i class="fa fa-linkedin fa-fw"></i>
-                            <span class="network-name">Linkedin</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-    <!-- /.container -->
-
-</aside>
 
 <!-- /.banner -->
