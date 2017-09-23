@@ -24,6 +24,7 @@ export class CreateAccountCustomerComponent implements OnInit {
  collection: any[] = [];
  lastElement: Object;
    submitted = false;
+   public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
 
   constructor(public rest: RestProvider, public fb: FormBuilder, private http: Http) {
 
@@ -42,7 +43,10 @@ export class CreateAccountCustomerComponent implements OnInit {
       this.emailAddress = post.emailAddress;
       this.password = post.password;
       this.phoneNumber = post.phoneNumber;
-      const url = 'http://192.168.9.102:8092/orientation/surfer/inscription' + '?firstNameCustomer='
+     const url = this.beginUrl + '?firstNameCustomer=' + post.firstNameCustomer + '&lastNameCustomer='
+     + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
+    + '&password =' + post.password;
+      const url1 = 'http://192.168.9.102:8092/orientation/surfer/inscription' + '?firstNameCustomer='
     + post.firstNameCustomer + '&lastNameCustomer='
      + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
     + '&password =' + post.password;

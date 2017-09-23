@@ -12,6 +12,7 @@ import 'rxjs/add/operator/catch';
 */
 @Injectable()
 export class RestProvider {
+  public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
 
     constructor(public http: Http) {
 
@@ -36,7 +37,8 @@ const options = new RequestOptions({  headers: headers1 });
       const object = [
       { title: title, articleContent: articleContent }
     ];
-    const url = 'http://192.168.9.102:8092/orientation/administrator/createArticle' +
+    const url = this.beginUrl + '?title=' + title + '&articleContent=' + articleContent;
+    const url1 = 'http://192.168.9.102:8092/orientation/administrator/createArticle' +
      '?title=' + title + '&articleContent=' + articleContent;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
@@ -56,7 +58,9 @@ const options = new RequestOptions({  headers: headers1 });
         motDePasse: password,
         telephone: phoneNumber
        };
-    const url = 'http://192.168.9.102:8092/orientation/surfer/inscription' + '?firstNameCustomer='
+       const url = this.beginUrl + '?firstNameCustomer=' + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
+    + '&password =' + password ;
+    const url1 = 'http://192.168.9.102:8092/orientation/surfer/inscription' + '?firstNameCustomer='
     + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
     + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
@@ -72,7 +76,8 @@ const options = new RequestOptions({  headers: headers1 });
       const object = {
         bookName: bookName,
        };
-    const url = 'http://192.168.9.102:8092/customer/addCustomer' + '?firstNameCustomer='
+      const url = this.beginUrl + '?title=' + '?firstNameCustomer='+ bookName;
+    const url1 = 'http://192.168.9.102:8092/customer/addCustomer' + '?firstNameCustomer='
     + bookName;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
@@ -101,7 +106,8 @@ const options = new RequestOptions({  headers: headers1 });
         email: emailAddress,
         motDePasse: password,
        };
-    const url = 'http://192.168.9.102:8092/customer/loginCustomer'  + '?emailAddress=' + emailAddress
+      const url = this.beginUrl  + '?emailAddress=' + emailAddress + '&password =' + password ;
+    const url1 = 'http://192.168.9.102:8092/customer/loginCustomer'  + '?emailAddress=' + emailAddress
     + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url2, object, options)
@@ -116,7 +122,8 @@ const options = new RequestOptions({  headers: headers1 });
         testimonyAuthor: testimonyAuthor,
         testimonyContent: testimonyContent,
        };
-    const url = 'http://192.168.9.102:8092/customer/postTestimony' + '?testimonyAuthor=' + testimonyAuthor
+      const url = this.beginUrl  + '?testimonyAuthor=' + testimonyAuthor+ '&testimonyContent =' + testimonyContent ;
+    const url1 = 'http://192.168.9.102:8092/customer/postTestimony' + '?testimonyAuthor=' + testimonyAuthor
     + '&testimonyContent =' + testimonyContent ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
@@ -132,7 +139,8 @@ const options = new RequestOptions({  headers: headers1 });
       const object = {
         email: newsletterConcernEmail,
        };
-    const url = 'http://192.168.9.102:8092/orientation/surfer/inscriptionToNewsletter' +
+      const url = this.beginUrl + '?newsletterConcernEmail=' + newsletterConcernEmail;
+    const url1 = 'http://192.168.9.102:8092/orientation/surfer/inscriptionToNewsletter' +
      '?newsletterConcernEmail=' + newsletterConcernEmail;
 
       const url2 = 'https://jsonplaceholder.typicode.com/posts';

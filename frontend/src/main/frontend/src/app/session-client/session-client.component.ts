@@ -14,6 +14,8 @@ export class SessionClientComponent implements OnInit {
   private results: [any];
    collectionJson: Object;
 collection: any[] = [];
+public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
+
 
   constructor(public rest: RestProvider, private http: Http) {
 
@@ -23,9 +25,10 @@ collection: any[] = [];
   }
 
   ngOnInit() {
-    const url = 'http://localhost:8092/customer/addCustomer';
+    const url = this.beginUrl;
+    const url1 = 'http://localhost:8092/customer/addCustomer';
   const url2 = 'https://jsonplaceholder.typicode.com/posts';
-      this.http.get(url2).subscribe(resp => {
+      this.http.get(url).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
 this.collection.push(this.collectionJson);

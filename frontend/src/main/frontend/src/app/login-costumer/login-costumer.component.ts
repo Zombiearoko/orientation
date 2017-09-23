@@ -21,6 +21,8 @@ export class LoginCostumerComponent implements OnInit {
    private collectionJson: Object;
    submitted = false;
    collection: any[] = [];
+  public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
+
 
   constructor(public rest: RestProvider, public fb: FormBuilder, private http: Http) {
 
@@ -34,7 +36,8 @@ export class LoginCostumerComponent implements OnInit {
 
       this.emailAdress = post.emailAdress;
       this.password = post.password;
-      const url = 'http://localhost:8092/customer/loginCustomer' + '&emailAddress=' + post.emailAddress
+       const url = this.beginUrl + '&emailAddress=' + post.emailAddress + '&password =' + post.password;
+      const url1 = 'http://localhost:8092/customer/loginCustomer' + '&emailAddress=' + post.emailAddress
     + '&password =' + post.password;
      const urlInno = 'http://192.168.9.100:8092/customer/addCustomer';
       const url2 = 'https://jsonplaceholder.typicode.com/post';
