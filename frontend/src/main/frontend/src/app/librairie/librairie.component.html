@@ -1,3 +1,4 @@
+<app-navigation></app-navigation>
 <div class="separator">
 </div>
 <!--navigaton side-->
@@ -12,10 +13,6 @@
                 <div class="menu-list">
 
                     <ul id="menu-content" class="menu-content collapse out">
-
-                        <li data-toggle="collapse" data-target="#products" class="collapsed active">
-                            <a> <i class="glyphicon glyphicon-off"></i>se deconnecter <span class="arrow"></span></a>
-                        </li>
                         <li data-toggle="collapse" data-target="#products" class="collapsed active">
                             <a href="#"><i class="fa fa-gift fa-lg"></i>Consulter les offres <span class="arrow"></span></a>
                         </li>
@@ -28,11 +25,6 @@
                         <li data-toggle="collapse" data-target="#service" class="collapsed">
                             <a [routerLink]="['../basket']"><i class="fa fa-user fa-lg"></i>Gerer son panier<span class="arrow"></span></a>
                         </li>
-
-
-                        <li data-toggle="collapse" data-target="#service" class="collapsed">
-                            <a [routerLink]="['../bookshop']"><i class="fa fa-globe fa-lg"></i> Librairie <span class="arrow"></span></a>
-                        </li>
                         <li data-toggle="collapse" data-target="#service" class="collapsed">
                             <a [routerLink]="['../postTestimony']"><i class="fa fa-globe fa-lg"></i> Poster temoignage<span class="arrow"></span></a>
                         </li>
@@ -44,29 +36,19 @@
         <section class="section-article">
             <div *ngFor="let item of collectionJson">
                 <div class="prod_box">
-                    <div class="product_title"><a href="#">{{ item.id}}</a></div>
+                    <div class="product_title"><a href="#">{{ item.bookName }}</a></div>
                     <div class="product_img">
-                        <a href="#"><img src="exp.png"> </a>
+                        <a href="#"><img src="https://www.google.cm/search?q=image+de+livre&tbm=isch&imgil=7_2ZTz54aA4hxM%253A%253B4lzYwlOotUDddM%253Bhttp%25253A%25252F%25252Ffr.shingekinokyojin.wikia.com%25252Fwiki%25252FFichier%25253ALivres.jpg&source=iu&pf=m&fir=7_2ZTz54aA4hxM%253A%252C4lzYwlOotUDddM%252C_&usg=__BTw5GU7ncHIusXsaZz2F5fWucAs%3D&biw=1366&bih=662&ved=0ahUKEwiLlc6JopPWAhUKbBoKHXQiAiMQyjcIPg&ei=IFWxWYuFMIrYafTEiJgC">                            </a>
                     </div>
-                    <div class="prod_price"><span class="reduce">{{ item.title}}</span></div>
-                    <button class="btn btn-danger" (click)=addInBasket()> <a [routerLink]="['../basket']" >ajouter au panier</a></button>
+                    <div class="prod_price"><span class="reduce">{{ item.bookPrice }}</span></div>
+                    <button class="btn btn-danger" (click)=addInBasket()> <a [routerLink]="['../basket']" ><span class="glyphicon glyphicon-shopping-cart"></span>ajouter au panier</a></button>
                     <button class="btn btn-primary"> <a href="aheter">Acheter</a> </button>
                 </div>
 
             </div>
         </section>
-        <section class="section-pub">
-            <div class="content-aside  col-lg-3">
-                <button class="btn btn-primary" (click)="download()">download</button>
-                <h3 class="pub">publicité </h3>
-
-            </div>
-        </section>
-
-
-
-
 
     </div>
 </div>
 <div class="clear-both"></div>
+<button class="btn btn-primary" (click)="download()">download </button>

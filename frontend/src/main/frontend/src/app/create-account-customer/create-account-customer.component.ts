@@ -1,3 +1,4 @@
+import { NavigationComponent } from './../navigation/navigation.component';
 import { HttpModule } from '@angular/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -7,7 +8,8 @@ import { Http } from '@angular/http';
 
 @Component({
   templateUrl: './create-account-customer.component.html',
-  styleUrls: ['./create-account-customer.component.css', '../../bootstrap/css/bootstrap.css']
+  styleUrls: ['./create-account-customer.component.css', '../../bootstrap/css/bootstrap.css'],
+  entryComponents: [NavigationComponent]
 })
 export class CreateAccountCustomerComponent implements OnInit {
   clientForm: FormGroup;
@@ -40,7 +42,7 @@ export class CreateAccountCustomerComponent implements OnInit {
       this.emailAddress = post.emailAddress;
       this.password = post.password;
       this.phoneNumber = post.phoneNumber;
-      const url = 'http://192.168.9.101:8092/orientation/surfer/addCustomer' + '?firstNameCustomer='
+      const url = 'http://192.168.9.102:8092/orientation/surfer/inscription' + '?firstNameCustomer='
     + post.firstNameCustomer + '&lastNameCustomer='
      + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
     + '&password =' + post.password;

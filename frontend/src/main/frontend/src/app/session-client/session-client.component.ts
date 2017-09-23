@@ -23,9 +23,9 @@ collection: any[] = [];
   }
 
   ngOnInit() {
-    const url = 'http://localhost:8092/surfer/addCustomer';
+    const url = 'http://localhost:8092/customer/addCustomer';
   const url2 = 'https://jsonplaceholder.typicode.com/posts';
-      this.http.get(url).subscribe(resp => {
+      this.http.get(url2).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
 this.collection.push(this.collectionJson);

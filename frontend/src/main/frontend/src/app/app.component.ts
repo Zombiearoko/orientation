@@ -33,8 +33,8 @@ clientForm: FormGroup;
 
   onSubmit(post) {
       this. newsletterConcernEmail = post. newsletterConcernEmail;
-      const url = 'http://192.168.9.101:8092/orientation/surfer/inscriptionToNewsLetter'  +
-       '& newsletterConcernEmail=' + post. newsletterConcernEmail;
+      const url = 'http://192.168.9.102:8092/orientation/surfer/inscriptionToNewsletter'  +
+       '?newsletterConcernEmail=' + post. newsletterConcernEmail;
       const url2 = 'https://jsonplaceholder.typicode.com/post';
 // console.log(this.firstNameCustomer);
 this.rest.postAccountNewsLetter(this. newsletterConcernEmail)

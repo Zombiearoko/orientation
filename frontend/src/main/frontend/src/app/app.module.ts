@@ -1,3 +1,4 @@
+import { NavigationComponent } from './navigation/navigation.component';
 import { routes } from './app.rooter';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -24,6 +25,8 @@ import { BourseComponent } from './bourse/bourse.component';
 import { LoginCostumerComponent } from './login-costumer/login-costumer.component';
 import { PostTestimonyComponent } from './post-testimony/post-testimony.component';
 import { PopupModule } from 'ng2-opd-popup';
+import {MaterialModule} from '@angular/material';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,8 @@ import { PopupModule } from 'ng2-opd-popup';
      ProgrammeComponent,
      BourseComponent,
      LoginCostumerComponent,
-     PostTestimonyComponent
+     PostTestimonyComponent,
+     NavigationComponent
   ],
   imports: [
    BrowserModule,
@@ -53,7 +57,9 @@ import { PopupModule } from 'ng2-opd-popup';
     ReactiveFormsModule,
     HttpModule,
     routes,
-    PopupModule.forRoot()
+    PopupModule.forRoot(),
+    MaterialModule,
+    BrowserAnimationsModule
   ],
   providers: [
   RestProvider

@@ -1,3 +1,4 @@
+import { NavigationComponent } from './../navigation/navigation.component';
 import { HttpModule } from '@angular/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -8,7 +9,8 @@ import { Http } from '@angular/http';
 @Component({
   selector: 'app-post-testimony',
   templateUrl: './post-testimony.component.html',
-  styleUrls: ['./post-testimony.component.css']
+  styleUrls: ['./post-testimony.component.css'],
+  entryComponents: [NavigationComponent]
 })
 export class PostTestimonyComponent implements OnInit {
 clientForm: FormGroup;
@@ -32,7 +34,7 @@ clientForm: FormGroup;
 
       this.testimonyAuthor = post.testimonyAuthor;
       this.testimonyContent = post.testimonyContent;
-      const url = 'http://localhost:8092/customer/postTestimony' + '&testimonyAuthor=' + post.testimonyAuthor
+      const url = 'http://192.168.9.102:8092/customer/postTestimony' + '&testimonyAuthor=' + post.testimonyAuthor
     + '&testimonyContent =' + post.testimonyContent;
      const urlInno = 'http://192.168.9.100:8092/customer/addCustomer';
       const url2 = 'https://jsonplaceholder.typicode.com/post';

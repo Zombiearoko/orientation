@@ -21,7 +21,7 @@ private results: [any];
   onSubmit() {
 
   }
-  download() {
+public download() {
 
         const doc = new jsPDF();
         doc.text(20, 20, 'Hello world!');
@@ -33,10 +33,10 @@ private results: [any];
         doc.save('Test.pdf');
     }
 
-
   ngOnInit() {
+  const url = 'http://192.168.9.102:8092/orientation/customer/researchAllBook';
   const url2 = 'https://jsonplaceholder.typicode.com/posts';
-      this.http.get(url2).subscribe(resp => {
+      this.http.get(url).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
   console.log(this.collectionJson);
