@@ -18,14 +18,15 @@ import freemarker.template.Template;
 public class MailSender {
 
 	@Autowired
-	private static JavaMailSender sender;
+	private JavaMailSender sender;
 	
 	@Autowired
-	private static Configuration freemarkerConfig;
+	private Configuration freemarkerConfig;
 	
 	//methode pour l'envoe d'un simple mail
 	
-	 public static void sendSimpleEmail(String recipient, String mailContent, String subject) throws Exception{
+
+	 public void sendSimpleEmail(String recipient, String mailContent, String subject) throws Exception{
 	        MimeMessage message = sender.createMimeMessage();
 	        MimeMessageHelper helper = new MimeMessageHelper(message);
 	        helper.setTo(recipient);
@@ -36,7 +37,7 @@ public class MailSender {
 	 }	
 	 
 	 //methode pour l'envoie d'un mail contenant des pieces jointes
-	 
+
 	 public void sendEmailWithAttachment(String recipient, String mailContent,
 			 					  String subject, List<String> listOfAttachment) throws Exception{
         MimeMessage message = sender.createMimeMessage();
@@ -56,29 +57,30 @@ public class MailSender {
     }
 	 
 	 
+	
+	public void sendEmailWithFreemarker(String recipient,
+		   String subject,List<String> listOfPrincipalActuality,
+		   List<String> listOfPublication,
+		   String templateFileName) throws Exception {
+				
+		        MimeMessage message = sender.createMimeMessage();
+		        MimeMessageHelper helper = new MimeMessageHelper(message);
+		        Map<String, Object> model = new HashMap<String, Object>();
+		        model.put("listOfPrincipalActuality", listOfPrincipalActuality);
+		        model.put("listOfPublication", listOfPublication);
+		        
+		        // set loading location to src/main/resources
+		        // You may want to use a subfolder such as /templates here
+		        freemarkerConfig.setClassForTemplateLoading(this.getClass(), "/backend/"
+		        		+ "src/main/resources/email-templates/");
+		        Template t = freemarkerConfig.getTemplate(templateFileName);
+		        String text = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+		        helper.setTo(recipient);
+		        helper.setText(text, true);
 
-	   public static void sendEmailWithFreemarker(String recipient,
-				  String subject,List<String> listOfPrincipalActuality,
-				  List<String> listOfPublication,
-				  String templateFileName, MailSender mailSender) throws Exception {
-	        MimeMessage message = sender.createMimeMessage();
-	        MimeMessageHelper helper = new MimeMessageHelper(message);
-	        Map<String, Object> model = new HashMap<String, Object>();
-	        model.put("listOfPrincipalActuality", listOfPrincipalActuality);
-	        model.put("listOfPublication", listOfPublication);
-	        
-	        // set loading location to src/main/resources
-	        // You may want to use a subfolder such as /templates here
-	        freemarkerConfig.setClassForTemplateLoading(mailSender.getClass(), "/backend/"
-	        		+ "src/main/resources/email-templates/");
-	        Template t = freemarkerConfig.getTemplate(templateFileName);
-	        String text = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
-	        helper.setTo(recipient);
-	        helper.setText(text, true);
-
-			// set to html
-	        helper.setSubject(subject);
-	        sender.send(message);
+				// set to html
+		        helper.setSubject(subject);
+		        sender.send(message);
 	    }
 	 
 	 

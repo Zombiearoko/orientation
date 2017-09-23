@@ -3,11 +3,8 @@ package com.bocobi2.orientation.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,9 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,9 +37,6 @@ import com.bocobi2.orientation.repositories.NewsletterConcernRepository;
 import com.bocobi2.orientation.repositories.NewsletterRepository;
 import com.bocobi2.orientation.repositories.ScholarshipRepository;
 import com.bocobi2.orientation.repositories.SchoolCalenderRepository;
-
-import freemarker.template.Configuration;
-import freemarker.template.Template;
 
 
 @CrossOrigin(origins = "*")
@@ -75,6 +66,9 @@ public class AdministratorController {
 	
 	@Autowired
 	NewsletterConcernRepository newsletterConcernRepository;
+	
+	//@Autowired
+	MailSender mailSender;
 	
 
 	
@@ -1616,18 +1610,20 @@ public class AdministratorController {
 			Newsletter newsletter = new Newsletter();
 			
 			newsletter = newsletterRepository.findByNewsletterId(newsletterId);
-			MailSender mailSender = new MailSender();		
+			mailSender = new MailSender();		
 
 			List<NewsletterConcern> listOfNewsletterConcern = new ArrayList<NewsletterConcern>();
 				listOfNewsletterConcern = newsletterConcernRepository.findAll();
+			if (!listOfNewsletterConcern.isEmpty()){
 			try {
-				
 				for(NewsletterConcern nc:listOfNewsletterConcern){
-					MailSender.sendEmailWithFreemarker(nc.getNewsletterConcernEmail(),newsletterSubject,
+					/*mailSender.sendEmailWithFreemarker(nc.getNewsletterConcernEmail(),newsletterSubject,
 						 newsletter.getListOfPrincipalActuality(),
-						 newsletter.getListOfPublication(), "newsletterTemplate.jsp", mailSender);
-					/*MailSender.sendSimpleEmail(nc.getNewsletterConcernEmail(), "l'envoie marche quand meme",
-							"newsletter du site d'orientation de l'entreprise bocobi2");*/
+						 newsletter.getListOfPublication(), "newsletterTemplate.jsp");*/
+					//*
+					 mailSender.sendSimpleEmail(nc.getNewsletterConcernEmail(), "l'envoie marche quand meme",
+							"newsletter du site d'orientation de l'entreprise bocobi2");
+					 //*/
 				}
 				return new ResponseEntity(new SuccessClass("newsletter envoyée avec succès!!"),HttpStatus.OK);
 			} catch (Exception e) {
@@ -1636,7 +1632,10 @@ public class AdministratorController {
 						+ " de la newsletter aux differents inscrits!!"),HttpStatus.OK);
 			}
 
-
+			}else{
+				return new ResponseEntity(new ErrorClass("yaaaaaaaaaaaaa la liste que"
+						+ " tu as recuperee est d'abord vide!"),HttpStatus.OK);
+			}
 		}
 	
 

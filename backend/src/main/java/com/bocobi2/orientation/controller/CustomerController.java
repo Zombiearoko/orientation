@@ -1,5 +1,6 @@
 package com.bocobi2.orientation.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -478,4 +479,63 @@ public class CustomerController {
 		}
 	}
 
+	//***************************************************************************************************************
+	//******************************************************************************//
+	//***********************methode pour la recherche de tous les livres**********//
+	//******************************************************************************//		
+	
+	//methode pour la recherche de tous les livres en get
+	
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value="/researchAllBook",method=RequestMethod.GET)
+	public ResponseEntity<List<Book>> researchAllBookGet(HttpServletRequest request){
+		
+
+		//creation de laliste des livres
+		
+		List<Book> listOfBook = new ArrayList<Book>();
+		
+		//recuperation des livres dans la base de données
+			
+		listOfBook = bookRepository.findAll();	
+		if(listOfBook.isEmpty()){
+			logger.error("aucun livre n'est enregistré dans la base de données");
+			return new ResponseEntity(new ErrorClass("aucun livre n'est enregistré "
+					+ "dans la base de données"),HttpStatus.OK);
+		}else{
+			return new ResponseEntity<List<Book>>(listOfBook,HttpStatus.OK);
+		}
+		
+
+}
+	
+	//methode pour la recherche de tous les livres en post
+	
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value="/researchAllBook",method=RequestMethod.POST)
+	public ResponseEntity<List<Book>> researchAllBookPost(HttpServletRequest request){
+		
+
+		//creation de laliste des livres
+		
+		List<Book> listOfBook = new ArrayList<Book>();
+		
+		//recuperation des livres dans la base de données
+			
+		listOfBook = bookRepository.findAll();	
+		if(listOfBook.isEmpty()){
+			logger.error("aucun livre n'est enregistré dans la base de données");
+			return new ResponseEntity(new ErrorClass("aucun livre n'est enregistré "
+					+ "dans la base de données"),HttpStatus.OK);
+		}else{
+			return new ResponseEntity<List<Book>>(listOfBook,HttpStatus.OK);
+		}
+		
+
+}
+	
+//***************************************************************************************************************
+	
 }
