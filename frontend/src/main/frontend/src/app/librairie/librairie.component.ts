@@ -37,9 +37,9 @@ public download() {
 
   ngOnInit() {
     const url = this.beginUrl;
-  const url1 = 'http://192.168.9.102:8092/orientation/customer/researchAllBook';
+  const url1 = 'http://localhost:8092/orientation/customer/researchAllBook';
   const url2 = 'https://jsonplaceholder.typicode.com/posts';
-      this.http.get(url).subscribe(resp => {
+      this.http.get(url1).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
   console.log(this.collectionJson);

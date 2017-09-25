@@ -22,7 +22,7 @@ public getHello(name, surname) {
       const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
       const options = new RequestOptions({  headers: headers1 });
 
-    const url = 'http://192.168.9.102:8092/hello' + '?name=' + name + '&surname=' + surname;
+    const url = 'http://localhost:8092/hello' + '?name=' + name + '&surname=' + surname;
     const url2 = '/api/hello' + '?name=' + name + '&surname=' + surname;
     const url3 = 'https://jsonplaceholder.typicode.com/post';
     // alert("toto 2");
@@ -38,10 +38,10 @@ const options = new RequestOptions({  headers: headers1 });
       { title: title, articleContent: articleContent }
     ];
     const url = this.beginUrl + '?title=' + title + '&articleContent=' + articleContent;
-    const url1 = 'http://192.168.9.102:8092/orientation/administrator/createArticle' +
+    const url1 = 'http://localhost:8092/orientation/administrator/createArticle' +
      '?title=' + title + '&articleContent=' + articleContent;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
-    return  this.http.post(url, object, options)
+    return  this.http.post(url1, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
@@ -60,12 +60,12 @@ const options = new RequestOptions({  headers: headers1 });
        };
        const url = this.beginUrl + '?firstNameCustomer=' + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
     + '&password =' + password ;
-    const url1 = 'http://192.168.9.102:8092/orientation/surfer/inscription' + '?firstNameCustomer='
+    const url1 = 'http://localhost:8092/orientation/surfer/inscription' + '?firstNameCustomer='
     + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
     + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
       const urlSaph = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
-    return  this.http.post(urlSaph, object, options)
+    return  this.http.post(url1, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
@@ -77,10 +77,10 @@ const options = new RequestOptions({  headers: headers1 });
         bookName: bookName,
        };
       const url = this.beginUrl + '?title=' + '?firstNameCustomer='+ bookName;
-    const url1 = 'http://192.168.9.102:8092/customer/addCustomer' + '?firstNameCustomer='
+    const url1 = 'http://localhost:8092/customer/addCustomer' + '?firstNameCustomer='
     + bookName;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
-    return  this.http.post(url, object, options)
+    return  this.http.post(url1, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
@@ -91,7 +91,7 @@ const options = new RequestOptions({  headers: headers1 });
       const object = {
         bookName: bookName,
        };
-    const url = 'http://192.168.9.102:8092/customer/addCustomer' + '?firstNameCustomer='
+    const url = 'http://localhost:8092/customer/addCustomer' + '?firstNameCustomer='
     + bookName;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
@@ -107,10 +107,10 @@ const options = new RequestOptions({  headers: headers1 });
         motDePasse: password,
        };
       const url = this.beginUrl  + '?emailAddress=' + emailAddress + '&password =' + password ;
-    const url1 = 'http://192.168.9.102:8092/customer/loginCustomer'  + '?emailAddress=' + emailAddress
+    const url1 = 'http://localhost:8092/customer/loginCustomer'  + '?emailAddress=' + emailAddress
     + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
-    return  this.http.post(url2, object, options)
+    return  this.http.post(url1, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
@@ -123,10 +123,10 @@ const options = new RequestOptions({  headers: headers1 });
         testimonyContent: testimonyContent,
        };
       const url = this.beginUrl  + '?testimonyAuthor=' + testimonyAuthor+ '&testimonyContent =' + testimonyContent ;
-    const url1 = 'http://192.168.9.102:8092/customer/postTestimony' + '?testimonyAuthor=' + testimonyAuthor
+    const url1 = 'http://localhost:8092/customer/postTestimony' + '?testimonyAuthor=' + testimonyAuthor
     + '&testimonyContent =' + testimonyContent ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
-    return  this.http.post(url, object, options)
+    return  this.http.post(url1, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
@@ -140,7 +140,7 @@ const options = new RequestOptions({  headers: headers1 });
         email: newsletterConcernEmail,
        };
       const url = this.beginUrl + '?newsletterConcernEmail=' + newsletterConcernEmail;
-    const url1 = 'http://192.168.9.102:8092/orientation/surfer/inscriptionToNewsletter' +
+    const url1 = 'http://localhost:8092/orientation/surfer/inscriptionToNewsletter' +
      '?newsletterConcernEmail=' + newsletterConcernEmail;
 
       const url2 = 'https://jsonplaceholder.typicode.com/posts';

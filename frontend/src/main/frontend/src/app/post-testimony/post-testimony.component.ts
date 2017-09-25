@@ -37,7 +37,7 @@ clientForm: FormGroup;
       this.testimonyAuthor = post.testimonyAuthor;
       this.testimonyContent = post.testimonyContent;
 const url = this.beginUrl  + '?testimonyAuthor=' + post.testimonyAuthor+ '&testimonyContent =' + post.testimonyContent ;
-      const url1 = 'http://192.168.9.102:8092/customer/postTestimony' + '&testimonyAuthor=' + post.testimonyAuthor
+      const url1 = 'http://localhost:8092/customer/postTestimony' + '&testimonyAuthor=' + post.testimonyAuthor
     + '&testimonyContent =' + post.testimonyContent;
       const url2 = 'https://jsonplaceholder.typicode.com/post';
 // console.log(this.firstNameCustomer);

@@ -59,7 +59,7 @@ this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emai
       //  console.log(this.firstNameCustomer);
         this.submitted = true;
        });
-       this.http.get(url).subscribe(resp => {
+       this.http.get(url1).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
 this.collection.push(this.collectionJson);
