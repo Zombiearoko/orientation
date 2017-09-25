@@ -46,7 +46,7 @@ export class CreateAccountCustomerComponent implements OnInit {
      const url = this.beginUrl + '?firstNameCustomer=' + post.firstNameCustomer + '&lastNameCustomer='
      + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
     + '&password =' + post.password;
-      const url1 = 'http://192.168.9.102:8092/orientation/surfer/inscription' + '?firstNameCustomer='
+      const url1 = 'http://localhost:8092/orientation/surfer/inscription' + '?firstNameCustomer='
     + post.firstNameCustomer + '&lastNameCustomer='
      + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
     + '&password =' + post.password;
