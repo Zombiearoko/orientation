@@ -26,7 +26,7 @@ public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-
 
   ngOnInit() {
     const url = this.beginUrl;
-    const url1 = 'http://localhost:8092/customer/addCustomer';
+    const url1 = 'http://localhost:8092/orientation/surfer/inscription';
   const url2 = 'https://jsonplaceholder.typicode.com/posts';
       this.http.get(url1).subscribe(resp => {
  this.results = resp['results'];

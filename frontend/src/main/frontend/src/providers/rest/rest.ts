@@ -144,7 +144,7 @@ const options = new RequestOptions({  headers: headers1 });
      '?newsletterConcernEmail=' + newsletterConcernEmail;
 
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
-    return  this.http.post(url, object, options)
+    return  this.http.post(url1, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }

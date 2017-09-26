@@ -11,7 +11,6 @@ import { HelloComponent } from './hello/hello.component';
 import { CreateArticleComponent } from './create-article/create-article.component';
 import { AdministratorLoginComponent } from './administrator-login/administrator-login.component';
 import { HomeComponent } from './home/home.component';
-import { ServiceComponent } from './service/service.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AboutComponent } from './about/about.component';
 import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
@@ -27,6 +26,7 @@ import { PostTestimonyComponent } from './post-testimony/post-testimony.componen
 import { PopupModule } from 'ng2-opd-popup';
 import {MaterialModule} from '@angular/material';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ServiceComponent } from './service/service.component';
 
 @NgModule({
   declarations: [
@@ -36,9 +36,9 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
      CreateArticleComponent,
      AdministratorLoginComponent,
      HomeComponent,
-     ServiceComponent,
      ContactsComponent,
      AboutComponent,
+     ServiceComponent,
      CreateAccountCustomerComponent,
      SessionClientComponent,
      SessionAdminComponent,

@@ -39,13 +39,13 @@ public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-
        '?newsletterConcernEmail=' + post. newsletterConcernEmail;
       const url2 = 'https://jsonplaceholder.typicode.com/post';
 // console.log(this.firstNameCustomer);
-this.rest.postAccountNewsLetter(this. newsletterConcernEmail)
+this.rest.postAccountNewsLetter(this.newsletterConcernEmail)
 .subscribe((data) => {
 
       //  console.log(this.firstNameCustomer);
         this.submitted = true;
        });
-       this.http.get(url).subscribe(resp => {
+       this.http.get(url1).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
 this.collection.push(this.collectionJson);
