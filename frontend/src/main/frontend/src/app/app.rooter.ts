@@ -13,6 +13,7 @@ import { ServiceComponent } from './service/service.component';
 import { HomeComponent } from './home/home.component';
 import { ModuleWithProviders, Component } from '@angular/core';
 import { Routes, RouterModule, Router} from '@angular/router';
+import { OffreComponent } from './offre/offre.component';
 
 export const router: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -28,7 +29,8 @@ export const router: Routes = [
 { path: 'sessionAdmin', component: SessionAdminComponent},
 { path: 'loginAdmin', component: AdministratorLoginComponent},
 { path: 'loginCostumer', component: LoginCostumerComponent},
-{ path: 'postTestimony', component: PostTestimonyComponent}
+{ path: 'postTestimony', component: PostTestimonyComponent},
+{ path: 'offre', component: OffreComponent}
 ];
 
 

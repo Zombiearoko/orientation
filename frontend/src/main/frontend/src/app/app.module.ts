@@ -27,6 +27,7 @@ import { PopupModule } from 'ng2-opd-popup';
 import {MaterialModule} from '@angular/material';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ServiceComponent } from './service/service.component';
+import { OffreComponent } from './offre/offre.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,8 @@ import { ServiceComponent } from './service/service.component';
      BourseComponent,
      LoginCostumerComponent,
      PostTestimonyComponent,
-     NavigationComponent
+     NavigationComponent,
+     OffreComponent
   ],
   imports: [
    BrowserModule,

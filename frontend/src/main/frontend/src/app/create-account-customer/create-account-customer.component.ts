@@ -16,7 +16,7 @@ export class CreateAccountCustomerComponent implements OnInit {
    
   clientForm: FormGroup;
   post: any;
-  firstNameCustomer: string;
+  firstNameCustomer: string = 'test';
   lastNameCustomer: string;
   emailAddress: string;
     password: string;
@@ -65,8 +65,8 @@ this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emai
 this.collection.push(this.collectionJson);
   console.log(this.collection);
 });
-  //  const inscrit = document.getElementById('session');
- // inscrit.innerHTML = this.firstNameCustomer + ' ' + 'vous etes bien inscrit';
+    const inscrit = document.getElementById('signup');
+  inscrit.innerHTML = this.firstNameCustomer + ' ' + 'vous etes bien inscrit';
 // document.body.innerHTML = '<h3 class="pub">publicité </h3>'
 
   }

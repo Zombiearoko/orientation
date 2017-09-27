@@ -11,7 +11,7 @@ import { Http } from '@angular/http';
   styleUrls: ['./session-client.component.css', '../../../bootstrap/css/bootstrap.css']
 })
 export class SessionClientComponent implements OnInit {
-  @Input() item: any
+  @Input() item: any;
   private results: [any];
    collectionJson: Object;
 collection: any[] = [];

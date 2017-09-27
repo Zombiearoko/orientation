@@ -124,15 +124,16 @@
                         <span class="text-danger" [hidden]="clientForm.controls.phoneNumber.valid || clientForm.controls.phoneNumber.untouched">veuillez entrer votre numero de telephone</span>
                         <div class="form-group ">
 
-                           <a [routerLink]="['../sessionCostumer']"><button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">Creer mon compte</button>
+                          <a [routerLink]="['../sessionCostumer']"> <button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">Creer mon compte</button>
                              </a>
                             <button class="btn btn-danger ">annuler</button>
                         </div>
+                        <div id="signup"> 
+                    <app-session-client [item]="firstNameCostumer" *ngFor="let item of collection" ></app-session-client>
+                </div>
                     </form>
                 </div>
-                <div id="signup"> 
-                    <app-session-client [item]="item" *ngFor="let item of collection" ></app-session-client>
-                </div>
+                
             </div>
         </div>
 
