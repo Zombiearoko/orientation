@@ -23,7 +23,7 @@ clientForm: FormGroup;
  collection: any[] = [];
  lastElement: Object;
    submitted = false;
-public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
+  public beginUrl = 'http://localhost:8092';
 
   constructor(public rest: RestProvider, public fb: FormBuilder, private http: Http) {
 
@@ -34,9 +34,7 @@ public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-
 
   onSubmit(post) {
       this. newsletterConcernEmail = post. newsletterConcernEmail;
-       const url = this.beginUrl  + '?newsletterConcernEmail=' + post. newsletterConcernEmail;
-      const url1 = 'http://192.168.9.102:8092/orientation/surfer/inscriptionToNewsletter'  +
-       '?newsletterConcernEmail=' + post. newsletterConcernEmail;
+       const url = this.beginUrl + 'orientation/surfer/inscriptionToNewsletter'  + '?newsletterConcernEmail=' + post. newsletterConcernEmail;
       const url2 = 'https://jsonplaceholder.typicode.com/post';
 // console.log(this.firstNameCustomer);
 this.rest.postAccountNewsLetter(this.newsletterConcernEmail)
@@ -45,7 +43,7 @@ this.rest.postAccountNewsLetter(this.newsletterConcernEmail)
       //  console.log(this.firstNameCustomer);
         this.submitted = true;
        });
-       this.http.get(url1).subscribe(resp => {
+       this.http.get(url).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
 this.collection.push(this.collectionJson);

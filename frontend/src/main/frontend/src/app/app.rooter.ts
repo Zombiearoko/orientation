@@ -5,7 +5,7 @@ import { LibrairieComponent } from './librairie/librairie.component';
 import { BasketComponent } from './basket/basket.component';
 import { AppComponent } from './app.component';
 import { SessionAdminComponent } from './session-admin/session-admin.component';
-import { SessionClientComponent } from './session-client/session-client.component';
+import { SessionClientComponent } from './create-account-customer/session-client/session-client.component';
 import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
 import { AboutComponent } from './about/about.component';
 import { ContactsComponent } from './contacts/contacts.component';

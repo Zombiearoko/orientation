@@ -15,7 +15,7 @@ private results: [any];
    private collectionJson: Object;
    private bookName: string;
    submitted = false;
-     public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
+  public beginUrl = 'http://localhost:8092';
 
   constructor(public rest: RestProvider, private http: Http) {
 
@@ -36,10 +36,10 @@ public download() {
     }
 
   ngOnInit() {
-    const url = this.beginUrl;
+    const url = this.beginUrl + '/orientation/customer/researchAllBook';
   const url1 = 'http://localhost:8092/orientation/customer/researchAllBook';
   const url2 = 'https://jsonplaceholder.typicode.com/posts';
-      this.http.get(url1).subscribe(resp => {
+      this.http.get(url).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
   console.log(this.collectionJson);

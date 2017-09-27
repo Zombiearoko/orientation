@@ -68,7 +68,7 @@
             <div class="container">
                 <div class="cadre ">
                     <div class="backgroundTitle"></div>
-                    <form (ngSubmit)="onSubmit(clientForm.value);" [formGroup]="clientForm">
+                    <form (ngSubmit)="onSubmit(clientForm.value);" [formGroup]="clientForm" id="session">
                         <div class="form-group">
 
                             <div class="cols-lg-8">
@@ -124,11 +124,14 @@
                         <span class="text-danger" [hidden]="clientForm.controls.phoneNumber.valid || clientForm.controls.phoneNumber.untouched">veuillez entrer votre numero de telephone</span>
                         <div class="form-group ">
 
-                           <!-- <a [routerLink]="['../sessionCostumer']">--><button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">Creer mon compte</button>
-                            <!-- </a>-->
+                           <a [routerLink]="['../sessionCostumer']"><button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">Creer mon compte</button>
+                             </a>
                             <button class="btn btn-danger ">annuler</button>
                         </div>
                     </form>
+                </div>
+                <div id="signup"> 
+                    <app-session-client [item]="item" *ngFor="let item of collection" ></app-session-client>
                 </div>
             </div>
         </div>

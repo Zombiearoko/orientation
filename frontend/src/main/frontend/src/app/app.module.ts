@@ -14,7 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AboutComponent } from './about/about.component';
 import { CreateAccountCustomerComponent } from './create-account-customer/create-account-customer.component';
-import { SessionClientComponent } from './session-client/session-client.component';
+import { SessionClientComponent } from './create-account-customer/session-client/session-client.component';
 import { SessionAdminComponent } from './session-admin/session-admin.component';
 import { BasketComponent } from './basket/basket.component';
 import { LibrairieComponent } from './librairie/librairie.component';
@@ -27,7 +27,6 @@ import { PopupModule } from 'ng2-opd-popup';
 import {MaterialModule} from '@angular/material';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ServiceComponent } from './service/service.component';
-
 @NgModule({
   declarations: [
     AppComponent,
