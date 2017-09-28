@@ -128,8 +128,8 @@
                              </a>
                             <button class="btn btn-danger ">annuler</button>
                         </div>
-                        <div id="signup"> 
-                    <app-session-client [item]="firstNameCostumer" *ngFor="let item of collection" ></app-session-client>
+                        <div id="signup" *ngFor="let item of collection"> 
+                    <app-session-client [item]="item"></app-session-client>
                 </div>
                     </form>
                 </div>

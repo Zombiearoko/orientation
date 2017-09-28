@@ -444,7 +444,7 @@ body {
 }
 
 .foot {
-    background-color: blue;
+    background-color: #375A7F;
     border-radius: 0 10px 0 0;
     ;
 }
@@ -493,11 +493,13 @@ h3 {
 
 header .ancres-header {
     position: fixed;
-    transform: rotate(-90deg);
+    eeetransform: rotate(-90deg);
     width: 100%;
-    margin-left: 54%;
+    ffmargin-left: 54%;
     height: 40%;
-    margin-top: 10%;
+    margin-top: 40%;
+    z-index:100;
+    margin-right: 54%;
 }
 
 header .ancres-header a {
