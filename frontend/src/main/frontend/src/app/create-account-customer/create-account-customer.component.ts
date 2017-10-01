@@ -5,16 +5,18 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RestProvider } from '../../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
+import { SessionClientComponent } from './session-client/session-client.component';
 
 @Component({
   templateUrl: './create-account-customer.component.html',
   styleUrls: ['./create-account-customer.component.css', '../../bootstrap/css/bootstrap.css'],
-  entryComponents: [NavigationComponent]
+  entryComponents: [NavigationComponent, SessionClientComponent]
 })
 export class CreateAccountCustomerComponent implements OnInit {
+   
   clientForm: FormGroup;
   post: any;
-  firstNameCustomer: string;
+  firstNameCustomer: string = 'test';
   lastNameCustomer: string;
   emailAddress: string;
     password: string;
@@ -24,8 +26,7 @@ export class CreateAccountCustomerComponent implements OnInit {
  collection: any[] = [];
  lastElement: Object;
    submitted = false;
-   public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
-
+public beginUrl = 'http://localhost:8092';
   constructor(public rest: RestProvider, public fb: FormBuilder, private http: Http) {
 
       this.clientForm = this.fb.group({
@@ -43,14 +44,13 @@ export class CreateAccountCustomerComponent implements OnInit {
       this.emailAddress = post.emailAddress;
       this.password = post.password;
       this.phoneNumber = post.phoneNumber;
-     const url = this.beginUrl + '?firstNameCustomer=' + post.firstNameCustomer + '&lastNameCustomer='
+     const url = this.beginUrl + '/orientation/surfer/inscription' + '?firstNameCustomer=' + post.firstNameCustomer + '&lastNameCustomer='
      + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
     + '&password =' + post.password;
-      const url1 = 'http://192.168.9.102:8092/orientation/surfer/inscription' + '?firstNameCustomer='
+      const url1 = 'http://localhost:8092/orientation/surfer/inscription' + '?firstNameCustomer='
     + post.firstNameCustomer + '&lastNameCustomer='
      + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
     + '&password =' + post.password;
-    const urlSaph = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
       const url2 = 'https://jsonplaceholder.typicode.com/post';
 // console.log(this.firstNameCustomer);
 this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emailAddress, this.password, this.phoneNumber  )
@@ -65,6 +65,9 @@ this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emai
 this.collection.push(this.collectionJson);
   console.log(this.collection);
 });
+    const inscrit = document.getElementById('signup');
+  inscrit.innerHTML = this.firstNameCustomer + ' ' + 'vous etes bien inscrit';
+// document.body.innerHTML = '<h3 class="pub">publicité </h3>'
 
   }
 

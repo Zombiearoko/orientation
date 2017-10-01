@@ -12,7 +12,7 @@ import 'rxjs/add/operator/catch';
 */
 @Injectable()
 export class RestProvider {
-  public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
+  public beginUrl = 'http://localhost:8092';
 
     constructor(public http: Http) {
 
@@ -58,14 +58,14 @@ const options = new RequestOptions({  headers: headers1 });
         motDePasse: password,
         telephone: phoneNumber
        };
-       const url = this.beginUrl + '?firstNameCustomer=' + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
+       const url = this.beginUrl + '/orientation/surfer/inscription' + '?firstNameCustomer=' + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
     + '&password =' + password ;
     const url1 = 'http://127.0.0.1:8080/orientation/surfer/inscription' + '?firstNameCustomer='
     + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
     + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
       const urlSaph = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
-    return  this.http.post(urlSaph, object, options)
+    return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
@@ -77,8 +77,7 @@ const options = new RequestOptions({  headers: headers1 });
         bookName: bookName,
        };
       const url = this.beginUrl + '?title=' + '?firstNameCustomer='+ bookName;
-    const url1 = 'http://127.0.0.1:8080/customer/addCustomer' + '?firstNameCustomer='
-    + bookName;
+    const url1 = 'http://127.0.0.1:8080/customer/addCustomer' + '?firstNameCustomer='    + bookName;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
@@ -92,7 +91,7 @@ const options = new RequestOptions({  headers: headers1 });
         bookName: bookName,
        };
     const url = 'http://127.0.0.1:8080/customer/addCustomer' + '?firstNameCustomer='
-    + bookName;
+   + bookName;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
@@ -110,7 +109,7 @@ const options = new RequestOptions({  headers: headers1 });
     const url1 = 'http://127.0.0.1:8080/customer/loginCustomer'  + '?emailAddress=' + emailAddress
     + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
-    return  this.http.post(url2, object, options)
+    return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
@@ -144,7 +143,7 @@ const options = new RequestOptions({  headers: headers1 });
      '?newsletterConcernEmail=' + newsletterConcernEmail;
 
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
-    return  this.http.post(url, object, options)
+    return  this.http.post(url1, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }

@@ -28,6 +28,7 @@ export class BasketComponent implements OnInit {
    private results: [any];
    private collectionJson: Object;
    submitted = false;
+   public beginUrl = 'http://localhost:8092';
 isClassVisible: true;
 i: any;
 key: any;
