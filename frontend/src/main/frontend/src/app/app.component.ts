@@ -6,6 +6,7 @@ import { RestProvider } from '../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',

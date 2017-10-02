@@ -38,7 +38,7 @@ const options = new RequestOptions({  headers: headers1 });
       { title: title, articleContent: articleContent }
     ];
     const url = this.beginUrl + '/orientation/administrator/createArticle' + '?title=' + title + '&articleContent=' + articleContent;
-    const url1 = 'http://localhost:8092/orientation/administrator/createArticle' + '?title=' + title + '&articleContent=' + articleContent;
+    
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
@@ -106,8 +106,6 @@ const options = new RequestOptions({  headers: headers1 });
         motDePasse: password,
        };
       const url = this.beginUrl + '/customer/loginCustomer'  + '?emailAddress=' + emailAddress + '&password =' + password ;
-    const url1 = 'http://localhost:8092/customer/loginCustomer'  + '?emailAddress=' + emailAddress
-    + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
