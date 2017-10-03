@@ -46,7 +46,8 @@ this.rest.postLoginCostumer( this.login, this.password)
           }
           else{
             if(data.status==1){
-               this.router.navigate(['/sessionCostumer']);
+               // this.router.navigate(['/sessionCostumer']);
+               this.router.navigate(['/sessionCostumer/'+this.login]);
             }
               
           }

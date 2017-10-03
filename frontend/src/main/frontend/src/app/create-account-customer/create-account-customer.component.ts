@@ -57,8 +57,8 @@ this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emai
           }
           else{
             if(data.status==1){
-                // this.router.navigate(['/sessionCostumer/:this.firstNameCustomer']);
-                this.router.navigate(['/sessionCostumer']);
+                this.router.navigate(['/sessionCostumer/'+this.firstNameCustomer]);
+                // this.router.navigate(['/sessionCostumer']);
             }
           }
         

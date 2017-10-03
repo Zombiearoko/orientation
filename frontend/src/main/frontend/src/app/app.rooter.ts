@@ -25,7 +25,7 @@ export const router: Routes = [
   { path: 'subcribe', component: AboutComponent },
    { path: 'account', component: CreateAccountCustomerComponent },
     { path: 'sessionCostumer', component: SessionClientComponent },
-     // { path: 'sessionCostumer/:this.firstNameCustomer', component: SessionClientComponent },
+  { path: 'sessionCostumer/:name', component: SessionClientComponent },
     { path: 'basket', component: BasketComponent },
 { path: 'bookshop', component: LibrairieComponent},
 { path: 'sessionAdmin', component: SessionAdminComponent},

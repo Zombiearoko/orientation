@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RestProvider } from '../../../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
-// import { RouterModule,Router, ActivatedRoute } from '@angular/router';
+ import { RouterModule,Router, ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -20,8 +20,8 @@ export class SessionClientComponent implements OnInit {
    collectionJson: Object;
 collection: any[] = [];
   public beginUrl = 'http://localhost:8092';
-  constructor(public rest: RestProvider, private http: Http) {
-
+  constructor(public rest: RestProvider, private http: Http, private route: ActivatedRoute) {
+    this.name = route.snapshot.params['name'];
   }
   onSubmit() {
 
