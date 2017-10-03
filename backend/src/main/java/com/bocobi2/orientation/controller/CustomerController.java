@@ -105,10 +105,10 @@ public class CustomerController {
 			session = request.getSession();
 			session.setAttribute("customerInSession", client);
 			logger.info("le client {} est actuelement en session", client);
-			return new ResponseEntity(new SuccessClass(client), HttpStatus.OK);
+			return new ResponseEntity(new SuccessClass("session ouverte avec succes!!",client), HttpStatus.OK);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			return new ResponseEntity(new SuccessClass(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity(new ErrorClass(e.getMessage()), HttpStatus.OK);
 		}
 
 	}
