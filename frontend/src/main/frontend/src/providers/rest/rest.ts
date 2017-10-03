@@ -36,7 +36,7 @@ public postArticle(title, articleContent) {
 const options = new RequestOptions({  headers: headers1 });
       const object = [
       { title: title, articleContent: articleContent }
-    ];
+   ];
     const url = this.beginUrl + '?title=' + title + '&articleContent=' + articleContent;
     const url1 = 'http://127.0.0.1:8080/orientation/administrator/createArticle' +
      '?title=' + title + '&articleContent=' + articleContent;
@@ -70,6 +70,9 @@ const options = new RequestOptions({  headers: headers1 });
               .map((res: Response ) => res.json());
 }
 
+
+
+
           public postBookInBasket(bookName) {
       const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
 const options = new RequestOptions({  headers: headers1 });
@@ -98,11 +101,11 @@ const options = new RequestOptions({  headers: headers1 });
               .map((res: Response ) => res.json());
 }
 
- public postLoginCostumer(emailAddress, password) {
-      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+ public postLoginCostumer(login, password) {
+   const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
 const options = new RequestOptions({  headers: headers1 });
       const object = {
-        email: emailAddress,
+        login: login,
         motDePasse: password,
        };
       const url = this.beginUrl  + '?emailAddress=' + emailAddress + '&password =' + password ;

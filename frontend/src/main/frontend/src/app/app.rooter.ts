@@ -15,6 +15,7 @@ import { ModuleWithProviders, Component } from '@angular/core';
 import { Routes, RouterModule, Router} from '@angular/router';
 import { OffreComponent } from './offre/offre.component';
 
+
 export const router: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -24,13 +25,16 @@ export const router: Routes = [
   { path: 'subcribe', component: AboutComponent },
    { path: 'account', component: CreateAccountCustomerComponent },
     { path: 'sessionCostumer', component: SessionClientComponent },
+  { path: 'sessionCostumer/:name', component: SessionClientComponent },
     { path: 'basket', component: BasketComponent },
 { path: 'bookshop', component: LibrairieComponent},
 { path: 'sessionAdmin', component: SessionAdminComponent},
 { path: 'loginAdmin', component: AdministratorLoginComponent},
 { path: 'loginCostumer', component: LoginCostumerComponent},
 { path: 'postTestimony', component: PostTestimonyComponent},
-{ path: 'offre', component: OffreComponent}
+{ path: 'offre', component: OffreComponent},
+
+
 ];
 
 

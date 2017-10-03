@@ -12,6 +12,7 @@ public class Client {
     @Id
     private String emailAddress;
 
+    private String typeOfOrientation;
     private String firstNameCustomer;
     private String lastNameCustomer;
 	private String password;
@@ -22,8 +23,17 @@ public class Client {
 	
 	public Client(){}
 	
+	
 
-    public Client(String emailAddress, String firstNameCustomer, String lastNameCustomer, String password, String phoneNumber) {
+    public Client(String emailAddress, String typeOfOrientation) {
+		super();
+		this.emailAddress = emailAddress;
+		this.typeOfOrientation = typeOfOrientation;
+	}
+
+
+
+	public Client(String emailAddress, String firstNameCustomer, String lastNameCustomer, String password, String phoneNumber) {
 		super();
 		this.emailAddress = emailAddress;
 		this.firstNameCustomer = firstNameCustomer;
@@ -148,6 +158,16 @@ public class Client {
 	
 	public void addBookInBasket(Book book){
 		this.customerBasket.add(book);
+	}
+
+
+	public String getTypeOfOrientation() {
+		return typeOfOrientation;
+	}
+
+
+	public void setTypeOfOrientation(String typeOfOrientation) {
+		this.typeOfOrientation = typeOfOrientation;
 	}
 
 

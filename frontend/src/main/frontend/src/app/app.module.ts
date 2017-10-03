@@ -28,6 +28,8 @@ import { PopupModule } from 'ng2-opd-popup';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ServiceComponent } from './service/service.component';
 import { OffreComponent } from './offre/offre.component';
+import { SplashScreenComponent } from './splash-screen/splash-screen.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +52,9 @@ import { OffreComponent } from './offre/offre.component';
      LoginCostumerComponent,
      PostTestimonyComponent,
      NavigationComponent,
-     OffreComponent
+     OffreComponent,
+     SplashScreenComponent,
+     
   ],
   imports: [
    BrowserModule,
