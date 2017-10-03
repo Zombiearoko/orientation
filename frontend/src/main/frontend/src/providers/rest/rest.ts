@@ -57,17 +57,28 @@ const options = new RequestOptions({  headers: headers1 });
         motDePasse: password,
         telephone: phoneNumber
        };
-       const url = this.beginUrl + '/orientation/surfer/inscription' + '?firstNameCustomer=' + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
-    + '&password =' + password ;
-    const url1 = 'http://localhost:8092/orientation/surfer/inscription' + '?firstNameCustomer='
-    + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
-    + '&password =' + password ;
-      const url2 = 'https://jsonplaceholder.typicode.com/posts';
-      const urlSaph = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
+       const url = this.beginUrl+'/orientation/surfer/inscription'+'?firstNameCustomer='+firstNameCustomer+'&lastNameCustomer='+lastNameCustomer+'&phoneNumber='+phoneNumber+'&emailAddress='+emailAddress+ '&password='+password ;
+     
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
+
+     public getName(firstNameCustomer) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        nom: firstNameCustomer
+       };
+       const url = this.beginUrl+'/orientation/surfer/inscription'+'?firstNameCustomer='+firstNameCustomer;
+     
+    return  this.http.post(url, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}
+
+
+
 
           public postBookInBasket(bookName) {
       const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
@@ -75,7 +86,7 @@ const options = new RequestOptions({  headers: headers1 });
       const object = {
         bookName: bookName,
        };
-      const url = this.beginUrl + '/customer/addCustomer' + '?title=' + '?firstNameCustomer='+ bookName;
+      const url = this.beginUrl + '/orientation/customer/addCustomer' + '?title=' + '?firstNameCustomer='+ bookName;
     const url1 = 'http://localhost:8092/customer/addCustomer' + '?firstNameCustomer='
     + bookName;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
@@ -98,15 +109,14 @@ const options = new RequestOptions({  headers: headers1 });
               .map((res: Response ) => res.json());
 }
 
- public postLoginCostumer(emailAddress, password) {
-      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+ public postLoginCostumer(login, password) {
+   const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
 const options = new RequestOptions({  headers: headers1 });
       const object = {
-        email: emailAddress,
+        login: login,
         motDePasse: password,
        };
-      const url = this.beginUrl + '/customer/loginCustomer'  + '?emailAddress=' + emailAddress + '&password =' + password ;
-      const url2 = 'https://jsonplaceholder.typicode.com/posts';
+      const url = this.beginUrl+'/orientation/customer/authentication'+'?login='+login+'&password='+password ;
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
@@ -119,7 +129,7 @@ const options = new RequestOptions({  headers: headers1 });
         testimonyAuthor: testimonyAuthor,
         testimonyContent: testimonyContent,
        };
-      const url = this.beginUrl +'/customer/postTestimony'  + '?testimonyAuthor=' + testimonyAuthor+ '&testimonyContent =' + testimonyContent ;
+      const url = this.beginUrl +'/orientation/customer/postTestimony'  + '?testimonyAuthor=' + testimonyAuthor+ '&testimonyContent =' + testimonyContent ;
     const url1 = 'http://localhost:8092/customer/postTestimony' + '?testimonyAuthor=' + testimonyAuthor
     + '&testimonyContent =' + testimonyContent ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';

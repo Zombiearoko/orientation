@@ -73,12 +73,17 @@
                             <div class="cols-lg-8">
                                 <div class="input-group">
                                     
-                                        <input type="email"  class="form-control" formControlName="emailAddress" name="emailAddress" id="title" placeholder=" " />
+                                        <input type="email"  class="form-control" formControlName="login" name="login" id="email" placeholder=" " />
                                     
                                 </div>
                             </div>
                         </div>
-                        <span class="text-danger" [hidden]="clientForm.controls.emailAddress.valid || clientForm.controls.emailAddress.untouched">veuillez entrer une adresse email valide</span>
+                        <span class="text-danger" [hidden]="clientForm.controls.login.valid || clientForm.controls.login.untouched">veuillez entrer une adresse email valide</span>
+                        <span *ngFor="let item of collection">
+
+                        <span *ngIf="item.status == 0" class ="text-danger">membre inexistant</span>
+                        <span *ngIf="item.status == 1" class="text-danger"></span>
+                        </span>
                         <div class="form-group">
                             <label for="name" class="cols-lg-2 control-label">mot de passe</label>
                             <div class="cols-lg-8">
@@ -92,8 +97,8 @@
                         <span class="text-danger" [hidden]="clientForm.controls.password.valid || clientForm.controls.password.untouched">veuillez entrer un mot de passe</span>
                         <div class="form-group ">
                            
-                                <a [routerLink]="['../sessionCostumer']"><button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">Se connecter</button>
-                            </a>
+                                <button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">Se connecter</button>
+                          
                             
                             <button class="btn btn-danger ">annuler</button>
                         </div>

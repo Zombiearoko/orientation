@@ -6,7 +6,8 @@ import { RestProvider } from '../../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
 import { SessionClientComponent } from './session-client/session-client.component';
-import { RouterModule,Router }   from '@angular/router';
+import { RouterModule,Router, ActivatedRoute, ParamMap }   from '@angular/router';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   templateUrl: './create-account-customer.component.html',
@@ -46,15 +47,6 @@ public beginUrl = 'http://localhost:8092';
       this.emailAddress = post.emailAddress;
       this.password = post.password;
       this.phoneNumber = post.phoneNumber;
-     const url = this.beginUrl + '/orientation/surfer/inscription' + '?firstNameCustomer=' + post.firstNameCustomer + '&lastNameCustomer='
-     + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
-    + '&password =' + post.password;
-      const url1 = 'http://localhost:8092/orientation/surfer/inscription' + '?firstNameCustomer='
-    + post.firstNameCustomer + '&lastNameCustomer='
-     + post.lastNameCustomer + '&phoneNumber=' + post.phoneNumber + '&emailAddress=' + post.emailAddress
-    + '&password =' + post.password;
-      const url2 = 'https://jsonplaceholder.typicode.com/post';
-// console.log(this.firstNameCustomer);
 this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emailAddress, this.password, this.phoneNumber  )
 .subscribe((data) => {
         console.log('*****************Before******************');
@@ -65,9 +57,9 @@ this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emai
           }
           else{
             if(data.status==1){
-               this.router.navigate(['/sessionCostumer']);
+                // this.router.navigate(['/sessionCostumer/:this.firstNameCustomer']);
+                this.router.navigate(['/sessionCostumer']);
             }
-              
           }
         
         
