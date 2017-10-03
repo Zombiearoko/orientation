@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RestProvider } from '../../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
+import { RouterModule,Router }   from '@angular/router';
+
 
 
 @Component({
@@ -24,7 +26,7 @@ export class LoginCostumerComponent implements OnInit {
   public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
 
 
-  constructor(public rest: RestProvider, public fb: FormBuilder, private http: Http) {
+  constructor(public rest: RestProvider, public fb: FormBuilder, private http: Http,  private router: Router) {
 
       this.clientForm = this.fb.group({
       'emailAddress': [null, Validators.compose([Validators.email])],
@@ -45,7 +47,18 @@ export class LoginCostumerComponent implements OnInit {
 this.rest.postLoginCostumer( this.emailAdress, this.password)
 .subscribe((data) => {
 
-      //  console.log(this.firstNameCustomer);
+      console.log('*****************Before******************');
+       console.log(data.status);
+       this.collection.push(data);
+        if(data.status==0){
+          this.router.navigate(['/loginCostumer']);
+          }
+          else{
+            if(data.status==1){
+               this.router.navigate(['/sessionCostumer']);
+            }
+              
+          }
         this.submitted = true;
        });
 
