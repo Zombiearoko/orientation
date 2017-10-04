@@ -108,9 +108,9 @@ const options = new RequestOptions({  headers: headers1 });
         login: login,
         motDePasse: password,
        };
-      const url = this.beginUrl  + '?emailAddress=' + emailAddress + '&password =' + password ;
-    const url1 = 'http://127.0.0.1:8080/customer/loginCustomer'  + '?emailAddress=' + emailAddress
-    + '&password =' + password ;
+const url = this.beginUrl+'/orientation/customer/authentication'+'?login='+login+'&password='+password ;      
+/*    const url1 = 'http://127.0.0.1:8080/customer/loginCustomer'  + '?emailAddress=' + emailAddress
+    + '&password =' + password ;*/
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
