@@ -2,7 +2,8 @@
 <div class="separator"></div>
 <!-- Header -->
 <!--<span *ngFor="let item of collection">-->
-<h3 class="" > hello {{ name }}</h3>
+<h3 class="" *ngIf=" (time | date:'hh')<=12" > bonjour {{ name }}</h3>
+<h3 class="" *ngIf=" (time | date:'hh')>12" > bonsoir {{ name }}</h3>
 
 <!--</span>-->
 
