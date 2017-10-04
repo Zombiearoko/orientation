@@ -52,8 +52,8 @@ private newArticle: Article;
 // la requette http de recupération des données
 const title = '';
 const articleContent = '';
- const url = 'http://192.168.8.110:8092/administrator/createArticle' + '?title=' + title + '&articleContent=' + articleContent;
-this.http.get('https://jsonplaceholder.typicode.com/posts').subscribe(resp => {
+ const url = 'http://localhost:8092/administrator/createArticle' + '?title=' + title + '&articleContent=' + articleContent;
+this.http.get(url).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
   console.log(this.collectionJson);

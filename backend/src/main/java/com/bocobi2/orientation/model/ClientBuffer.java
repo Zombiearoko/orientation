@@ -6,10 +6,8 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "client")
-public class Client {
+public class ClientBuffer {
 
     @Id
     private String pseudonym;
@@ -22,7 +20,6 @@ public class Client {
 	private String phoneNumber;
     private String emailAddress;
     private String image;
-    private String memberStatus;
     
     @DBRef
     private Profil profil;
@@ -34,9 +31,6 @@ public class Client {
     private Locality presentLocality;
     
     @DBRef
-    private ConnectionStatus connectionStatus;
-    
-    @DBRef
 	private TypeOfOrientation typeOfOrientation;
 	
 	private List<Client> blacklist = new ArrayList<Client>();
@@ -44,11 +38,11 @@ public class Client {
 	private List<Book> customerBasket = new ArrayList<Book>(); 
 	
 	
-	public Client(){}
+	public ClientBuffer(){}
 
 
 
-	public Client(String emailAddress, String firstNameCustomer, String lastNameCustomer, String password, String phoneNumber) {
+	public ClientBuffer(String emailAddress, String firstNameCustomer, String lastNameCustomer, String password, String phoneNumber) {
 		super();
 		this.emailAddress = emailAddress;
 		this.firstNameCustomer = firstNameCustomer;
@@ -58,9 +52,8 @@ public class Client {
 	}
     
     
-
 	
-
+	
     public String getPseudonym() {
 		return pseudonym;
 	}
@@ -109,18 +102,6 @@ public class Client {
 
 
 
-	public String getMemberStatus() {
-		return memberStatus;
-	}
-
-
-
-	public void setMemberStatus(String memberStatus) {
-		this.memberStatus = memberStatus;
-	}
-
-
-
 	public Profil getProfil() {
 		return profil;
 	}
@@ -153,18 +134,6 @@ public class Client {
 
 	public void setPresentLocality(Locality presentLocality) {
 		this.presentLocality = presentLocality;
-	}
-
-
-
-	public ConnectionStatus getConnectionStatus() {
-		return connectionStatus;
-	}
-
-
-
-	public void setConnectionStatus(ConnectionStatus connectionStatus) {
-		this.connectionStatus = connectionStatus;
 	}
 
 
@@ -309,5 +278,4 @@ public class Client {
 	}
 
 
-	
 }

@@ -12,7 +12,7 @@ import 'rxjs/add/operator/catch';
 */
 @Injectable()
 export class RestProvider {
-  public beginUrl = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
+  public beginUrl = 'http://localhost:8092';
 
     constructor(public http: Http) {
 
@@ -70,6 +70,22 @@ const options = new RequestOptions({  headers: headers1 });
               .map((res: Response ) => res.json());
 }
 
+     public getName(firstNameCustomer) {
+      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        nom: firstNameCustomer
+       };
+       const url = this.beginUrl+'/orientation/surfer/inscription'+'?firstNameCustomer='+firstNameCustomer;
+     
+    return  this.http.post(url, object, options)
+              .do((res: Response ) => console.log(res.json()))
+              .map((res: Response ) => res.json());
+}
+
+
+
+
           public postBookInBasket(bookName) {
       const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
 const options = new RequestOptions({  headers: headers1 });
@@ -91,6 +107,7 @@ const options = new RequestOptions({  headers: headers1 });
       const object = {
         bookName: bookName,
        };
+
     const url = 'http://127.0.0.1:8080/customer/addCustomer' + '?firstNameCustomer='
     + bookName;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
@@ -99,11 +116,11 @@ const options = new RequestOptions({  headers: headers1 });
               .map((res: Response ) => res.json());
 }
 
- public postLoginCostumer(emailAddress, password) {
-      const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+ public postLoginCostumer(login, password) {
+   const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
 const options = new RequestOptions({  headers: headers1 });
       const object = {
-        email: emailAddress,
+        login: login,
         motDePasse: password,
        };
       const url = this.beginUrl  + '?emailAddress=' + emailAddress + '&password =' + password ;
@@ -144,7 +161,7 @@ const options = new RequestOptions({  headers: headers1 });
      '?newsletterConcernEmail=' + newsletterConcernEmail;
 
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
-    return  this.http.post(url, object, options)
+    return  this.http.post(url1, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
