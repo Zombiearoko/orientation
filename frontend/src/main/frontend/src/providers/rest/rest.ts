@@ -21,7 +21,6 @@ export class RestProvider {
 public getHello(name, surname) {
       const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
       const options = new RequestOptions({  headers: headers1 });
-
     const url = 'http://127.0.0.1:8080/hello' + '?name=' + name + '&surname=' + surname;
     const url2 = '/api/hello' + '?name=' + name + '&surname=' + surname;
     const url3 = 'https://jsonplaceholder.typicode.com/post';
