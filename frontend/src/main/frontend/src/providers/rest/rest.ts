@@ -57,14 +57,14 @@ const options = new RequestOptions({  headers: headers1 });
         motDePasse: password,
         telephone: phoneNumber
        };
-       const url = this.beginUrl + '?firstNameCustomer=' + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
+       const url = this.beginUrl + '/orientation/surfer/inscription' + '?firstNameCustomer=' + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
     + '&password =' + password ;
     const url1 = 'http://127.0.0.1:8080/orientation/surfer/inscription' + '?firstNameCustomer='
     + firstNameCustomer + '&lastNameCustomer=' + lastNameCustomer + '&phoneNumber=' + phoneNumber + '&emailAddress=' + emailAddress
     + '&password =' + password ;
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
       const urlSaph = 'https://www.google.com/url?q=https%3A%2F%2Fafternoon-reaches-41359.herokuapp.com%2Frencontre%2FInternetSurfer%2Fregistration&sa=D&sntz=1&usg=AFQjCNE4MIqkyr7cIswSLCD-1qWTGptEBw';
-    return  this.http.post(urlSaph, object, options)
+    return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
@@ -116,17 +116,17 @@ const options = new RequestOptions({  headers: headers1 });
 }
 
  public postLoginCostumer(login, password) {
-   const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+    const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
 const options = new RequestOptions({  headers: headers1 });
       const object = {
         login: login,
         motDePasse: password,
        };
-      const url = this.beginUrl  + '?emailAddress=' + emailAddress + '&password =' + password ;
-    const url1 = 'http://127.0.0.1:8080/customer/loginCustomer'  + '?emailAddress=' + emailAddress
-    + '&password =' + password ;
+const url = this.beginUrl+'/orientation/customer/authentication'+'?login='+login+'&password='+password ;      
+/*    const url1 = 'http://127.0.0.1:8080/customer/loginCustomer'  + '?emailAddress=' + emailAddress
+    + '&password =' + password ;*/
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
-    return  this.http.post(url2, object, options)
+    return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
 }
