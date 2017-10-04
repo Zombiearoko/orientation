@@ -5,6 +5,7 @@ import { RestProvider } from '../../../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
  import { RouterModule,Router, ActivatedRoute } from '@angular/router';
+ import { DatePipe } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -19,6 +20,7 @@ export class SessionClientComponent implements OnInit {
   name: any;
    collectionJson: Object;
 collection: any[] = [];
+private time: Date;
   public beginUrl = 'http://localhost:8092';
   constructor(public rest: RestProvider, private http: Http, private route: ActivatedRoute) {
     this.name = route.snapshot.params['name'];
@@ -42,7 +44,7 @@ this.name = this.route.ParamMap
        this.name = this.route.snapshot.ParamMap['firstNameCustomer'];
       */ 
      // this.name = this.route.snapshot.params['this.firstNameCustomer'];
- 
+ this.time = new Date();
     
   }
 
