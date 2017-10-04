@@ -29,6 +29,7 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ServiceComponent } from './service/service.component';
 import { OffreComponent } from './offre/offre.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
+import { SessionComponent } from './session/session.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { SplashScreenComponent } from './splash-screen/splash-screen.component';
      NavigationComponent,
      OffreComponent,
      SplashScreenComponent,
+     SessionComponent,
      
   ],
   imports: [

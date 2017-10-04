@@ -1,23 +1,20 @@
 import { HttpModule } from '@angular/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { RestProvider } from '../../../providers/rest/rest';
+import { RestProvider } from '../../providers/rest/rest';
 import { HttpClientModule} from '@angular/common/http';
 import { Http } from '@angular/http';
  import { RouterModule,Router, ActivatedRoute } from '@angular/router';
  import { DatePipe } from '@angular/common';
- import { OffreComponent } from './../../offre/offre.component';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  selector: 'app-session-client',
-  templateUrl: './session-client.component.html',
-   inputs: ['item'],
-  styleUrls: ['./session-client.component.css', '../../../bootstrap/css/bootstrap.css'],
-  entryComponents: [OffreComponent]
+  selector: 'app-session',
+  templateUrl: './session.component.html',
+  styleUrls: ['./session.component.css']
 })
-export class SessionClientComponent implements OnInit {
-  @Input() item: any;
+export class SessionComponent implements OnInit {
+@Input() item: any;
   private results: [any];
   name: any;
    collectionJson: Object;

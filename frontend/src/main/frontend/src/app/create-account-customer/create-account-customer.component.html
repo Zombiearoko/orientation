@@ -92,15 +92,16 @@
 
                             <div class="cols-lg-8">
                                 <div class="input-group">
-                                    <input type="email" placeholder="Entrez votre mail" class="form-control" formControlName="emailAddress" name="emailAddress" id="title" />
+                                    <input (blur)="validateEmail(clientForm.value)" type="email" placeholder="Entrez votre mail" class="form-control" formControlName="emailAddress" name="emailAddress" id="title" />
                                 </div>
                             </div>
                         </div>
                         <span class="text-danger" [hidden]="clientForm.controls.emailAddress.valid || clientForm.controls.emailAddress.untouched">veuillez entrer une adresse email valide</span>
                         <span *ngFor="let item of collection">
 
-                        <span *ngIf="item.status == 0" class ="text-danger">un client avec cette adresse email existe deja</span>
-                        <span *ngIf="item.status == 1" class="text-danger"></span>
+                        <span [hidden]="!item.status == 0 || clientForm.controls.emailAddress.untouched" class ="text-danger">un client avec cette adresse email existe deja</span>
+                        
+                        <span [hidden]="item.status == 1" class="text-danger"></span>
                         </span>
 
                         <div class="form-group">

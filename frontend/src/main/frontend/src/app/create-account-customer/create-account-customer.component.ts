@@ -78,6 +78,30 @@ this.collection.push(this.collectionJson);
 // document.body.innerHTML = '<h3 class="pub">publicité </h3>'
 
   }
+validateEmail(post) {
+      this.firstNameCustomer = post.firstNameCustomer;
+      this.lastNameCustomer = post.lastNameCustomer;
+      this.emailAddress = post.emailAddress;
+      this.password = post.password;
+      this.phoneNumber = post.phoneNumber;
+this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emailAddress, this.password, this.phoneNumber  )
+.subscribe((data) => {
+        console.log('*****************Before******************');
+       console.log(data.status);
+       this.collection.push(data);
+        if(data.status==0){
+          this.router.navigate(['/account']);
+          }
+          else{
+            if(data.status==1){
+                this.router.navigate(['/account']);
+                // this.router.navigate(['/sessionCostumer']);
+            }
+          }
+            this.submitted = true;
+       });
+
+  }
 
   ngOnInit() {
 

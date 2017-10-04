@@ -1,0 +1,136 @@
+<app-navigation></app-navigation>
+<div class="separator"></div>
+<!-- Header -->
+<!--<span *ngFor="let item of collection">-->
+
+
+<!--</span>-->
+
+
+<div class="separators"></div>
+<!--navigaton side-->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+<div class="container main">
+
+    <h3 class="pull-right" *ngIf=" (time | date:'HH')<=12" > bonjour {{ name }}</h3>
+    <h3 class="pull-right" *ngIf=" (time | date:'HH')>12" > bonsoir {{ name }}</h3>
+     <section class="section-nav-side-menu clear-left">
+        <div class="nav-side-menu">
+            <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+            <div class="menu-list">
+
+                <ul id="menu-content" class="menu-content collapse out">
+
+                    <li data-toggle="collapse" data-target="#products" class="collapsed active">
+                        <a href="#"><i class="fa fa-gift fa-lg"></i>Consulter les offres <span class="arrow"></span></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="products">
+                        <li><a href="#">offre d'emploi</a></li>
+                        <li><a href="#">offre de stage</a></li>
+                        <li><a href="#">offre de bourse</a></li>
+                        <li><a href="#">conseiller d'orientation</a></li>
+                    </ul>
+                    <li data-toggle="collapse" data-target="#service" class="collapsed">
+                        <a [routerLink]="['../basket']"><i class="fa fa-user fa-lg"></i>Gerer son panier<span class="arrow"></span></a>
+                    </li>
+
+
+                    <li data-toggle="collapse" data-target="#service" class="collapsed">
+                        <a [routerLink]="['../bookshop']"><i class="fa fa-globe fa-lg"></i> Librairie <span class="arrow"></span></a>
+                    </li>
+                    <li data-toggle="collapse" data-target="#service" class="collapsed">
+                        <a [routerLink]="['../postTestimony']"><i class="fa fa-globe fa-lg"></i> Poster temoignage<span class="arrow"></span></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Content -->
+    <section class="section-princ clear-left">
+        <div class="row">
+            <section class="section-article">
+                <div class="article clear-left col-lg-6">
+                    <section class="content-section-a ">
+
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-lg-5 ml-auto">
+                                    <hr class="section-heading-spacer">
+                                    <div class="clearfix"></div>
+                                    <h2 class="section-heading"><button class="btn btn-success btn-block">offres de Bourses</button></h2>
+                                    <p class="lead">bourses Uni2grow
+                                        <a target="_blank" href="#">Uni2grow</a>offre une bourses de 120 000 à toutes personnes respectant les critères suivants</p>
+                                </div>
+                                <div class="col-lg-5 mr-auto">
+                                    <img class="img-fluid" src="./../img/ipad.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.container -->
+                    </section>
+
+                    <section class="content-section-b">
+
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-lg-5 mr-auto order-lg-2">
+                                    <hr class="section-heading-spacer">
+                                    <div class="clearfix"></div>
+                                    <h2 class="section-heading"><button class="btn btn-danger  btn-block">Offre de stage</button></h2>
+                                    <p class="lead">Dans l'optique de recruter les jeunes de 20 ans pour l'organisation d'une startup future, l'entreprise
+                                        <a target="_blank" href="#">bocobi2</a>lance des offres de stages dans le domaine de l'informatique</p>
+                                </div>
+                                <div class="col-lg-5 ml-auto order-lg-1">
+                                    <img class="img-fluid" src="{{image}}" alt="">
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.container -->
+
+                    </section>
+                    <!-- /.content-section-b -->
+
+                    <section class="content-section-a">
+
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-lg-5 ml-auto">
+                                    <hr class="section-heading-spacer">
+                                    <div class="clearfix"></div>
+                                    <h2 class="section-heading"><button class="btn btn-block  btn-primary">Les metiers</button><br></h2>
+                                    <p class="lead">les differents metiers retrouvés au cameroun et ailleurs
+                                    </p>
+                                </div>
+                                <div class="col-lg-5 mr-auto ">
+                                    <img class="img-fluid" src="./../img/phones.png" alt="">
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.container -->
+
+                    </section>
+                </div>
+            </section>
+            
+        </div>
+    </section>
+    <section class="section-pub clear-left">
+                <div class="content-aside  col-lg-3">
+
+                    <h3 class="pub">publicité </h3>
+
+                </div>
+            </section>
+</div>
+<div class="clear-both"></div>
