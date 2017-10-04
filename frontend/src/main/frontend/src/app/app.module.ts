@@ -24,7 +24,7 @@ import { BourseComponent } from './bourse/bourse.component';
 import { LoginCostumerComponent } from './login-costumer/login-costumer.component';
 import { PostTestimonyComponent } from './post-testimony/post-testimony.component';
 import { PopupModule } from 'ng2-opd-popup';
-import {MaterialModule} from '@angular/material';
+//import {MaterialModule} from '@angular/material';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ServiceComponent } from './service/service.component';
 import { OffreComponent } from './offre/offre.component';
@@ -65,7 +65,7 @@ import { SessionComponent } from './session/session.component';
     HttpModule,
     routes,
     PopupModule.forRoot(),
-    MaterialModule,
+   // MaterialModule,
     BrowserAnimationsModule
   ],
   providers: [
