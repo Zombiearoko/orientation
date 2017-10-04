@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./../app.component.css', '../../bootstrap/css/bootstrap.css', './home.component.css'],
 })
 export class HomeComponent implements OnInit {
+  private time: Date;
 
   constructor() { }
 
   ngOnInit() {
+    this.time = new Date();
   }
 
 }
