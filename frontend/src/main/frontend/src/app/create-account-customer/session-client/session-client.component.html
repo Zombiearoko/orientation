@@ -1,16 +1,16 @@
 <app-navigation></app-navigation>
 <!-- Header -->
 <header class="intro-header">
-    <h4 class="pull-right index" *ngIf=" (time | date:'HH')<=12" > bonjour {{ name }}</h4>
-    <h4 class="pull-right index" *ngIf=" (time | date:'HH')>12" > bonsoir {{ name }}</h4>
-    <section class="ancres-header">
+    <h4 class="pull-right index" *ngIf=" (time | date:'HH')<=12" > bonjour {{ name | uppercase }}</h4>
+    <h4 class="pull-right index" *ngIf=" (time | date:'HH')>12" > bonsoir {{ name | uppercase }}</h4>
+   <!-- <section class="ancres-header">
         <div class="head">
-    <a >Nos offres</a>
+    <a >Nos offres</a> 
         </div>
         <div class="foot">
              <a>Newsletter</a>
         </div>
-    </section>
+    </section> -->
     <div class="container">
         <div class="intro-message">
             <h1>Orientation academique et professionnelle </h1>

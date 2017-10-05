@@ -1011,11 +1011,11 @@ header .foot a {
 .index{
     z-index: 100;
     display:inline-block;
-    background-color: red;
-    border-radius: 10px 0 0 0;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
     color: #f8f8f8;
-    background-size: cover;
+    margin: 0;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+    font-size: 2em;
 }

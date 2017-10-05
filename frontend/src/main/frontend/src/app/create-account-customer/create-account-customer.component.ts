@@ -22,6 +22,7 @@ export class CreateAccountCustomerComponent implements OnInit {
   lastNameCustomer: string;
   emailAddress: string;
     password: string;
+     confirmPassword: string;    
     phoneNumber: string;
     status: number;
   private results: [any];
@@ -37,6 +38,7 @@ public beginUrl = 'http://localhost:8092';
        'lastNameCustomer': [null, Validators.compose([Validators.required, Validators.maxLength(45)])],
       'emailAddress': [null, Validators.compose([Validators.email])],
       'password': [null, Validators.compose([Validators.required])],
+      'confirmPassword': [null, Validators.compose([Validators.required])],
       'phoneNumber': [null, Validators.compose([Validators.required])]
       });
   }
@@ -50,6 +52,7 @@ public beginUrl = 'http://localhost:8092';
 this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emailAddress, this.password, this.phoneNumber  )
 .subscribe((data) => {
         console.log('*****************Before******************');
+        console.log(typeof(data));
        console.log(data.status);
        this.collection.push(data);
         if(data.status==0){
@@ -101,6 +104,15 @@ console.log('******test*****');
 });*/
 
   }
+validatePassword(post) {
+      this.password = post.password;
+     this.confirmPassword = post.confirmPassword;
+     console.log(this.password!=this.confirmPassword);
+if (this.password!=this.confirmPassword){
+const espaceError = document.getElementById('errorSpace');
+espaceError.innerHTML = 'le mot de passe confirmé ne correspond pas';
+}
+}
 
   ngOnInit() {
 
