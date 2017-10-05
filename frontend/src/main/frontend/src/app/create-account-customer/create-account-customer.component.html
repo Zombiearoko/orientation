@@ -111,7 +111,16 @@
                                     <input type="password" placeholder="Entrez votre mot de passe" class="form-control" formControlName="password" name="password" id="title" />
                                 </div>
                             </div>
+                            
                         </div>
+                        <div class="form-group">
+                            <div class="cols-lg-8">
+                                <div class="input-group">
+                                    <input (blur)=validatePassword(clientForm.value) type="password" placeholder="confirmer votre mot de passe" class="form-control" formControlName="confirmPassword" name="password" id="title" />
+                                </div>
+                            </div>
+                            <div id="errorSpace" class="text-danger"></div>
+                            </div>
                         <span class="text-danger" [hidden]="clientForm.controls.password.valid || clientForm.controls.password.untouched">veuillez entrer un mot de passe</span>
                         <div class="form-group">
 
