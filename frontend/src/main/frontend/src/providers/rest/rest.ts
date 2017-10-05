@@ -12,7 +12,7 @@ import 'rxjs/add/operator/catch';
 */
 @Injectable()
 export class RestProvider {
-  public beginUrl = 'http://192.168.9.102:8092';
+  public beginUrl = 'http://localhost:8092';
 
     constructor(public http: Http) {
 
