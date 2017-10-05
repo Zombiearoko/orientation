@@ -99,7 +99,7 @@
                         <span class="text-danger" [hidden]="clientForm.controls.emailAddress.valid || clientForm.controls.emailAddress.untouched">veuillez entrer une adresse email valide</span>
                         <span *ngFor="let item of collection">
 
-                        <span [hidden]="!item.status == 0 || clientForm.controls.emailAddress.untouched" class ="text-danger">un client avec cette adresse email existe deja</span>
+                        <span *ngIf="item.status == 0 || clientForm.controls.emailAddress.untouched" class ="text-danger">un client avec cette adresse email existe deja</span>
                         
                         <span [hidden]="item.status == 1" class="text-danger"></span>
                         </span>

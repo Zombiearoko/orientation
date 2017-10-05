@@ -84,22 +84,21 @@ validateEmail(post) {
       this.emailAddress = post.emailAddress;
       this.password = post.password;
       this.phoneNumber = post.phoneNumber;
-this.rest.postAccount(this.firstNameCustomer , this.lastNameCustomer,  this.emailAddress, this.password, this.phoneNumber  )
-.subscribe((data) => {
-        console.log('*****************Before******************');
-       console.log(data.status);
-       this.collection.push(data);
-        if(data.status==0){
+       const url = this.beginUrl + '/orientation/surfer/inscription' + '?firstNameCustomer=' + this.firstNameCustomer + '&lastNameCustomer=' + this.lastNameCustomer + '&phoneNumber=' + this.phoneNumber + '&emailAddress=' + this.emailAddress
+    + '&password =' +this.password ;
+/*this.http.get(url).subscribe(resp => {
+ this.results = resp['results'];
+  this.collectionJson = resp.json();
+this.collection.push(this.collectionJson);
+console.log('******test*****'); 
+  console.log(this.results); 
+  if(this.collectionJson.status==0){
           this.router.navigate(['/account']);
           }
           else{
-            if(data.status==1){
-                this.router.navigate(['/account']);
-                // this.router.navigate(['/sessionCostumer']);
-            }
-          }
-            this.submitted = true;
-       });
+            if(this.collectionJson.status==1){
+                this.router.navigate(['/sessionCostumer/'+this.firstNameCustomer]);
+});*/
 
   }
 
