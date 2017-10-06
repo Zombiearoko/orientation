@@ -69,6 +69,7 @@ const url2 = 'https://jsonplaceholder.typicode.com/posts';
       this.http.get(url2).subscribe(resp => {
  this.results = resp['results'];
   this.collectionJson = resp.json();
+  console.log('*****begin*****')
   console.log(this.collectionJson);
 });
   }

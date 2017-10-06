@@ -13,8 +13,10 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class RestProvider {
   public beginUrl = 'http://localhost:8092';
+  public loggedIn = false; 
 
     constructor(public http: Http) {
+    this.loggedIn = !!localStorage.getItem('auth_token');
 
     }
 
@@ -162,4 +164,34 @@ const options = new RequestOptions({  headers: headers1 });
 }
 
 
+
+ // gestion de la connexion et de la deconnexion
+
+ public login(email, password) {
+    const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
+const options = new RequestOptions({  headers: headers1 });
+      const object = {
+        login: email,
+        motDePasse: password,
+       };
+const url = this.beginUrl+'/orientation/customer/authentication'+'?login='+email+'&password='+password ;  
+    return this.http.post(url,object,options)
+    .map(res => res.json()).map((res) => {
+        if (res.success) {
+          localStorage.setItem('auth_token', res.auth_token);
+          this.loggedIn = true;
+        }
+
+        return res.success;
+      });
+  }
+
+  logout() {
+    localStorage.removeItem('auth_token');
+    this.loggedIn = false;
+  }
+
+  isLoggedIn() {
+    return this.loggedIn;
+  }
 }

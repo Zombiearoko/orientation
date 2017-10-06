@@ -81,7 +81,7 @@
                         <span class="text-danger" [hidden]="clientForm.controls.login.valid || clientForm.controls.login.untouched">veuillez entrer une adresse email valide</span>
                         <span *ngFor="let item of collection">
 
-                        <span *ngIf="item.status == 0" class ="text-danger">membre inexistant</span>
+                        <span [hidden]="!item.status == 0" class ="text-danger">membre inexistant</span>
                         <span *ngIf="item.status == 1" class="text-danger"></span>
                         </span>
                         <div class="form-group">
@@ -95,6 +95,10 @@
                             </div>
                         </div>
                         <span class="text-danger" [hidden]="clientForm.controls.password.valid || clientForm.controls.password.untouched">veuillez entrer un mot de passe</span>
+                       <span *ngFor="let item of collection">
+                        <span [hidden]="!item.status == 0"  class ="text-danger">mot de passe incorrecte</span>
+                        <span *ngIf="item.status == 1" class="text-danger"></span>
+                        </span>
                         <div class="form-group ">
                            
                                 <button class="btn btn-primary " type="submit" [disabled]="!clientForm.valid">Se connecter</button>

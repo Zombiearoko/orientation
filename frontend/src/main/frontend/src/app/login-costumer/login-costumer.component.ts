@@ -18,6 +18,7 @@ export class LoginCostumerComponent implements OnInit {
   clientForm: FormGroup;
   post: any;
   login: string;
+  name: string;
     password: string;
   private results: [any];
    private collectionJson: Object;
@@ -36,18 +37,21 @@ export class LoginCostumerComponent implements OnInit {
   onSubmit(post) {
       this.login = post.login;
       this.password = post.password;
+      
 this.rest.postLoginCostumer( this.login, this.password)
 .subscribe((data) => {
       console.log('*****************Before******************');
        console.log(data);
        this.collection.push(data);
+       this.name = data.customer.firstNameCustomer;
+       console.log(this.name);
         if(data.status==0){
           this.router.navigate(['/loginCostumer']);
           }
           else{
             if(data.status==1){
                // this.router.navigate(['/sessionCostumer']);
-               this.router.navigate(['/sessionCostumer/'+this.login]);
+               this.router.navigate(['/sessionCostumer/'+this.name]);
             }
               
           }
