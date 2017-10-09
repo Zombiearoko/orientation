@@ -28,6 +28,7 @@ export class CreateAccountCustomerComponent implements OnInit {
   private results: [any];
    private collectionJson: Object;
  collection: any[] = [];
+  collection2: any[] = [];
  lastElement: Object;
    submitted = false;
 public beginUrl = 'http://localhost:8092';
@@ -89,18 +90,23 @@ validateEmail(post) {
       this.phoneNumber = post.phoneNumber;
        const url = this.beginUrl + '/orientation/surfer/inscription' + '?firstNameCustomer=' + this.firstNameCustomer + '&lastNameCustomer=' + this.lastNameCustomer + '&phoneNumber=' + this.phoneNumber + '&emailAddress=' + this.emailAddress
     + '&password =' +this.password ;
-/*this.http.get(url).subscribe(resp => {
+    const url2 = 'https://jsonplaceholder.typicode.com/posts';
+/*this.http.get(url2).subscribe(resp => {
+    console.log('*****beginner*****')
  this.results = resp['results'];
   this.collectionJson = resp.json();
-this.collection.push(this.collectionJson);
-console.log('******test*****'); 
-  console.log(this.results); 
-  if(this.collectionJson.status==0){
-          this.router.navigate(['/account']);
+  console.log(this.collectionJson);
+  if(this.collectionJson[0].id==1){
+         const espaceError = document.getElementById('errorEmail');
+          espaceError.innerHTML = 'un membre avec cette adresse email existe deja';
+
           }
           else{
-            if(this.collectionJson.status==1){
-                this.router.navigate(['/sessionCostumer/'+this.firstNameCustomer]);
+            if(this.collectionJson[0].id=2){
+                       const espaceError = document.getElementById('errorEmail');
+                        espaceError.innerHTML = 'un membre avec cette adresse email existe deja';
+            }
+          }
 });*/
 
   }
