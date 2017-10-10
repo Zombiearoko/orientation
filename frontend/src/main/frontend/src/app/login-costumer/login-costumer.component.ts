@@ -14,7 +14,11 @@ import { RouterModule,Router }   from '@angular/router';
   styleUrls: ['./login-costumer.component.css', '../../bootstrap/css/bootstrap.css']
 })
 export class LoginCostumerComponent implements OnInit {
-
+  localUser = {
+        email: '',
+        password: ''
+  }
+public isLoggedIn: boolean;
   clientForm: FormGroup;
   post: any;
   login: string;
@@ -47,11 +51,16 @@ this.rest.postLoginCostumer( this.login, this.password)
        console.log(this.name);
         if(data.status==0){
           this.router.navigate(['/loginCostumer']);
+          
           }
           else{
             if(data.status==1){
-               // this.router.navigate(['/sessionCostumer']);
+               // this.router.navigate(['/sessionCostumer']);            
+               window.localStorage.setItem('auth-key', data.status);
+               window.sessionStorage.setItem('auth-key', data.status);
+               this.isLoggedIn = true;
                this.router.navigate(['/sessionCostumer/'+this.name]);
+
             }
               
           }
