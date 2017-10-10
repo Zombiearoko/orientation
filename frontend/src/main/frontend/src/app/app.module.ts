@@ -30,6 +30,7 @@ import { ServiceComponent } from './service/service.component';
 import { OffreComponent } from './offre/offre.component';
 import { SplashScreenComponent } from './splash-screen/splash-screen.component';
 import { SessionComponent } from './session/session.component';
+import { GuardComponent } from './guard';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { SessionComponent } from './session/session.component';
      OffreComponent,
      SplashScreenComponent,
      SessionComponent,
-     
+     GuardComponent
   ],
   imports: [
    BrowserModule,

@@ -22,6 +22,8 @@ clientForm: FormGroup;
    public beginUrl = 'http://localhost:8092';
   constructor(public rest: RestProvider,  private router: Router, private http: Http) { }
   deconnexion(){
+    window.localStorage.removeItem('auth-key');
+    window.sessionStorage.removeItem('auth-key');
      const url = this.beginUrl + '/orientation/customer/deconnection'
     this.http.get(url).subscribe(resp => {
  this.results = resp['results'];

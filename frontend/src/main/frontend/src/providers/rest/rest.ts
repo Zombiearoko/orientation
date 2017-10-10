@@ -14,7 +14,7 @@ import 'rxjs/add/operator/catch';
 export class RestProvider {
   public beginUrl = 'http://localhost:8092';
   public loggedIn = false; 
-
+  public isLogIn: boolean;
     constructor(public http: Http) {
     this.loggedIn = !!localStorage.getItem('auth_token');
 
@@ -114,6 +114,7 @@ const options = new RequestOptions({  headers: headers1 });
 }
 
  public postLoginCostumer(login, password) {
+   this.isLogIn = false;
     const headers1 =  new Headers({ 'Access-Control-Allow-Origin': '*' });
 const options = new RequestOptions({  headers: headers1 });
       const object = {
@@ -121,12 +122,11 @@ const options = new RequestOptions({  headers: headers1 });
         motDePasse: password,
        };
 const url = this.beginUrl+'/orientation/customer/authentication'+'?login='+login+'&password='+password ;      
-/*    const url1 = 'http://127.0.0.1:8080/customer/loginCustomer'  + '?emailAddress=' + emailAddress
-    + '&password =' + password ;*/
       const url2 = 'https://jsonplaceholder.typicode.com/posts';
     return  this.http.post(url, object, options)
               .do((res: Response ) => console.log(res.json()))
               .map((res: Response ) => res.json());
+              
 }
 
 public postTestimony(testimonyAuthor, testimonyContent) {
